@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# De Vermogensvertaler
 
-## Getting Started
+Website for Alberta Opoku's financial literacy practice: two free scans (Pensioenpot-check, AOW-gatscan) as the entry point, then a free intro call, masterclass, one-day proeverij (€600), ten-month group track (€7,500) and one-on-one coaching.
 
-First, run the development server:
+Built by Dennis Petri, visual identity by Studio Menno van der Veen.
+
+## Status
+
+Wireframe phase: black and white, dummy copy (marked `[Dummytekst]`), hand-drawn illustrations generated with Krea. Menno's identity replaces the colours and type later.
+
+Not wired up yet:
+
+- Payments: pay buttons link to `#` until Alberta's Stripe account exists (iDEAL, card, installments for the group track)
+- Booking: Cal.com placeholder at `#kennismaken`
+- Scans: one dummy dropdown each; Alberta's real scoring logic and Google Sheets capture come next
+- Newsletter form: no endpoint yet
+
+## Stack
+
+Next.js 16 (App Router), Tailwind CSS 4, TypeScript. Hosted on Vercel.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where things live
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `content/site.ts`: **all copy**, navigation, offer and the four detail pages. Text changes happen here only.
+- `app/page.tsx`: homepage
+- `app/[slug]/page.tsx`: one template for all detail pages; the slot shows a scan or a price block
+- `components/`: shared UI (`ui.tsx`), scan, carousel, nav, back-to-top
+- `public/illustrations/`: transparent line-art PNGs. After replacing an image, give it a new filename so caches don't serve the old one.
+- `app/globals.css`: design tokens (`--radius-card`, display font), dashed lines, ticker tilt (`--tilt`)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## SEO
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Title template, descriptions, canonical URLs, Open Graph image (`app/opengraph-image.tsx`), `robots.txt`, `sitemap.xml`, JSON-LD
+- Only indexable when `VERCEL_ENV=production`. Set `NEXT_PUBLIC_SITE_URL` if the domain differs from `https://devermogensvertaler.nl`.
