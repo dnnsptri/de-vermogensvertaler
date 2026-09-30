@@ -31,7 +31,7 @@ export default function Home() {
         <div className="grid gap-12 md:grid-cols-2 md:items-center md:gap-24">
           <div>
             <Eyebrow>{hero.eyebrow}</Eyebrow>
-            <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
+            <h1 className="text-[2.8125rem] font-semibold leading-tight md:text-[3.75rem]">
               {hero.title}
             </h1>
             <p className="mt-6 text-lg text-neutral-700">{hero.intro}</p>
