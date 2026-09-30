@@ -11,11 +11,11 @@ const ratios = {
 };
 
 // Drawing size and anchor inside its shape. Figures stand on the bottom; the dense square
-// notepad is smaller and pushed to the top right, where it breaks out of the shape.
+// notepad is smaller and centred (the overflow box sits slightly up-right, so it leans that way).
 const artScale = {
-  portrait: "origin-bottom scale-[0.85]",
-  landscape: "origin-bottom scale-[0.85]",
-  square: "origin-top-right scale-[0.65]",
+  portrait: "origin-bottom scale-[0.85] object-bottom",
+  landscape: "origin-bottom scale-[0.85] object-bottom",
+  square: "origin-center scale-[0.65] object-center",
 };
 
 export function Photo({ label, ratio, src }: PhotoType) {
@@ -27,7 +27,7 @@ export function Photo({ label, ratio, src }: PhotoType) {
         <div aria-hidden className={`${ratios[ratio]} absolute inset-0 bg-neutral-200`} />
         {/* 115% of the shape: 15% out at the top, 10% right, 5% left */}
         <div className="absolute -top-[15%] -right-[10%] bottom-0 -left-[5%]">
-          <Image src={src} alt={label} fill sizes="(min-width: 768px) 50vw, 100vw" className={`${artScale[ratio]} object-contain object-bottom`} />
+          <Image src={src} alt={label} fill sizes="(min-width: 768px) 50vw, 100vw" className={`${artScale[ratio]} object-contain`} />
         </div>
       </div>
     );
