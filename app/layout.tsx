@@ -32,7 +32,7 @@ const jsonLd = {
   description: site.description,
   url: site.url,
   areaServed: "NL",
-  founder: { "@type": "Person", name: "Alberta Opoku" },
+  founder: { "@type": "Person", name: site.owner },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -56,9 +56,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 
         <footer className="border-t border-black px-4 py-10 text-sm">
           <div className="mx-auto flex max-w-5xl flex-col gap-4 md:flex-row md:justify-between">
-            <p>
+            <div>
               <Logo name={site.name} />
-            </p>
+              {/* Indented to line up with the name, past the 32px mark and 8px gap */}
+              <p className="mt-1 pl-10 text-xs text-neutral-500">{site.owner}</p>
+            </div>
             <p className="max-w-md text-neutral-600">{site.disclaimer}</p>
             <Link href="#" className="underline underline-offset-4">
               Privacyverklaring

@@ -35,14 +35,15 @@ export type DetailPage = {
 };
 
 export const site = {
-  name: "De Vermogensvertaler",
+  name: "De VermogensVertaler",
+  owner: "Alberta Opoku",
   tagline: "Financiële taal, vertaald naar jouw leven",
   // SEO: canonical domain (override per environment with NEXT_PUBLIC_SITE_URL) and default description
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://devermogensvertaler.nl",
   description:
     "Gratis pensioen- en AOW-scans en trainingen die je helpen je financiële toekomst zelf in handen te nemen. Voor zzp'ers en iedereen zonder financiële voorsprong van huis uit.",
   disclaimer:
-    "De scans en trainingen van De Vermogensvertaler zijn educatief. Ze geven inzicht, geen persoonlijk financieel advies.",
+    "De scans en trainingen van De VermogensVertaler zijn educatief. Ze geven inzicht, geen persoonlijk financieel advies.",
   nav: [
     { label: "Pensioenpot-check", href: "/pensioenpot-check" },
     { label: "AOW-gatscan", href: "/aow-gatscan" },

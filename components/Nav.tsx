@@ -31,13 +31,16 @@ export function Nav({ items }: { items: Item[] }) {
         ))}
       </nav>
 
+      {/* Mobile: the button is fixed in its header spot so it stays reachable while scrolling;
+          this spacer keeps the header layout intact */}
+      <span aria-hidden className="h-11 w-11 md:hidden" />
       <button
         type="button"
         aria-expanded={open}
         aria-controls="mobile-menu"
         aria-label={open ? "Menu sluiten" : "Menu openen"}
         onClick={() => setOpen(!open)}
-        className="flex h-11 w-11 items-center justify-center rounded-full border border-black md:hidden"
+        className="fixed top-4 right-4 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-black bg-white md:hidden"
       >
         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
           {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
@@ -45,7 +48,7 @@ export function Nav({ items }: { items: Item[] }) {
       </button>
 
       {open && (
-        <nav id="mobile-menu" aria-label="Hoofdmenu" className="w-full border-t border-black pt-2 md:hidden">
+        <nav id="mobile-menu" aria-label="Hoofdmenu" className="fixed inset-x-0 top-0 z-40 border-b border-black bg-white px-4 pt-20 pb-6 md:hidden">
           <ul>
             {items.map((item) => (
               <li key={item.href}>

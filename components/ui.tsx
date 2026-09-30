@@ -10,8 +10,13 @@ const ratios = {
   square: "aspect-square rounded-card",
 };
 
-// Drawing size inside its shape; the square notepad is dense, so it gets less
-const artScale = { portrait: "scale-[0.85]", landscape: "scale-[0.85]", square: "scale-[0.65]" };
+// Drawing size and anchor inside its shape. Figures stand on the bottom; the dense square
+// notepad is smaller and pushed to the top right, where it breaks out of the shape.
+const artScale = {
+  portrait: "origin-bottom scale-[0.85]",
+  landscape: "origin-bottom scale-[0.85]",
+  square: "origin-top-right scale-[0.65]",
+};
 
 export function Photo({ label, ratio, src }: PhotoType) {
   // Illustration stands in the organic shape and breaks out at the top and right edge for depth.
@@ -22,7 +27,7 @@ export function Photo({ label, ratio, src }: PhotoType) {
         <div aria-hidden className={`${ratios[ratio]} absolute inset-0 bg-neutral-200`} />
         {/* 115% of the shape: 15% out at the top, 10% right, 5% left */}
         <div className="absolute -top-[15%] -right-[10%] bottom-0 -left-[5%]">
-          <Image src={src} alt={label} fill sizes="(min-width: 768px) 50vw, 100vw" className={`origin-bottom ${artScale[ratio]} object-contain object-bottom`} />
+          <Image src={src} alt={label} fill sizes="(min-width: 768px) 50vw, 100vw" className={`${artScale[ratio]} object-contain object-bottom`} />
         </div>
       </div>
     );

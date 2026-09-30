@@ -1,4 +1,4 @@
-# De Vermogensvertaler
+# De VermogensVertaler
 
 Website for Alberta Opoku's financial literacy practice: two free scans (Pensioenpot-check, AOW-gatscan) as the entry point, then a free intro call, masterclass, one-day proeverij (€600), ten-month group track (€7,500) and one-on-one coaching.
 
