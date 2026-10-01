@@ -13,7 +13,7 @@ Not wired up yet:
 - Payments: pay buttons link to `#` until Alberta's Stripe account exists (iDEAL, card, installments for the group track)
 - Booking: Cal.com placeholder at `#kennismaken`
 - Scans: one dummy dropdown each; Alberta's real scoring logic and Google Sheets capture come next
-- Newsletter form: no endpoint yet
+- Email capture: the free test (scans) will collect email; no separate newsletter
 
 ## Stack
 
@@ -27,9 +27,9 @@ npm run dev
 ## Where things live
 
 - `content/site.ts`: **all copy**, navigation, offer and the four detail pages. Text changes happen here only.
-- `app/page.tsx`: homepage
+- `app/page.tsx`: homepage in 7 blocks (hero, herkenning, werken met mij, over mij, testimonial, gratis test, kennismaken)
 - `app/[slug]/page.tsx`: one template for all detail pages; the slot shows a scan or a price block
-- `components/`: shared UI (`ui.tsx`), scan, carousel, nav, back-to-top
+- `components/`: shared UI (`ui.tsx`), scan, nav, back-to-top
 - `public/illustrations/`: transparent line-art PNGs. After replacing an image, give it a new filename so caches don't serve the old one.
 - `app/globals.css`: wireframe tokens (Inter only). The parked "decorated" style (Shrikhand, dashed lines, tilted ticker, organic shapes) is in git tag `decorated-v1`.
 

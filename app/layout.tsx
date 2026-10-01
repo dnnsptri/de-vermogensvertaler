@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Inter } from "next/font/google";
 import { site } from "@/content/site";
-import { Logo, Newsletter } from "@/components/ui";
+import { Logo } from "@/components/ui";
 import { BackToTop } from "@/components/BackToTop";
 import { Nav } from "@/components/Nav";
 import "./globals.css";
@@ -49,7 +49,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 
         <main className="flex-1">{children}</main>
 
-        <Newsletter {...site.newsletter} />
         <BackToTop />
 
         <footer className="border-t border-black px-4 py-10 text-sm">

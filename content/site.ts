@@ -41,23 +41,16 @@ export const site = {
   // SEO: canonical domain (override per environment with NEXT_PUBLIC_SITE_URL) and default description
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://devermogensvertaler.nl",
   description:
-    "Gratis pensioen- en AOW-scans en trainingen die je helpen je financiële toekomst zelf in handen te nemen. Voor zzp'ers en iedereen zonder financiële voorsprong van huis uit.",
+    "Voor professionals die weten wat ze willen: een eigen financieel plan, met trainingen en persoonlijke begeleiding. Begin met de gratis pensioen- of AOW-test.",
   disclaimer:
     "De scans en trainingen van De VermogensVertaler zijn educatief. Ze geven inzicht, geen persoonlijk financieel advies.",
   nav: [
-    { label: "Pensioenpot-check", href: "/pensioenpot-check" },
-    { label: "AOW-gatscan", href: "/aow-gatscan" },
-    { label: "Proeverij", href: "/proeverij" },
-    { label: "Groepstraject", href: "/groepstraject" },
+    { label: "Gratis test", href: "/#gratis-test" },
+    { label: "Werken met mij", href: "/#werken-met-mij" },
+    { label: "Over mij", href: "/#over-mij" },
+    { label: "Kennismaken", href: "/#kennismaken" },
   ],
   bookingCta: { label: "Plan een gratis kennismaking", href: "/#kennismaken" },
-  newsletter: {
-    title: "[Dummytekst] Eén keer per maand geld, vertaald",
-    text: "[Dummytekst] Geen jargon, geen verkooppraatjes. Afmelden kan altijd.",
-    button: "Aanmelden",
-    // Mailing tool (form endpoint) still to be chosen
-    action: "#",
-  },
   // Alberta's profile URLs still to come
   social: [
     { label: "Instagram", href: "#", icon: "instagram" },
@@ -65,19 +58,75 @@ export const site = {
   ] as { label: string; href: string; icon: "instagram" | "linkedin" }[],
 };
 
+// Homepage in 7 blocks, modelled on Kim de Graeve / Katrin Van de Water: one free test as the way in,
+// then straight to business. No prices here (that read as "a shop"); prices live on the detail pages.
 export const home = {
   hero: {
-    eyebrow: "Voor zzp'ers en iedereen zonder financiële voorsprong van huis uit",
-    title: "Weet jij waar je staat als je stopt met werken?",
+    eyebrow: "Voor professionals die weten wat ze willen",
+    title: "Je carrière staat. Nu je vermogen nog.",
     intro:
-      "In twee minuten zie je hoe groot je pensioenpot en je AOW-gat zijn. Daarna weet je wat je volgende stap is, zonder vakjargon en zonder schaamte.",
-    primary: { label: "Doe de gratis scan", href: "#scans" },
-    secondary: { label: "Plan een vrijblijvend gesprek", href: "#kennismaken" },
+      "[Dummytekst] Je verdient goed, maar je geld groeit niet mee. Ik vertaal de taal van geld naar een plan dat bij jouw leven past, zodat je eindelijk de stap zet.",
+    primary: { label: "Plan een kennismakingsgesprek", href: "#kennismaken" },
+    secondary: { label: "Of doe eerst de gratis test", href: "#gratis-test" },
+    // Shoot photo 004_097 (arms crossed, mustard on green) replaces this
     photo: { label: "Illustratie: Alberta met een kop koffie", ratio: "portrait", src: "/illustrations/alberta-portret-v2.png" } as Photo,
   },
-  banner: "Gratis online masterclass op [datum] · Meld je aan",
-  scans: {
-    title: "Begin met inzicht. Gratis, in twee minuten.",
+  recognition: {
+    title: "Herken je dit?",
+    items: [
+      { title: "Je carrière staat, je vermogen niet", text: "[Dummytekst] Je hebt hard gewerkt voor je positie, maar je geld staat vooral op een spaarrekening." },
+      { title: "Niemand deed het je voor", text: "[Dummytekst] Geen ouders of oom die je leerden beleggen. Dus schuif je het op." },
+      { title: "Je wilt, maar zet de stap niet", text: "[Dummytekst] Je weet dat het moet. Je mist alleen een plan dat je vertrouwt." },
+    ],
+  },
+  work: {
+    eyebrow: "Werken met mij",
+    title: "Drie manieren om je plan te bouwen",
+    items: [
+      {
+        format: "Eén dag, kleine groep",
+        title: "De Proeverij",
+        text: "[Dummytekst] Ervaar in één dag hoe je gestructureerd over je financiële toekomst nadenkt.",
+        href: "/proeverij",
+        link: "Meer over de proeverij",
+        icon: "/illustrations/icon-proeverij.png",
+      },
+      {
+        format: "Tien maanden, groep van 7 tot 9",
+        title: "Het Groepstraject",
+        text: "[Dummytekst] Bouw je eigen plan, samen met een groep die je scherp houdt. Live in Amsterdam of Rotterdam.",
+        href: "/groepstraject",
+        link: "Meer over het groepstraject",
+        icon: "/illustrations/icon-groepstraject.png",
+      },
+      {
+        format: "Bijna een jaar, één op één",
+        title: "Persoonlijke begeleiding",
+        text: "[Dummytekst] Voor wie het liefst persoonlijk en intensief werkt. Beperkt aantal plekken.",
+        href: "#kennismaken",
+        link: "Plan een kennismaking",
+        icon: "/illustrations/icon-een-op-een.png",
+      },
+    ],
+  },
+  about: {
+    eyebrow: "Over mij",
+    title: "Ik vertaal de taal van geld naar jouw leven.",
+    body: [
+      "[Dummytekst] Ruim tien jaar was ik woordvoerder in de financiële wereld, onder meer bij SNS, de Volksbank, de AFM en ING. Ik weet hoe de sector praat, en hoe weinig daarvan bij mensen aankomt.",
+      "[Dummytekst] Ik kwam op mijn tiende uit Ghana naar Nederland en moest alles over geld zelf uitzoeken. Die ervaring deel ik nu, zodat jij niet hoeft te zoeken.",
+    ],
+    // Shoot photo 005_121 (kente scarf, outdoors) replaces this
+    photo: { label: "Illustratie: Alberta aan het werk", ratio: "portrait", src: "/illustrations/alberta-werk-v2.png" } as Photo,
+  },
+  quote: {
+    text: "[Dummyquote] Voor het eerst heb ik een plan. En het kost me maar een paar uur per maand.",
+    name: "Deelnemer, groepstraject",
+  },
+  freeTest: {
+    eyebrow: "Gratis test",
+    title: "Weet in twee minuten waar je staat",
+    text: "[Dummytekst] Begin met een van de twee gratis scans. Je krijgt je uitkomst direct, en per mail als je wilt.",
     items: [
       {
         href: "/pensioenpot-check",
@@ -92,51 +141,6 @@ export const home = {
         text: "Niet vanaf je 17e in Nederland gewoond? Zie welk deel van je AOW je opbouwt.",
       },
     ],
-    coaching: { label: "Liever direct persoonlijk? Vraag 1-op-1 coaching aan", href: "#kennismaken" },
-  },
-  problem: {
-    title: "Je weet dat je iets moet doen. Maar waar begin je?",
-    steps: [
-      { title: "Het overzicht komt binnen", text: "Je opent je pensioenoverzicht en begrijpt de helft." },
-      { title: "Je schuift het op", text: "Het voelt ver weg, en er is altijd iets dringenders." },
-      { title: "De onrust blijft", text: "Ergens weet je dat het later tegen je gaat werken." },
-    ],
-  },
-  notNeeded: {
-    title: "Wat je niet nodig hebt om te beginnen",
-    illustration: { label: "Illustratie: kladblok met doorgestreepte lijstjes", ratio: "square", src: "/illustrations/kladblok.png" } as Photo,
-    items: [
-      { title: "Een rijke oom", text: "Niemand die het je voordeed? Dan leren we het samen." },
-      { title: "Een financiële opleiding", text: "Je hoeft geen rekenwonder te zijn. Wel nieuwsgierig." },
-      { title: "Het perfecte moment", text: "Dat bestaat niet. Het beste moment is nu." },
-      { title: "Een goeroe", text: "Geen snelle rijkdom, wel een plan dat schokken aankan." },
-    ],
-  },
-  about: {
-    eyebrow: "Hoi, ik ben Alberta",
-    title: "Ik vertaal de taal van geld naar jouw leven.",
-    body: [
-      "[Dummytekst] Jarenlang was ik journalist en woordvoerder in de financiële wereld, bij banken en bij de toezichthouder. Ik weet hoe de sector praat, en hoe weinig daarvan bij mensen aankomt.",
-      "[Dummytekst] Ik kwam op mijn tiende naar Nederland en moest alles over geld zelf uitzoeken. Die ervaring deel ik nu, zodat jij niet hoeft te zoeken.",
-    ],
-    photo: { label: "Illustratie: Alberta aan het werk", ratio: "portrait", src: "/illustrations/alberta-werk-v2.png" } as Photo,
-  },
-  offer: {
-    title: "Zo werken we samen",
-    free: [
-      { title: "Gratis scans", text: "Pensioenpot-check en AOW-gatscan.", href: "#scans", icon: "/illustrations/icon-scans.png" },
-      { title: "Kennismaking", text: "Een kwartier, gratis. Waar sta je?", href: "#kennismaken", icon: "/illustrations/icon-kennismaking.png" },
-      { title: "Online masterclass", text: "Anderhalf uur, gratis. Waarom juist nu?", href: "#", icon: "/illustrations/icon-masterclass.png" },
-    ],
-    paid: [
-      { title: "Proeverij", price: "€ 600", text: "Eén dag, in een kleine groep.", href: "/proeverij", icon: "/illustrations/icon-proeverij.png" },
-      { title: "Groepstraject", price: "€ 7.500", text: "Tien maanden, Amsterdam of Rotterdam.", href: "/groepstraject", icon: "/illustrations/icon-groepstraject.png" },
-      { title: "Eén op één", price: "Op aanvraag", text: "Persoonlijke begeleiding, bijna een jaar.", href: "#kennismaken", icon: "/illustrations/icon-een-op-een.png" },
-    ],
-  },
-  quote: {
-    text: "[Dummyquote] Voor het eerst heb ik een plan. En het kost me maar een paar uur per maand.",
-    name: "Deelnemer, groepstraject",
   },
   booking: {
     title: "Plan een gratis kennismaking",

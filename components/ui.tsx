@@ -23,31 +23,6 @@ export function Photo({ label, ratio, src }: PhotoType) {
   );
 }
 
-// Newsletter signup on every page. Plain form post: works without JS; endpoint comes from the mailing tool.
-export function Newsletter({ title, text, button, action }: { title: string; text: string; button: string; action: string }) {
-  const field = "w-full border border-black bg-white px-5 py-3 placeholder:text-neutral-500";
-  return (
-    <Section tone="grey">
-      <div className="grid gap-8 md:grid-cols-2 md:items-end">
-        <div>
-          <h2 className="text-3xl font-semibold">{title}</h2>
-          <p className="mt-4 text-neutral-700">{text}</p>
-        </div>
-        <form action={action} method="post" className="grid gap-3 sm:grid-cols-[1fr_1fr_auto]">
-          <label className="sr-only" htmlFor="nl-name">Naam</label>
-          <input id="nl-name" name="name" type="text" autoComplete="given-name" placeholder="Naam" required className={field} />
-          <label className="sr-only" htmlFor="nl-email">E-mailadres</label>
-          <input id="nl-email" name="email" type="email" autoComplete="email" placeholder="E-mailadres" required className={field} />
-          <button type="submit" className="bg-black px-6 py-3 font-medium text-white transition-colors hover:bg-neutral-800">
-            {button}
-          </button>
-        </form>
-      </div>
-    </Section>
-  );
-}
-
-// Wordmark with euro badge; header and footer share it. Icon is decorative, the name carries the meaning.
 export function Logo({ name }: { name: string }) {
   return (
     <span className="inline-flex items-center gap-2 font-semibold">

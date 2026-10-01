@@ -1,39 +1,21 @@
 import Image from "next/image";
-import { Carousel } from "@/components/Carousel";
 import Link from "next/link";
 import { home, site } from "@/content/site";
-import {
-  BookingCta,
-  Button,
-  Eyebrow,
-  Photo,
-  Section,
-  SocialLinks,
-} from "@/components/ui";
+import { BookingCta, Button, Eyebrow, Photo, Section, SocialLinks } from "@/components/ui";
 
+// 7 blocks: hero, recognition, working with me, about, testimonial, free test, booking.
+// One main call to action (intro call); the free test is the low-threshold alternative.
 export default function Home() {
-  const {
-    hero,
-    banner,
-    scans,
-    problem,
-    notNeeded,
-    about,
-    offer,
-    quote,
-    booking,
-  } = home;
+  const { hero, recognition, work, about, quote, freeTest, booking } = home;
 
   return (
     <>
-      {/* Hero: the visitor's question first, Alberta second (StoryBrand) */}
+      {/* 1. Hero */}
       <Section>
         <div className="grid gap-12 md:grid-cols-2 md:items-center md:gap-24">
           <div>
             <Eyebrow>{hero.eyebrow}</Eyebrow>
-            <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
-              {hero.title}
-            </h1>
+            <h1 className="text-4xl font-semibold leading-tight md:text-5xl">{hero.title}</h1>
             <p className="mt-6 text-lg text-neutral-700">{hero.intro}</p>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
               <Button href={hero.primary.href}>{hero.primary.label}</Button>
@@ -46,73 +28,42 @@ export default function Home() {
         </div>
       </Section>
 
-      <Link href="#" className="block bg-black px-4 py-3 text-center text-sm text-white hover:underline">
-        {banner}
-      </Link>
-
-      <Section id="scans">
-        <h2 className="text-3xl font-semibold">{scans.title}</h2>
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
-          {scans.items.map((s) => (
-            <Link
-              key={s.href}
-              href={s.href}
-              className="group border border-black p-8 hover:bg-neutral-100"
-            >
-              {/* Same illustration as the scan's own page, small */}
-              <div className="relative mb-6 h-24 w-full">
-                <Image src={s.icon} alt="" fill sizes="10rem" className="object-contain object-right" />
-              </div>
-              <h3 className="text-2xl font-semibold">{s.title}</h3>
-              <p className="mt-3 text-neutral-700">{s.text}</p>
-              <p className="mt-6 font-medium underline underline-offset-4">
-                Start gratis
-              </p>
-            </Link>
-          ))}
-        </div>
-        <div className="mt-10 text-center">
-          <Button href={scans.coaching.href} variant="outline">
-            {scans.coaching.label}
-          </Button>
-        </div>
-      </Section>
-
+      {/* 2. Recognition */}
       <Section tone="grey">
-        <h2 className="max-w-2xl text-3xl font-semibold">{problem.title}</h2>
-        <ol className="mt-10 grid gap-8 md:grid-cols-3">
-          {problem.steps.map((step, i) => (
-            <li key={step.title}>
-              <p className="text-5xl font-semibold text-neutral-300">
-                0{i + 1}
-              </p>
-              <h3 className="mt-2 text-xl font-semibold">{step.title}</h3>
-              <p className="mt-2 text-neutral-700">{step.text}</p>
+        <h2 className="text-3xl font-semibold">{recognition.title}</h2>
+        <ul className="mt-10 grid gap-8 md:grid-cols-3">
+          {recognition.items.map((item) => (
+            <li key={item.title} className="border-t border-black pt-4">
+              <h3 className="text-xl font-semibold">{item.title}</h3>
+              <p className="mt-2 text-neutral-700">{item.text}</p>
             </li>
           ))}
-        </ol>
+        </ul>
       </Section>
 
-      <Section>
-        <div className="grid gap-12 md:grid-cols-2 md:items-center md:gap-24">
-          <div>
-            <h2 className="text-3xl font-semibold">{notNeeded.title}</h2>
-            <ul className="mt-10 grid gap-6">
-              {notNeeded.items.map((item) => (
-                <li key={item.title} className="border-t border-black pt-4">
-                  <h3 className="text-xl font-semibold line-through decoration-1">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-neutral-700">{item.text}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <Photo {...notNeeded.illustration} />
-        </div>
+      {/* 3. Working with me: three offers, no prices on the homepage */}
+      <Section id="werken-met-mij">
+        <Eyebrow>{work.eyebrow}</Eyebrow>
+        <h2 className="text-3xl font-semibold">{work.title}</h2>
+        <ul className="mt-10 grid gap-6 md:grid-cols-3">
+          {work.items.map((item) => (
+            <li key={item.title}>
+              <Link href={item.href} className="flex h-full flex-col border border-black p-6 hover:bg-neutral-100">
+                <div className="relative h-28">
+                  <Image src={item.icon} alt="" fill sizes="12rem" className="object-contain object-left" />
+                </div>
+                <p className="mt-6 text-sm text-neutral-500">{item.format}</p>
+                <h3 className="mt-1 text-xl font-semibold">{item.title}</h3>
+                <p className="mt-2 flex-1 text-neutral-700">{item.text}</p>
+                <p className="mt-6 font-medium underline underline-offset-4">{item.link}</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </Section>
 
-      <Section tone="grey">
+      {/* 4. About */}
+      <Section id="over-mij" tone="grey">
         <div className="grid gap-12 md:grid-cols-2 md:items-center md:gap-24">
           <Photo {...about.photo} />
           <div>
@@ -130,70 +81,34 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Six 2:3 cards in one row: starts on the content edge, bleeds off the right and scrolls sideways */}
-      <section className="bg-white py-16 md:py-24">
-        <div className="mx-auto max-w-5xl px-4">
-          <h2 className="text-3xl font-semibold">{offer.title}</h2>
-        </div>
-        <Carousel
-          label={offer.title}
-          className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 pr-4 pl-[max(1rem,calc((100vw-64rem)/2+1rem))] scroll-pl-[max(1rem,calc((100vw-64rem)/2+1rem))]"
-        >
-          {[
-            ...offer.free.map((o) => ({
-              ...o,
-              group: "Gratis",
-              price: undefined as string | undefined,
-            })),
-            ...offer.paid.map((o) => ({ ...o, group: "Training" })),
-          ].map((o) => {
-            const paid = o.price !== undefined;
-            return (
-              <li key={o.title} className="w-60 shrink-0 snap-start md:w-64">
-                <Link
-                  href={o.href}
-                  className={`flex aspect-[2/3] flex-col p-6 transition-colors ${
-                    paid
-                      ? "bg-black text-white hover:bg-neutral-800"
-                      : "border border-black hover:bg-neutral-100"
-                  }`}
-                >
-                  <p
-                    className={`text-sm font-medium ${paid ? "text-neutral-400" : "text-neutral-500"}`}
-                  >
-                    {o.group}
-                  </p>
-                  {/* Black line art turns white on the dark paid cards */}
-                  <div className="relative my-4 flex-1">
-                    <Image src={o.icon} alt="" fill sizes="16rem" className={`scale-[0.85] object-contain ${paid ? "invert" : ""}`} />
-                  </div>
-                  <p className="mt-auto text-xl font-semibold">{o.title}</p>
-                  {paid && (
-                    <p className="mt-1 text-2xl font-semibold">{o.price}</p>
-                  )}
-                  <p
-                    className={`mt-2 ${paid ? "text-neutral-300" : "text-neutral-700"}`}
-                  >
-                    {o.text}
-                  </p>
-                </Link>
-              </li>
-            );
-          })}
-        </Carousel>
-      </section>
-
-      <Section tone="grey">
+      {/* 5. Testimonial */}
+      <Section>
         <figure className="mx-auto max-w-3xl text-center">
-          <blockquote className="text-2xl font-semibold md:text-3xl">
-            &ldquo;{quote.text}&rdquo;
-          </blockquote>
-          <figcaption className="mt-4 text-neutral-600">
-            {quote.name}
-          </figcaption>
+          <blockquote className="text-2xl font-semibold md:text-3xl">&ldquo;{quote.text}&rdquo;</blockquote>
+          <figcaption className="mt-4 text-neutral-600">{quote.name}</figcaption>
         </figure>
       </Section>
 
+      {/* 6. Free test: the two scans as one lead magnet (email capture follows with the real scans) */}
+      <Section id="gratis-test" tone="grey">
+        <Eyebrow>{freeTest.eyebrow}</Eyebrow>
+        <h2 className="text-3xl font-semibold">{freeTest.title}</h2>
+        <p className="mt-4 max-w-2xl text-neutral-700">{freeTest.text}</p>
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
+          {freeTest.items.map((s) => (
+            <Link key={s.href} href={s.href} className="border border-black bg-white p-8 hover:bg-neutral-100">
+              <div className="relative mb-6 h-24 w-full">
+                <Image src={s.icon} alt="" fill sizes="10rem" className="object-contain object-right" />
+              </div>
+              <h3 className="text-2xl font-semibold">{s.title}</h3>
+              <p className="mt-3 text-neutral-700">{s.text}</p>
+              <p className="mt-6 font-medium underline underline-offset-4">Start gratis</p>
+            </Link>
+          ))}
+        </div>
+      </Section>
+
+      {/* 7. Booking */}
       <BookingCta {...booking} />
     </>
   );
