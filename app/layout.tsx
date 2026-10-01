@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Geist, Shrikhand } from "next/font/google";
+import { Inter } from "next/font/google";
 import { site } from "@/content/site";
 import { Logo, Newsletter } from "@/components/ui";
 import { BackToTop } from "@/components/BackToTop";
 import { Nav } from "@/components/Nav";
 import "./globals.css";
 
-const geist = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-// Display font: placeholder until Menno sets the identity type
-const shrikhand = Shrikhand({ variable: "--font-shrikhand", subsets: ["latin"], weight: "400" });
+const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
 // Only the production deployment may be indexed; previews and localhost stay out of search engines
 const indexable = process.env.VERCEL_ENV === "production";
@@ -37,7 +35,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="nl" className={`${geist.variable} ${shrikhand.variable} antialiased`}>
+    <html lang="nl" className={`${inter.variable} antialiased`}>
       <body id="top" className="flex min-h-screen flex-col bg-white text-black">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <header className="border-b border-black px-4">

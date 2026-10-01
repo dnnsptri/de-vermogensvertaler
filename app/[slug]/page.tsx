@@ -33,7 +33,7 @@ export default async function DetailPage({ params }: PageProps<"/[slug]">) {
         <div className="grid gap-12 md:grid-cols-2 md:items-center md:gap-24">
           <div>
             <Eyebrow>{page.eyebrow}</Eyebrow>
-            <h1 className="text-[2.8125rem] font-semibold leading-tight md:text-[3.75rem]">{page.title}</h1>
+            <h1 className="text-4xl font-semibold leading-tight md:text-5xl">{page.title}</h1>
             <p className="mt-6 text-lg text-neutral-700">{page.intro}</p>
             <div className="mt-8">
               <Button href="#aan-de-slag">{page.cta}</Button>
@@ -59,7 +59,7 @@ export default async function DetailPage({ params }: PageProps<"/[slug]">) {
         <div className="mx-auto max-w-2xl">
           {page.scan && <Scan {...page.scan} />}
           {page.price && (
-            <div className="rounded-card border border-black p-6 text-center md:p-10">
+            <div className="border border-black p-6 text-center md:p-10">
               <p className="font-semibold">{page.title}</p>
               <p className="mt-2 text-5xl font-semibold">{page.price.amount}</p>
               <p className="mt-2 text-neutral-600">{page.price.note}</p>

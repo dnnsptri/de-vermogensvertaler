@@ -31,7 +31,7 @@ npm run dev
 - `app/[slug]/page.tsx`: one template for all detail pages; the slot shows a scan or a price block
 - `components/`: shared UI (`ui.tsx`), scan, carousel, nav, back-to-top
 - `public/illustrations/`: transparent line-art PNGs. After replacing an image, give it a new filename so caches don't serve the old one.
-- `app/globals.css`: design tokens (`--radius-card`, display font), dashed lines, ticker tilt (`--tilt`)
+- `app/globals.css`: wireframe tokens (Inter only). The parked "decorated" style (Shrikhand, dashed lines, tilted ticker, organic shapes) is in git tag `decorated-v1`.
 
 ## SEO
 

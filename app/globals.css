@@ -1,30 +1,9 @@
 @import "tailwindcss";
 
-/* Wireframe phase: black and white only. Menno's identity replaces these tokens later. */
+/* Wireframe phase: black and white, Inter only. Menno's identity replaces these tokens later.
+   The parked "decorated" styling lives in git tag decorated-v1. */
 @theme inline {
-  --font-sans: var(--font-geist-sans);
-  --font-display: var(--font-shrikhand);
-  /* One radius for every card and photo: tune the organic feel here */
-  --radius-card: 2rem;
-}
-
-/* Headings and quotes in the display font. Shrikhand has one weight: block faux bold from font-semibold */
-h1,
-h2,
-h3,
-blockquote,
-.font-display {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-synthesis: none;
-  letter-spacing: 0;
-}
-
-/* Every line dashed, one rule: header, cards, inputs, dividers. Unlayered, so it beats Tailwind's solid default */
-*,
-::before,
-::after {
-  border-style: dashed;
+  --font-sans: var(--font-inter);
 }
 
 html {
@@ -33,36 +12,5 @@ html {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-}
-
-/* Tilted ticker band. Change --tilt to adjust the angle; the vertical room scales with it,
-   so the band never overlaps content and never causes horizontal scroll. */
-.ticker-tilt {
-  --tilt: 6deg;
-  overflow: hidden;
-  padding-block: calc(50vw * tan(var(--tilt)) + 1rem);
-}
-.ticker-tilt > a {
-  width: 150%;
-  margin-left: -25%;
-  transform: rotate(calc(-1 * var(--tilt)));
-}
-
-/* Ticker moves exactly one half, then restarts: no visible jump */
-.ticker {
-  animation: ticker 40s linear infinite;
-}
-.ticker:hover {
-  animation-play-state: paused;
-}
-@keyframes ticker {
-  to {
-    transform: translateX(-50%);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .ticker {
-    animation: none;
   }
 }

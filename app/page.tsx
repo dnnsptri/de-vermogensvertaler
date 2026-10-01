@@ -31,7 +31,7 @@ export default function Home() {
         <div className="grid gap-12 md:grid-cols-2 md:items-center md:gap-24">
           <div>
             <Eyebrow>{hero.eyebrow}</Eyebrow>
-            <h1 className="text-[2.8125rem] font-semibold leading-tight md:text-[3.75rem]">
+            <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
               {hero.title}
             </h1>
             <p className="mt-6 text-lg text-neutral-700">{hero.intro}</p>
@@ -46,26 +46,9 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Running ticker: two identical halves so the loop is seamless; screen readers get the text once */}
-      <div className="ticker-tilt">
-        <Link
-          href="#"
-          aria-label={banner}
-          className="block overflow-hidden bg-black py-3 text-sm text-white"
-        >
-          <div aria-hidden className="ticker flex w-max">
-            {[0, 1].map((half) => (
-              <span key={half} className="flex shrink-0">
-                {Array.from({ length: 6 }, (_, i) => (
-                  <span key={i} className="px-6">
-                    {banner}
-                  </span>
-                ))}
-              </span>
-            ))}
-          </div>
-        </Link>
-      </div>
+      <Link href="#" className="block bg-black px-4 py-3 text-center text-sm text-white hover:underline">
+        {banner}
+      </Link>
 
       <Section id="scans">
         <h2 className="text-3xl font-semibold">{scans.title}</h2>
@@ -74,7 +57,7 @@ export default function Home() {
             <Link
               key={s.href}
               href={s.href}
-              className="group rounded-card border border-black p-8 hover:bg-neutral-100"
+              className="group border border-black p-8 hover:bg-neutral-100"
             >
               {/* Same illustration as the scan's own page, small */}
               <div className="relative mb-6 h-24 w-full">
@@ -100,7 +83,7 @@ export default function Home() {
         <ol className="mt-10 grid gap-8 md:grid-cols-3">
           {problem.steps.map((step, i) => (
             <li key={step.title}>
-              <p className="font-display text-6xl font-semibold text-neutral-300">
+              <p className="text-5xl font-semibold text-neutral-300">
                 0{i + 1}
               </p>
               <h3 className="mt-2 text-xl font-semibold">{step.title}</h3>
@@ -169,7 +152,7 @@ export default function Home() {
               <li key={o.title} className="w-60 shrink-0 snap-start md:w-64">
                 <Link
                   href={o.href}
-                  className={`flex aspect-[2/3] flex-col rounded-card p-6 transition-colors ${
+                  className={`flex aspect-[2/3] flex-col p-6 transition-colors ${
                     paid
                       ? "bg-black text-white hover:bg-neutral-800"
                       : "border border-black hover:bg-neutral-100"

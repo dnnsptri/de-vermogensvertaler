@@ -11,7 +11,7 @@ export function Scan({ question, options }: ScanTool) {
   const [result, setResult] = useState<string | null>(null);
 
   return (
-    <div className="rounded-card border border-black bg-white p-6 md:p-10">
+    <div className="border border-black bg-white p-6 md:p-10">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -29,7 +29,7 @@ export function Scan({ question, options }: ScanTool) {
             setChoice(e.target.value);
             setResult(null);
           }}
-          className="mt-3 w-full rounded-full border border-black bg-white px-5 py-3"
+          className="mt-3 w-full border border-black bg-white px-5 py-3"
         >
           <option value="" disabled>
             Kies een antwoord
@@ -38,7 +38,7 @@ export function Scan({ question, options }: ScanTool) {
             <option key={o.label}>{o.label}</option>
           ))}
         </select>
-        <button type="submit" className="mt-6 w-full rounded-full bg-black px-6 py-3 font-medium text-white hover:bg-neutral-800">
+        <button type="submit" className="mt-6 w-full bg-black px-6 py-3 font-medium text-white hover:bg-neutral-800">
           Bekijk mijn uitkomst
         </button>
       </form>

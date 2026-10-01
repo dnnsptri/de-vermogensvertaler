@@ -31,7 +31,7 @@ export function BackToTop() {
       // Hidden buttons stay out of the tab order and can't be clicked
       tabIndex={visible ? 0 : -1}
       aria-hidden={!visible}
-      className={`fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-black text-white transition-opacity duration-300 hover:bg-neutral-800 motion-reduce:transition-none ${
+      className={`fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center bg-black text-white transition-opacity duration-300 hover:bg-neutral-800 motion-reduce:transition-none ${
         visible ? "opacity-100" : "pointer-events-none opacity-0"
       }`}
     >

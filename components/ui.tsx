@@ -2,33 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Photo as PhotoType } from "@/content/site";
 
-// Grey placeholder until Alberta's shoot photos arrive; the label says what goes where.
-// Organic shapes: portrait becomes a pebble (uneven radii), landscape and square a soft frame.
-const ratios = {
-  portrait: "aspect-[4/5] rounded-[58%_42%_48%_52%/42%_46%_54%_58%]",
-  landscape: "aspect-[3/2] rounded-card",
-  square: "aspect-square rounded-card",
-};
-
-// Drawing size and anchor inside its shape. Figures stand on the bottom; the dense square
-// notepad is smaller and centred (the overflow box sits slightly up-right, so it leans that way).
-const artScale = {
-  portrait: "origin-bottom scale-[0.85] object-bottom",
-  landscape: "origin-bottom scale-[0.85] object-bottom",
-  square: "origin-center scale-[0.65] object-center",
-};
+// Grey box per ratio. With src it shows the illustration contained; without, a labelled placeholder.
+const ratios = { portrait: "aspect-[4/5]", landscape: "aspect-[3/2]", square: "aspect-square" };
 
 export function Photo({ label, ratio, src }: PhotoType) {
-  // Illustration stands in the organic shape and breaks out at the top and right edge for depth.
-  // The shape is its own layer so the drawing can overflow it; Section clips any sideways overflow.
   if (src)
     return (
-      <div className={`${ratios[ratio].split(" ")[0]} relative w-full`}>
-        <div aria-hidden className={`${ratios[ratio]} absolute inset-0 bg-neutral-200`} />
-        {/* 115% of the shape: 15% out at the top, 10% right, 5% left */}
-        <div className="absolute -top-[15%] -right-[10%] bottom-0 -left-[5%]">
-          <Image src={src} alt={label} fill sizes="(min-width: 768px) 50vw, 100vw" className={`${artScale[ratio]} object-contain`} />
-        </div>
+      <div className={`${ratios[ratio]} relative w-full bg-neutral-200`}>
+        <Image src={src} alt={label} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-contain p-[8%]" />
       </div>
     );
   return (
@@ -44,7 +25,7 @@ export function Photo({ label, ratio, src }: PhotoType) {
 
 // Newsletter signup on every page. Plain form post: works without JS; endpoint comes from the mailing tool.
 export function Newsletter({ title, text, button, action }: { title: string; text: string; button: string; action: string }) {
-  const field = "w-full rounded-full border border-black bg-white px-5 py-3 placeholder:text-neutral-500";
+  const field = "w-full border border-black bg-white px-5 py-3 placeholder:text-neutral-500";
   return (
     <Section tone="grey">
       <div className="grid gap-8 md:grid-cols-2 md:items-end">
@@ -57,7 +38,7 @@ export function Newsletter({ title, text, button, action }: { title: string; tex
           <input id="nl-name" name="name" type="text" autoComplete="given-name" placeholder="Naam" required className={field} />
           <label className="sr-only" htmlFor="nl-email">E-mailadres</label>
           <input id="nl-email" name="email" type="email" autoComplete="email" placeholder="E-mailadres" required className={field} />
-          <button type="submit" className="rounded-full bg-black px-6 py-3 font-medium text-white transition-colors hover:bg-neutral-800">
+          <button type="submit" className="bg-black px-6 py-3 font-medium text-white transition-colors hover:bg-neutral-800">
             {button}
           </button>
         </form>
@@ -70,21 +51,9 @@ export function Newsletter({ title, text, button, action }: { title: string; tex
 export function Logo({ name }: { name: string }) {
   return (
     <span className="inline-flex items-center gap-2 font-semibold">
-      {/* Hand-drawn euro mark: wobbly strokes to match the illustrations, crisp at any size */}
-      <svg
-        aria-hidden
-        viewBox="0 0 24 24"
-        className="h-8 w-8"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M12 2.6c5.3-.2 9.5 4 9.3 9.4-.1 5.1-4.3 9.2-9.5 9.1C6.6 21 2.6 16.9 2.7 11.8 2.8 6.6 6.9 2.4 12.4 2.9" />
-        <path d="M15.6 8.2c-.9-1-2.1-1.5-3.4-1.4-2.6.1-4.4 2.4-4.3 5.3.1 2.9 2 5 4.6 4.9 1.2 0 2.3-.6 3.1-1.5" />
-        <path d="M6.4 10.7c2.1-.2 4.2-.3 6.3-.2M6.6 13.2c1.8-.1 3.7-.1 5.5 0" />
-      </svg>
+      <span aria-hidden className="flex h-8 w-8 items-center justify-center bg-neutral-200 text-sm">
+        €
+      </span>
       {name}
     </span>
   );
@@ -114,7 +83,7 @@ export function SocialLinks({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Alberta op ${l.label}`}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-black transition-colors hover:bg-black hover:text-white"
+            className="flex h-11 w-11 items-center justify-center border border-black transition-colors hover:bg-black hover:text-white"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden>
               {socialIcons[l.icon]}
@@ -137,8 +106,8 @@ export function Button({
 }) {
   const style =
     variant === "solid"
-      ? "rounded-full bg-black text-white hover:bg-neutral-800"
-      : "rounded-full border border-black text-black hover:bg-neutral-100";
+      ? " bg-black text-white hover:bg-neutral-800"
+      : " border border-black text-black hover:bg-neutral-100";
   return (
     <Link href={href} className={`inline-block px-6 py-3 font-medium transition-colors ${style}`}>
       {children}
@@ -177,7 +146,7 @@ export function BookingCta({ title, text }: { title: string; text: string }) {
           <p className="mt-4 text-neutral-300">{text}</p>
         </div>
         {/* Cal.com embed goes here once Alberta's account exists */}
-        <div className="flex aspect-[4/3] items-center justify-center rounded-card border border-neutral-500 text-sm text-neutral-400">
+        <div className="flex aspect-[4/3] items-center justify-center border border-neutral-500 text-sm text-neutral-400">
           Cal.com agenda
         </div>
       </div>

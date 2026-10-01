@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-// Horizontal card row with hand-drawn prev/next buttons. Each button greys out at its end.
+// Horizontal card row with prev/next buttons. Each button greys out at its end.
 export function Carousel({
   label,
   className,
@@ -62,21 +62,11 @@ function ArrowButton({ dir, disabled, onClick }: { dir: -1 | 1; disabled: boolea
       onClick={onClick}
       disabled={disabled}
       aria-label={dir === 1 ? "Volgende" : "Vorige"}
-      className="h-12 w-12 transition-opacity enabled:hover:scale-105 disabled:opacity-25 motion-reduce:transition-none"
+      className="flex h-11 w-11 items-center justify-center border border-black transition-opacity enabled:hover:bg-neutral-100 disabled:opacity-25 motion-reduce:transition-none"
     >
-      {/* Wobbly circle and arrow to match the illustrations; the left one is the right one mirrored */}
-      <svg
-        viewBox="0 0 48 48"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden
-        className={dir === -1 ? "-scale-x-100" : ""}
-      >
-        <path d="M24 3.5c11-.4 20.6 8.4 20.3 20.6-.3 10.8-9.3 20.3-20.8 20.1C12 44 3.2 35.3 3.6 23.6 4 12.6 12.4 3.9 24.8 4.4" />
-        <path d="M14.5 24.3c6.2-.4 12.4-.5 18.6-.2M27 17.6c2.3 2.1 4.3 4.3 6.2 6.6-2.1 2.2-4.1 4.5-6 6.9" />
+      {/* Left arrow is the right one mirrored */}
+      <svg viewBox="0 0 24 24" className={`h-5 w-5 ${dir === -1 ? "-scale-x-100" : ""}`} fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+        <path d="M5 12h14M13 6l6 6-6 6" />
       </svg>
     </button>
   );

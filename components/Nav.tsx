@@ -40,7 +40,7 @@ export function Nav({ items }: { items: Item[] }) {
         aria-controls="mobile-menu"
         aria-label={open ? "Menu sluiten" : "Menu openen"}
         onClick={() => setOpen(!open)}
-        className="fixed top-4 right-4 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-black bg-white md:hidden"
+        className="fixed top-4 right-4 z-50 flex h-11 w-11 items-center justify-center border border-black bg-white md:hidden"
       >
         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
           {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}

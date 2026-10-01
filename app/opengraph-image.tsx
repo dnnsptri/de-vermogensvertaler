@@ -19,7 +19,7 @@ export default async function Image() {
           <div style={{ fontSize: 72, fontWeight: 700, lineHeight: 1.05 }}>{site.name}</div>
           <div style={{ fontSize: 36, marginTop: 24, color: "#525252" }}>{site.tagline}</div>
         </div>
-        <div style={{ width: 400, display: "flex", alignItems: "flex-end", background: "#e5e5e5", borderRadius: 48 }}>
+        <div style={{ width: 400, display: "flex", alignItems: "flex-end", background: "#e5e5e5" }}>
           <img src={src} alt="" width={400} height={538} style={{ objectFit: "contain" }} />
         </div>
       </div>
