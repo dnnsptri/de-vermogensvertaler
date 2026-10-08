@@ -6,14 +6,18 @@ Built by Dennis Petri, visual identity by Studio Menno van der Veen.
 
 ## Status
 
-Wireframe phase: black and white, dummy copy (marked `[Dummytekst]`), hand-drawn illustrations generated with Krea. Menno's identity replaces the colours and type later.
+Simple homepage (October 2026), after Alberta's colour choice and Menno's sketch: hero, voor wie, wat ik doe, over Alberta, success photo, kennismaken (Cal.com). Copy partly dummy (marked `[Dummytekst]`).
+
+Parked, not deleted (git tags):
+
+- `wireframe-7blocks`: 7-block homepage, 4 detail pages (scans, proeverij, groepstraject), dummy scans, nav
+- `decorated-v1`: the decorated style (Shrikhand, dashed lines, tilted ticker, illustrations)
 
 Not wired up yet:
 
-- Payments: pay buttons link to `#` until Alberta's Stripe account exists (iDEAL, card, installments for the group track)
-- Booking: Cal.com placeholder at `#kennismaken`
-- Scans: one dummy dropdown each; Alberta's real scoring logic and Google Sheets capture come next
-- Email capture: the free test (scans) will collect email; no separate newsletter
+- Heading font: Young Serif is a stand-in until Menno names his font
+- Booking: set `site.calLink` in `content/site.ts` once Alberta's Cal.com account exists (placeholder until then)
+- Payments, scans and email capture come back with the parked pages
 
 ## Stack
 
@@ -26,12 +30,12 @@ npm run dev
 
 ## Where things live
 
-- `content/site.ts`: **all copy**, navigation, offer and the four detail pages. Text changes happen here only.
-- `app/page.tsx`: homepage in 7 blocks (hero, herkenning, werken met mij, over mij, testimonial, gratis test, kennismaken)
-- `app/[slug]/page.tsx`: one template for all detail pages; the slot shows a scan or a price block
-- `components/`: shared UI (`ui.tsx`), scan, nav, back-to-top
-- `public/illustrations/`: transparent line-art PNGs. After replacing an image, give it a new filename so caches don't serve the old one.
-- `app/globals.css`: wireframe tokens (Inter only). The parked "decorated" style (Shrikhand, dashed lines, tilted ticker, organic shapes) is in git tag `decorated-v1`.
+- `content/site.ts`: **all copy**, Cal.com link, booking label. Text changes happen here only; `*word*` in a heading marks the emphasised word.
+- `app/page.tsx`: the homepage sections
+- `components/ui.tsx`: logo and mark (SVG), background pattern, buttons, emphasis
+- `components/CalEmbed.tsx`: Cal.com iframe or placeholder
+- `public/photos/`: the three shoot photos (resized from `_shoot/003_065`, `002_077`, `005_135`). After replacing an image, give it a new filename so caches don't serve the old one.
+- `app/globals.css`: brand tokens (ink, forest, mustard, cream), fonts (Young Serif headings, Inter body), hero photo fade, scroll reveal
 
 ## SEO
 

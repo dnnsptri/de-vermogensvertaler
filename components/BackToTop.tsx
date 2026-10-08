@@ -1,22 +1,33 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Mark } from "@/components/ui";
 
-// Appears once the visitor has scrolled past the first screen, fades out again when the footer
-// comes into view (it would sit on top of the footer content otherwise).
+// Appears once the visitor has scrolled past the first screen. Dissolves while it sits over a green
+// area (sections marked data-green, plus the footer): a green disc on green would just disappear anyway.
 export function BackToTop() {
   const [scrolled, setScrolled] = useState(false);
-  const [atFooter, setAtFooter] = useState(false);
-  const visible = scrolled && !atFooter;
+  const [overGreen, setOverGreen] = useState(false);
+  const visible = scrolled && !overGreen;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > window.innerHeight);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
 
-    const footer = document.querySelector("footer");
-    const observer = new IntersectionObserver(([entry]) => setAtFooter(entry.isIntersecting));
-    if (footer) observer.observe(footer);
+    // Watch only the bottom 15% of the screen, where the button lives
+    const inside = new Set<Element>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) inside.add(e.target);
+          else inside.delete(e.target);
+        }
+        setOverGreen(inside.size > 0);
+      },
+      { rootMargin: "-85% 0px 0px 0px" },
+    );
+    document.querySelectorAll("[data-green], footer").forEach((el) => observer.observe(el));
 
     return () => {
       window.removeEventListener("scroll", onScroll);
@@ -31,13 +42,20 @@ export function BackToTop() {
       // Hidden buttons stay out of the tab order and can't be clicked
       tabIndex={visible ? 0 : -1}
       aria-hidden={!visible}
-      className={`fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center bg-black text-white transition-opacity duration-300 hover:bg-neutral-800 motion-reduce:transition-none ${
-        visible ? "opacity-100" : "pointer-events-none opacity-0"
+      // 56px target (above the 44px minimum). Mobile: clears the iPhone home indicator via safe-area insets;
+      // press feedback replaces hover on touch. Hiding = dissolve: fade, slight blur and shrink.
+      className={`group fixed bottom-[max(1.5rem,calc(env(safe-area-inset-bottom)+0.75rem))] right-[max(1.5rem,calc(env(safe-area-inset-right)+0.75rem))] z-50 flex h-14 w-14 items-center justify-center rounded-full bg-forest shadow-[0_8px_24px_-8px_rgba(21,22,16,0.45)] transition-[opacity,scale,filter] duration-500 ease-out [-webkit-tap-highlight-color:transparent] active:scale-90 motion-reduce:transition-none ${
+        visible ? "opacity-100" : "pointer-events-none scale-75 opacity-0 blur-sm"
       }`}
     >
-      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-        <path d="M12 19V5M5 12l7-7 7 7" />
-      </svg>
+      {/* The logo mark turned upward, coloured like the logo on dark: white arrow (9:1 on forest),
+          the mustard star behind at 20% so it reads as an arrow, not a star */}
+      <Mark
+        rotate={-90}
+        arrow="#fff"
+        star="rgba(227, 182, 63, 0.2)"
+        className="h-9 w-9 transition-transform duration-300 ease-out group-hover:-translate-y-1 motion-reduce:transition-none"
+      />
     </a>
   );
 }

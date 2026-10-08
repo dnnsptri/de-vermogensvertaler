@@ -1,130 +1,182 @@
-import Image from "next/image";
 import Link from "next/link";
-import type { Photo as PhotoType } from "@/content/site";
+import { site } from "@/content/site";
 
-// Grey box per ratio. With src it shows the illustration contained; without, a labelled placeholder.
-const ratios = { portrait: "aspect-[4/5]", landscape: "aspect-[3/2]", square: "aspect-square" };
-
-export function Photo({ label, ratio, src }: PhotoType) {
-  if (src)
-    return (
-      <div className={`${ratios[ratio]} relative w-full bg-neutral-200`}>
-        <Image src={src} alt={label} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-contain p-[8%]" />
-      </div>
-    );
+/* Brand mark, rebuilt as SVG from Menno's logo sketch: an eight-point star whose left half is an
+   arrow pointing into the centre. `rotate={-90}` turns the arrow upward (growth) for the pattern. */
+export function Mark({
+  className = "",
+  arrow = "var(--color-forest)",
+  star = "var(--color-mustard)",
+  rotate = 0,
+}: {
+  className?: string;
+  arrow?: string;
+  star?: string;
+  rotate?: number;
+}) {
   return (
-    <div
-      role="img"
-      aria-label={label}
-      className={`${ratios[ratio]} w-full bg-neutral-200 flex items-center justify-center p-4 text-center text-sm text-neutral-500`}
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      className={className}
     >
-      {label}
-    </div>
+      <g transform={`rotate(${rotate} 12 12)`}>
+        <path stroke={star} d="M12 2v20M12 12h10M12 12l7.07-7.07M12 12l7.07 7.07" />
+        <path stroke={arrow} d="M2 12h10M4.93 4.93 12 12l-7.07 7.07" />
+      </g>
+    </svg>
   );
 }
 
-export function Logo({ name }: { name: string }) {
+// Logo: mark + wordmark. `dark` = on a green or black background (white arrow, white text).
+export function Logo({ name, dark = false }: { name: string; dark?: boolean }) {
   return (
-    <span className="inline-flex items-center gap-2 font-semibold">
-      <span aria-hidden className="flex h-8 w-8 items-center justify-center bg-neutral-200 text-sm">
-        €
-      </span>
+    <span
+      className={`inline-flex items-center gap-2.5 text-lg font-semibold tracking-tight ${dark ? "text-white" : "text-forest"}`}
+    >
+      <Mark className="h-8 w-8" arrow={dark ? "#fff" : "var(--color-forest)"} />
       {name}
     </span>
   );
 }
 
-// Brand glyphs as inline SVG: no icon library needed for two icons.
-const socialIcons = {
-  instagram: (
-    <path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 4.8a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.2-9.6a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z" />
-  ),
-  linkedin: (
-    <path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.1c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.5H3.6V9h3.5v11.5zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z" />
-  ),
+// Big cropped mark at 10% opacity behind a section; decorative only.
+export function Pattern({ className = "", dark = false }: { className?: string; dark?: boolean }) {
+  return (
+    <Mark
+      rotate={-90}
+      arrow={dark ? "#fff" : "var(--color-forest)"}
+      className={`pointer-events-none absolute opacity-10 ${className}`}
+    />
+  );
+}
+
+/* Renders `*word*` as emphasis: a mustard pill under the word on light backgrounds,
+   mustard text on dark ones (mustard text on cream or white fails contrast, so never that). */
+export function Emph({ text, dark = false }: { text: string; dark?: boolean }) {
+  return (
+    <>
+      {text.split("*").map((part, i) =>
+        i % 2 === 1 ? (
+          dark ? (
+            <span key={i} className="text-mustard">
+              {part}
+            </span>
+          ) : (
+            // Mustard pill behind the bottom of the word: rounded ends echo the strokes of the logo.
+            // leading-none fixes the box to the font, so the pill sits at the same spot relative to the
+            // baseline in every heading, whatever that heading's line-height is.
+            <span key={i} className="relative inline-block leading-none">
+              <span
+                aria-hidden
+                className="absolute inset-x-[-0.12em] bottom-[0.06em] h-[0.34em] rounded-full bg-mustard"
+              />
+              <span className="relative">{part}</span>
+            </span>
+          )
+        ) : (
+          part
+        ),
+      )}
+    </>
+  );
+}
+
+// The arrow from the logo, as a standalone chevron
+function Arrow({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden className={className}>
+      <path d="M4 12h14M12 6l6 6-6 6" />
+    </svg>
+  );
+}
+
+/* Pill with a round arrow badge. Hover: the pill lifts slightly, the arrow slides out to the right
+   and a second one slides in from the left (all transform-only, so it stays smooth). */
+export function Button({
+  href,
+  children,
+  variant = "primary",
+}: {
+  href: string;
+  children: React.ReactNode;
+  variant?: "primary" | "dark" | "light";
+}) {
+  const styles = {
+    // Forest on mustard: 4.75:1 (passes AA for this 16px semibold label). White on forest: 9:1.
+    primary: { pill: "bg-mustard text-forest", badge: "bg-forest text-mustard" },
+    dark: { pill: "bg-forest text-white", badge: "bg-mustard text-ink" },
+    light: { pill: "bg-white text-ink", badge: "bg-forest text-white" },
+  }[variant];
+  return (
+    <Link
+      href={href}
+      className={`group inline-flex items-center gap-4 rounded-full py-2 pl-7 pr-2 text-base font-semibold transition-transform duration-300 ease-out hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${styles.pill}`}
+    >
+      {children}
+      <span className={`relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full ${styles.badge}`}>
+        <Arrow className="h-5 w-5 transition-transform duration-300 ease-out group-hover:translate-x-10 motion-reduce:transition-none" />
+        <Arrow className="absolute h-5 w-5 -translate-x-10 transition-transform duration-300 ease-out group-hover:translate-x-0 motion-reduce:transition-none" />
+      </span>
+    </Link>
+  );
+}
+
+// Text link with an underline that grows from the left on hover
+export function TextLink({ href, children, dark = false }: { href: string; children: React.ReactNode; dark?: boolean }) {
+  return (
+    <Link
+      href={href}
+      className={`group relative inline-block py-1 text-base font-semibold ${dark ? "text-white" : "text-forest"}`}
+    >
+      {children}
+      <span
+        aria-hidden
+        className={`absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-30 transition-transform duration-300 ease-out group-hover:scale-x-100 motion-reduce:transition-none ${dark ? "bg-mustard" : "bg-forest"}`}
+      />
+    </Link>
+  );
+}
+
+export function Eyebrow({ children, dark = false }: { children: React.ReactNode; dark?: boolean }) {
+  return (
+    <p className={`mb-4 text-sm font-semibold tracking-wide ${dark ? "text-mustard" : "text-forest"}`}>{children}</p>
+  );
+}
+
+// LinkedIn and Instagram as round icon buttons. `dark` = on green (white ring), light = forest ring.
+const socialPaths: Record<string, string> = {
+  LinkedIn:
+    "M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.1c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.5H3.6V9h3.5v11.5z",
+  Instagram:
+    "M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 4.8a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.2-9.6a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z",
 };
 
-export function SocialLinks({
-  links,
-}: {
-  links: { label: string; href: string; icon: keyof typeof socialIcons }[];
-}) {
+export function SocialIcons({ className = "", dark = false }: { className?: string; dark?: boolean }) {
+  const ring = dark
+    ? "border-white/40 text-white hover:border-mustard hover:bg-mustard hover:text-ink"
+    : "border-forest/30 text-forest hover:border-forest hover:bg-forest hover:text-white";
   return (
-    <ul className="flex gap-3">
-      {links.map((l) => (
-        <li key={l.label}>
+    <ul className={`flex gap-3 ${className}`}>
+      {site.social.map((s) => (
+        <li key={s.label}>
           <a
-            href={l.href}
+            href={s.href}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Alberta op ${l.label}`}
-            className="flex h-11 w-11 items-center justify-center border border-black transition-colors hover:bg-black hover:text-white"
+            aria-label={`Alberta op ${s.label}`}
+            className={`flex h-12 w-12 items-center justify-center rounded-full border transition-colors duration-300 ${ring}`}
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden>
-              {socialIcons[l.icon]}
+              <path d={socialPaths[s.label]} />
             </svg>
           </a>
         </li>
       ))}
     </ul>
-  );
-}
-
-export function Button({
-  href,
-  children,
-  variant = "solid",
-}: {
-  href: string;
-  children: React.ReactNode;
-  variant?: "solid" | "outline";
-}) {
-  const style =
-    variant === "solid"
-      ? " bg-black text-white hover:bg-neutral-800"
-      : " border border-black text-black hover:bg-neutral-100";
-  return (
-    <Link href={href} className={`inline-block px-6 py-3 font-medium transition-colors ${style}`}>
-      {children}
-    </Link>
-  );
-}
-
-export function Section({
-  id,
-  children,
-  tone = "white",
-}: {
-  id?: string;
-  children: React.ReactNode;
-  tone?: "white" | "grey" | "black";
-}) {
-  const tones = { white: "bg-white", grey: "bg-neutral-100", black: "bg-black text-white" };
-  return (
-    <section id={id} className={`${tones[tone]} overflow-x-clip px-4 py-16 md:py-24`}>
-      <div className="mx-auto max-w-5xl">{children}</div>
-    </section>
-  );
-}
-
-export function Eyebrow({ children }: { children: React.ReactNode }) {
-  return <p className="mb-3 text-sm font-medium text-neutral-500">{children}</p>;
-}
-
-// Shared closing block: every page ends with the free intro call.
-export function BookingCta({ title, text }: { title: string; text: string }) {
-  return (
-    <Section id="kennismaken" tone="black">
-      <div className="grid gap-8 md:grid-cols-2 md:items-center">
-        <div>
-          <h2 className="text-3xl font-semibold md:text-4xl">{title}</h2>
-          <p className="mt-4 text-neutral-300">{text}</p>
-        </div>
-        {/* Cal.com embed goes here once Alberta's account exists */}
-        <div className="flex aspect-[4/3] items-center justify-center border border-neutral-500 text-sm text-neutral-400">
-          Cal.com agenda
-        </div>
-      </div>
-    </Section>
   );
 }

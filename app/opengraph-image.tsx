@@ -3,25 +3,26 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { site } from "@/content/site";
 
-// Share image for WhatsApp, LinkedIn etc.: name, tagline and Alberta's illustration
+// Share image for WhatsApp, LinkedIn etc.: brand green, mustard headline, Alberta on the right
 export const alt = `${site.name}: ${site.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function Image() {
-  const art = await readFile(join(process.cwd(), "public/illustrations/alberta-portret-v2.png"));
-  const src = `data:image/png;base64,${art.toString("base64")}`;
+  const photo = await readFile(join(process.cwd(), "public/photos/alberta-tafel.jpg"));
+  const src = `data:image/jpeg;base64,${photo.toString("base64")}`;
 
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", display: "flex", background: "white", padding: 72 }}>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
-          <div style={{ fontSize: 72, fontWeight: 700, lineHeight: 1.05 }}>{site.name}</div>
-          <div style={{ fontSize: 36, marginTop: 24, color: "#525252" }}>{site.tagline}</div>
+      <div style={{ width: "100%", height: "100%", display: "flex", background: "#173326" }}>
+        <div
+          style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 64px" }}
+        >
+          <div style={{ fontSize: 30, color: "#ffffff", opacity: 0.85 }}>{site.name}</div>
+          <div style={{ fontSize: 68, lineHeight: 1.05, color: "#e3b63f", marginTop: 24 }}>Je carrière staat.</div>
+          <div style={{ fontSize: 68, lineHeight: 1.05, color: "#e3b63f" }}>Nu je vermogen nog.</div>
         </div>
-        <div style={{ width: 400, display: "flex", alignItems: "flex-end", background: "#e5e5e5" }}>
-          <img src={src} alt="" width={400} height={538} style={{ objectFit: "contain" }} />
-        </div>
+        <img src={src} alt="" width={480} height={630} style={{ objectFit: "cover", objectPosition: "60% 30%" }} />
       </div>
     ),
     size,

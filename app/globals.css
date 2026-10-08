@@ -1,16 +1,177 @@
 @import "tailwindcss";
 
-/* Wireframe phase: black and white, Inter only. Menno's identity replaces these tokens later.
-   The parked "decorated" styling lives in git tag decorated-v1. */
+/* Brand tokens: Alberta's chosen palette (Oct 2026). Heading serif is a stand-in until Menno names his font.
+   Contrast: mustard text only on green or black (4.75:1 / 9.6:1), never on cream or white (1.65:1).
+   Parked earlier versions: git tags decorated-v1 and wireframe-7blocks. */
 @theme inline {
   --font-sans: var(--font-inter);
+  --font-serif: var(--font-young-serif);
+  --color-ink: #151610;
+  --color-forest: #275139;
+  --color-forest-deep: #173326;
+  --color-mustard: #e3b63f;
+  --color-cream: #eef0e5;
 }
 
 html {
   scroll-behavior: smooth;
 }
+
+/* Every serif use (headings plus .font-serif: step numbers, stats, big statements) shares one weight */
+h1,
+h2,
+h3,
+.font-serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* Hero headline: four fixed lines. Mobile scales with width; from md up it scales with width AND
+   height, so the four lines always leave room above and below in a 100svh hero. */
+.hero-title {
+  font-size: 12.5vw;
+  line-height: 0.92;
+}
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: min(7vw, 10.5svh);
+  }
+}
+
+/* Display size for the big section statements (wat ik doe, succes, kennismaken): one source, so they always match */
+@utility text-display {
+  font-size: clamp(2.25rem, 6vw, 6.5rem);
+  line-height: 1;
+}
+
+/* Hero photo fades into the green: at the bottom on mobile, on its left edge from md up */
+.hero-photo {
+  mask-image: linear-gradient(to bottom, black 70%, transparent);
+}
+@media (min-width: 768px) {
+  .hero-photo {
+    mask-image: linear-gradient(to right, transparent, black 40%);
+  }
+}
+
+/* ---------- Motion. All transform/opacity only; everything is off for reduced motion. ---------- */
+
+/* Hero, on load: photo settles from a slight zoom, headline lines rise out of a mask, the rest fades in */
+.hero-zoom {
+  animation: hero-zoom 2.2s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes hero-zoom {
+  from {
+    transform: scale(1.12);
+  }
+}
+.rise {
+  display: block;
+  animation: rise 1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes rise {
+  from {
+    transform: translateY(110%);
+  }
+}
+.fade-up {
+  animation: fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+}
+/* Scroll cue: a small line that keeps travelling down */
+.cue {
+  animation: cue 2s ease-in-out infinite;
+}
+@keyframes cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Scroll-driven, CSS only. Browsers without support simply show the end state. */
+@supports (animation-timeline: view()) {
+  /* Sections drift in */
+  .reveal {
+    animation: fade-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+  /* Big statements colour in as they pass the middle of the screen */
+  .scrub {
+    animation: scrub linear both;
+    animation-timeline: view();
+    animation-range: entry 30% cover 45%;
+  }
+  @keyframes scrub {
+    from {
+      opacity: 0.18;
+    }
+  }
+  /* Photo opens up from an inset frame to full size */
+  .unveil {
+    animation: unveil linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+  }
+  @keyframes unveil {
+    from {
+      clip-path: inset(10% 10% 10% 10% round 2rem);
+    }
+    to {
+      clip-path: inset(0 round 1.5rem);
+    }
+  }
+  /* Full-width photo slowly zooms out while you scroll past */
+  .drift {
+    animation: drift linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+  @keyframes drift {
+    from {
+      transform: scale(1.18);
+    }
+  }
+  /* Background mark turns a quarter while the section scrolls by */
+  .turn {
+    animation: turn linear both;
+    animation-timeline: view();
+  }
+  @keyframes turn {
+    from {
+      rotate: -25deg;
+    }
+    to {
+      rotate: 20deg;
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .hero-zoom,
+  .rise,
+  .fade-up,
+  .cue,
+  .reveal,
+  .scrub,
+  .unveil,
+  .drift,
+  .turn {
+    animation: none;
   }
 }
