@@ -14,7 +14,7 @@ export function Mark({ className = "", dark = false }: { className?: string; dar
 }
 
 // Full logo (mark + wordmark) as delivered. The wordmark is outlined artwork, so it carries an aria-label.
-export function Logo({ name, dark = false, className = "h-7 md:h-9" }: { name: string; dark?: boolean; className?: string }) {
+export function Logo({ name, dark = false, className = "h-6 md:h-9" }: { name: string; dark?: boolean; className?: string }) {
   return (
     <svg
       viewBox={LOGO_VIEWBOX}

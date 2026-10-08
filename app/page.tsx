@@ -94,7 +94,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. Wat ik doe: three steps as cards that stack while you scroll */}
+      {/* 3. Wat ik doe: four steps as cards that stack while you scroll, then what she doesn't do */}
       <section className="relative overflow-x-clip bg-cream px-4 py-24 md:px-8 md:py-36">
         <Pattern className="turn -right-48 top-10 h-[46rem] w-[46rem] md:-right-24" />
         <div className="relative mx-auto max-w-7xl">
@@ -113,8 +113,9 @@ export default function Home() {
                 "bg-white text-forest",
                 "bg-forest text-white",
                 "bg-mustard text-ink",
+                "bg-ink text-white",
               ][i];
-              const num = ["text-mustard bg-forest", "text-ink bg-mustard", "text-mustard bg-ink"][i];
+              const num = ["text-mustard bg-forest", "text-ink bg-mustard", "text-mustard bg-ink", "text-ink bg-mustard"][i];
               return (
                 <li
                   key={step.title}
@@ -142,6 +143,12 @@ export default function Home() {
               );
             })}
           </ol>
+
+          {/* What she doesn't do: the boundary that keeps her out of advice (her words) */}
+          <div className="reveal mt-16 grid gap-6 border-t border-forest/20 pt-12 md:mt-24 md:grid-cols-[1fr_2fr] md:gap-16">
+            <h3 className="text-[clamp(2rem,3.5vw,3.25rem)] leading-[1] text-forest">{what.not.title}</h3>
+            <p className="text-lg text-ink/80 md:text-xl">{what.not.text}</p>
+          </div>
         </div>
       </section>
 

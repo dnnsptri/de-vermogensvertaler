@@ -57,7 +57,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <p className="mt-2 pl-[3.2rem] text-xs text-white/60">{site.owner}</p>
             </div>
             <p className="max-w-md">{site.disclaimer}</p>
-            <div className="flex items-center gap-8">
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+              <a href={`mailto:${site.email}`} className="underline underline-offset-4 hover:text-white">
+                {site.email}
+              </a>
               <SocialIcons dark />
               <Link href="#" className="underline underline-offset-4 hover:text-white">
                 Privacyverklaring

@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { site } from "@/content/site";
+import { home, site } from "@/content/site";
 
 // Share image for WhatsApp, LinkedIn etc.: brand green, mustard headline, Alberta on the right
 export const alt = `${site.name}: ${site.tagline}`;
@@ -19,8 +19,12 @@ export default async function Image() {
           style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 64px" }}
         >
           <div style={{ fontSize: 30, color: "#ffffff", opacity: 0.85 }}>{site.name}</div>
-          <div style={{ fontSize: 68, lineHeight: 1.05, color: "#e3b63f", marginTop: 24 }}>Je carrière staat.</div>
-          <div style={{ fontSize: 68, lineHeight: 1.05, color: "#e3b63f" }}>Nu je vermogen nog.</div>
+          {/* Same headline as the hero, one sentence per line */}
+          {home.hero.title.map((lines, i) => (
+            <div key={i} style={{ fontSize: 60, lineHeight: 1.05, color: "#e3b63f", marginTop: i === 0 ? 24 : 0 }}>
+              {lines.join(" ")}
+            </div>
+          ))}
         </div>
         <img src={src} alt="" width={480} height={630} style={{ objectFit: "cover", objectPosition: "60% 30%" }} />
       </div>
