@@ -146,7 +146,9 @@ export function SocialIcons({ className = "", dark = false }: { className?: stri
     : "border-forest/30 text-forest hover:border-forest hover:bg-forest hover:text-white";
   return (
     <ul className={`flex gap-3 ${className}`}>
-      {site.social.map((s) => (
+      {site.social
+        .filter((s) => s.href !== "#")
+        .map((s) => (
         <li key={s.label}>
           <a
             href={s.href}

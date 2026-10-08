@@ -19,9 +19,9 @@ export const site = {
   calLink: "devermogensvertaler/kennismaking",
   // Label as Alberta wrote it. Her "Doe de Pensioencheck" buttons stay hidden until the check is on the site.
   booking: { label: "Plan een kennismaking", href: "#kennismaken" },
-  // Alberta's profile URLs still to come ("#" until then)
+  // Profiles with href "#" are hidden until the real URL is known
   social: [
-    { label: "LinkedIn", href: "#" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/albertaopoku/" },
     { label: "Instagram", href: "#" },
   ],
 };
