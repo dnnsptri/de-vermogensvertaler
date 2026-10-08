@@ -13,7 +13,7 @@ export function CalEmbed() {
 
   return (
     <iframe
-      src={`https://cal.com/${site.calLink}?embed=true&theme=light`}
+      src={`https://cal.com/${site.calLink}?embed=true&theme=light&overlayCalendar=true`}
       title="Plan een kennismakingsgesprek met Alberta"
       loading="lazy"
       className="h-[40rem] w-full rounded-2xl bg-white"

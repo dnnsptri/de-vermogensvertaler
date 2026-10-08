@@ -13,7 +13,7 @@ export const site = {
     "Voor professionals die weten wat ze willen: Alberta Opoku vertaalt de taal van geld naar een plan dat bij jouw leven past. Plan een gratis kennismakingsgesprek.",
   disclaimer: "De VermogensVertaler geeft inzicht en begeleiding, geen persoonlijk financieel advies.",
   // Cal.com booking path, e.g. "alberta-opoku/kennismaking". Empty = placeholder until her account exists.
-  calLink: "",
+  calLink: "devermogensvertaler/kennismaking",
   booking: { label: "Plan een kennismakingsgesprek", href: "#kennismaken" },
   // Alberta's profile URLs still to come ("#" until then)
   social: [
