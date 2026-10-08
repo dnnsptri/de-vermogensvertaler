@@ -1,4 +1,4 @@
-# De VermogensVertaler
+# De Vermogensvertaler
 
 Website for Alberta Opoku's financial literacy practice: two free scans (Pensioenpot-check, AOW-gatscan) as the entry point, then a free intro call, masterclass, one-day proeverij (€600), ten-month group track (€7,500) and one-on-one coaching.
 
@@ -32,7 +32,8 @@ npm run dev
 
 - `content/site.ts`: **all copy**, Cal.com link, booking label. Text changes happen here only; `*word*` in a heading marks the emphasised word.
 - `app/page.tsx`: the homepage sections
-- `components/ui.tsx`: logo and mark (SVG), background pattern, buttons, emphasis
+- `components/ui.tsx`: logo and mark, background pattern, buttons, emphasis
+- `components/logo-paths.ts`: Menno's logo paths, unchanged from his SVG (Oct 2026). Favicon `app/icon.svg` is a heavier version for small sizes.
 - `components/CalEmbed.tsx`: Cal.com iframe or placeholder
 - `public/photos/`: the three shoot photos (resized from `_shoot/003_065`, `002_077`, `005_135`). After replacing an image, give it a new filename so caches don't serve the old one.
 - `app/globals.css`: brand tokens (ink, forest, mustard, cream), fonts (Young Serif headings, Inter body), hero photo fade, scroll reveal

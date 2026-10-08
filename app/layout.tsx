@@ -52,9 +52,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <footer className="border-t border-white/15 bg-forest px-4 py-12 text-sm text-white/80 md:px-8">
           <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-start md:justify-between">
             <div>
-              <Logo name={site.name} dark />
-              {/* Indented to line up with the name, past the 32px mark and 10px gap */}
-              <p className="mt-1 pl-[2.625rem] text-xs text-white/60">{site.owner}</p>
+              <Logo name={site.name} dark className="h-9" />
+              {/* Indented to line up with the wordmark: it starts at 16% of the 318px-wide logo */}
+              <p className="mt-2 pl-[3.2rem] text-xs text-white/60">{site.owner}</p>
             </div>
             <p className="max-w-md">{site.disclaimer}</p>
             <div className="flex items-center gap-8">

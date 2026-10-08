@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Mark } from "@/components/ui";
+import { Arrow } from "@/components/ui";
 
 // Appears once the visitor has scrolled past the first screen. Dissolves while it sits over a green
 // area (sections marked data-green, plus the footer): a green disc on green would just disappear anyway.
@@ -48,14 +48,8 @@ export function BackToTop() {
         visible ? "opacity-100" : "pointer-events-none scale-75 opacity-0 blur-sm"
       }`}
     >
-      {/* The logo mark turned upward, coloured like the logo on dark: white arrow (9:1 on forest),
-          the mustard star behind at 20% so it reads as an arrow, not a star */}
-      <Mark
-        rotate={-90}
-        arrow="#fff"
-        star="rgba(227, 182, 63, 0.2)"
-        className="h-9 w-9 transition-transform duration-300 ease-out group-hover:-translate-y-1 motion-reduce:transition-none"
-      />
+      {/* Plain up arrow: the flower has no direction, an "up" button needs one. White on forest: 9:1 */}
+      <Arrow className="h-6 w-6 -rotate-90 text-white transition-transform duration-300 ease-out group-hover:-translate-y-1 motion-reduce:transition-none" />
     </a>
   );
 }

@@ -1,57 +1,41 @@
 import Link from "next/link";
 import { site } from "@/content/site";
+import { FLOWER, LOGO_VIEWBOX, MARK_VIEWBOX, STAR, WORDMARK } from "@/components/logo-paths";
 
-/* Brand mark, rebuilt as SVG from Menno's logo sketch: an eight-point star whose left half is an
-   arrow pointing into the centre. `rotate={-90}` turns the arrow upward (growth) for the pattern. */
-export function Mark({
-  className = "",
-  arrow = "var(--color-forest)",
-  star = "var(--color-mustard)",
-  rotate = 0,
-}: {
-  className?: string;
-  arrow?: string;
-  star?: string;
-  rotate?: number;
-}) {
+/* Brand mark from Menno's logo: a flower in outline with a star at its heart.
+   On dark backgrounds the two-colour version: flower in the text colour (white), star in mustard. */
+export function Mark({ className = "", dark = false }: { className?: string; dark?: boolean }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      strokeWidth="2.4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-      className={className}
-    >
-      <g transform={`rotate(${rotate} 12 12)`}>
-        <path stroke={star} d="M12 2v20M12 12h10M12 12l7.07-7.07M12 12l7.07 7.07" />
-        <path stroke={arrow} d="M2 12h10M4.93 4.93 12 12l-7.07 7.07" />
-      </g>
+    <svg viewBox={MARK_VIEWBOX} fill="currentColor" aria-hidden className={className}>
+      <path d={FLOWER} />
+      <path d={STAR} fill={dark ? "var(--color-mustard)" : "currentColor"} />
     </svg>
   );
 }
 
-// Logo: mark + wordmark. `dark` = on a green or black background (white arrow, white text).
-export function Logo({ name, dark = false }: { name: string; dark?: boolean }) {
+// Full logo (mark + wordmark) as delivered. The wordmark is outlined artwork, so it carries an aria-label.
+export function Logo({ name, dark = false, className = "h-7 md:h-9" }: { name: string; dark?: boolean; className?: string }) {
   return (
-    <span
-      className={`inline-flex items-center gap-2.5 text-lg font-semibold tracking-tight ${dark ? "text-white" : "text-forest"}`}
+    <svg
+      viewBox={LOGO_VIEWBOX}
+      fill="currentColor"
+      role="img"
+      aria-label={name}
+      className={`w-auto ${dark ? "text-white" : "text-forest"} ${className}`}
     >
-      <Mark className="h-8 w-8" arrow={dark ? "#fff" : "var(--color-forest)"} />
-      {name}
-    </span>
+      <path d={FLOWER} />
+      <path d={STAR} fill={dark ? "var(--color-mustard)" : "currentColor"} />
+      {WORDMARK.map((d, i) => (
+        <path key={i} d={d} />
+      ))}
+    </svg>
   );
 }
 
-// Big cropped mark at 10% opacity behind a section; decorative only.
+// Big cropped flower at 10% opacity behind a section; decorative only.
 export function Pattern({ className = "", dark = false }: { className?: string; dark?: boolean }) {
   return (
-    <Mark
-      rotate={-90}
-      arrow={dark ? "#fff" : "var(--color-forest)"}
-      className={`pointer-events-none absolute opacity-10 ${className}`}
-    />
+    <Mark className={`pointer-events-none absolute opacity-10 ${dark ? "text-white" : "text-forest"} ${className}`} />
   );
 }
 
@@ -86,10 +70,10 @@ export function Emph({ text, dark = false }: { text: string; dark?: boolean }) {
   );
 }
 
-// The arrow from the logo, as a standalone chevron
-function Arrow({ className = "" }: { className?: string }) {
+// Plain outline arrow; the thin rounded line follows the line weight of the logo. Points right by default.
+export function Arrow({ className = "" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden className={className}>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden className={className}>
       <path d="M4 12h14M12 6l6 6-6 6" />
     </svg>
   );

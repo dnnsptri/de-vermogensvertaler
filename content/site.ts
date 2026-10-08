@@ -4,14 +4,14 @@
 // `*word*` in a heading marks the emphasised word (mustard highlight, or mustard text on dark).
 
 export const site = {
-  name: "De VermogensVertaler",
+  name: "De Vermogensvertaler",
   owner: "Alberta Opoku",
   tagline: "Financiële taal, vertaald naar jouw leven",
   // SEO: canonical domain (override per environment with NEXT_PUBLIC_SITE_URL) and default description
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://devermogensvertaler.nl",
   description:
     "Voor professionals die weten wat ze willen: Alberta Opoku vertaalt de taal van geld naar een plan dat bij jouw leven past. Plan een gratis kennismakingsgesprek.",
-  disclaimer: "De VermogensVertaler geeft inzicht en begeleiding, geen persoonlijk financieel advies.",
+  disclaimer: "De Vermogensvertaler geeft inzicht en begeleiding, geen persoonlijk financieel advies.",
   // Cal.com booking path, e.g. "alberta-opoku/kennismaking". Empty = placeholder until her account exists.
   calLink: "devermogensvertaler/kennismaking",
   booking: { label: "Plan een kennismakingsgesprek", href: "#kennismaken" },
