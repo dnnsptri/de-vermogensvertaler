@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { home, site } from "@/content/site";
-import { Button, Emph, Eyebrow, Logo, Pattern, SocialIcons, TextLink } from "@/components/ui";
+import { Button, Emph, Eyebrow, Logo, Pattern, TextLink } from "@/components/ui";
 import { CalEmbed } from "@/components/CalEmbed";
 
 // Simple StoryBrand homepage: hero, voor wie, wat ik doe, over Alberta, succes, kennismaken.
@@ -12,18 +12,21 @@ export default function Home() {
   return (
     <>
       {/* 1. Hero: full-screen photo, giant headline rising in, one primary action */}
-      <section className="relative flex flex-col overflow-hidden bg-forest-deep text-white md:h-[100svh] md:min-h-[40rem]">
+      <section className="relative flex flex-col overflow-clip bg-forest-deep text-white md:h-[100svh] md:min-h-[40rem]">
         {/* Photo: top of the screen on mobile (text below, never over her face); from md up the right 60%,
             fading into the green so it still reads as one image */}
         <div className="hero-zoom hero-photo relative h-[58svh] md:absolute md:inset-y-0 md:left-auto md:right-0 md:h-auto md:w-[60%]">
-          <Image
-            src={hero.photo.src}
-            alt={hero.photo.alt}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-[62%_28%]"
-          />
+          {/* Parallax layer: 20% taller than its frame so the drift never shows an edge */}
+          <div className="parallax absolute inset-x-0 -inset-y-[10%]">
+            <Image
+              src={hero.photo.src}
+              alt={hero.photo.alt}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-[62%_28%]"
+            />
+          </div>
         </div>
         {/* Light green floor under the text from md up */}
         <div aria-hidden className="absolute inset-0 hidden bg-gradient-to-t from-forest-deep/60 to-transparent md:block" />
@@ -32,9 +35,7 @@ export default function Home() {
           <Link href="/" aria-label={`${site.name}, naar boven`}>
             <Logo name={site.name} dark />
           </Link>
-          <TextLink href={site.booking.href} dark>
-            Kennismaken
-          </TextLink>
+          {/* Right slot stays empty until the Pensioencheck is live; then Alberta's "Pensioencheck" link goes here */}
         </header>
 
         <div className="relative mx-auto -mt-8 w-full max-w-7xl px-4 pb-16 md:my-auto md:px-8 md:pb-[6svh] md:pt-0">
@@ -74,17 +75,17 @@ export default function Home() {
       </section>
 
       {/* 2. Voor wie: three statements at headline size, colouring in as you scroll */}
-      <section className="px-4 py-24 md:px-8 md:py-36">
+      <section className="px-4 py-16 md:px-8 md:py-36">
         <div className="mx-auto max-w-7xl">
           <Eyebrow>{forWhom.eyebrow}</Eyebrow>
-          <h2 className="reveal text-[clamp(2.25rem,4vw,3.5rem)] text-forest">
+          <h2 className="reveal text-section text-forest">
             <Emph text={forWhom.title} />
           </h2>
           <ul className="mt-14 border-t border-forest/15">
             {forWhom.items.map((item) => (
               <li
                 key={item.title}
-                className="scrub grid gap-4 border-b border-forest/15 py-10 md:grid-cols-[1fr_22rem] md:items-end md:gap-16 md:py-14"
+                className="scrub grid gap-3 border-b border-forest/15 py-8 md:grid-cols-[1fr_22rem] md:items-end md:gap-16 md:py-14"
               >
                 <h3 className="text-[clamp(2rem,5.2vw,5.25rem)] leading-[1] text-forest">{item.title}</h3>
                 <p className="text-lg text-ink/70">{item.text}</p>
@@ -95,7 +96,7 @@ export default function Home() {
       </section>
 
       {/* 3. Wat ik doe: four steps as cards that stack while you scroll, then what she doesn't do */}
-      <section className="relative overflow-x-clip bg-cream px-4 py-24 md:px-8 md:py-36">
+      <section className="relative overflow-x-clip bg-cream px-4 py-16 md:px-8 md:py-36">
         <Pattern className="turn -right-48 top-10 h-[46rem] w-[46rem] md:-right-24" />
         <div className="relative mx-auto max-w-7xl">
           <div className="reveal max-w-5xl">
@@ -119,17 +120,18 @@ export default function Home() {
               return (
                 <li
                   key={step.title}
-                  className={`sticky mb-6 min-h-[20rem] rounded-[2rem] p-8 shadow-[0_-12px_40px_-24px_rgba(21,22,16,0.35)] md:p-14 ${tone}`}
+                  className={`sticky mb-4 rounded-[1.5rem] p-6 shadow-[0_-12px_40px_-24px_rgba(21,22,16,0.35)] md:mb-6 md:min-h-[20rem] md:rounded-[2rem] md:p-14 ${tone}`}
                   style={{ top: `calc(5rem + ${i * 1.75}rem)` }}
                 >
-                  {/* items-baseline: the number in the circle sits on the same line as the title */}
-                  <div className="flex items-baseline gap-6 md:gap-12">
-                    <span className={`flex h-20 w-20 shrink-0 items-center justify-center rounded-full font-serif text-4xl md:h-28 md:w-28 md:text-5xl ${num}`}>
+                  {/* Mobile: small number above the title so the title gets the full card width.
+                      From md up: side by side, number and title on one baseline */}
+                  <div className="flex flex-col items-start gap-4 md:flex-row md:items-baseline md:gap-12">
+                    <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full font-serif text-2xl md:h-28 md:w-28 md:text-5xl ${num}`}>
                       {i + 1}
                     </span>
-                    <h3 className="text-[clamp(2.25rem,4.5vw,4.5rem)] leading-[1]">{step.title}</h3>
+                    <h3 className="text-[clamp(2rem,4.5vw,4.5rem)] leading-[1]">{step.title}</h3>
                   </div>
-                  <div className="mt-6 md:mt-4 md:pl-40">
+                  <div className="mt-3 md:mt-4 md:pl-40">
                     {/* One sentence per line from md up, so the lines break where the thought breaks */}
                     <p className="text-lg opacity-80 md:text-xl">
                       {step.text.split(/(?<=[.?!])\s+/).map((sentence) => (
@@ -153,7 +155,7 @@ export default function Home() {
       </section>
 
       {/* 4. Over Alberta: the portrait opens up, track record as large figures */}
-      <section id="over" className="scroll-mt-8 px-4 py-24 md:px-8 md:py-36">
+      <section id="over" className="scroll-mt-8 px-4 py-16 md:px-8 md:py-36">
         <div className="mx-auto grid max-w-7xl items-center gap-14 md:grid-cols-[5fr_6fr] md:gap-24">
           <div className="unveil relative aspect-[4/5] overflow-hidden rounded-3xl">
             <Image
@@ -166,7 +168,7 @@ export default function Home() {
           </div>
           <div className="reveal">
             <Eyebrow>{who.eyebrow}</Eyebrow>
-            <h2 className="text-[clamp(2.5rem,5vw,5rem)] leading-[1] text-forest">
+            <h2 className="text-[clamp(2rem,5vw,5rem)] leading-[1] text-forest">
               <Emph text={who.title} />
             </h2>
             {who.body.map((p) => (
@@ -183,15 +185,16 @@ export default function Home() {
                 </div>
               ))}
             </dl>
-            <SocialIcons className="mt-10" />
           </div>
         </div>
       </section>
 
       {/* 5. Succes: full-screen photo that slowly zooms out, one big sentence */}
-      <section className="relative flex h-[100svh] min-h-[36rem] items-end overflow-hidden">
+      <section className="relative flex h-[100svh] min-h-[36rem] items-end overflow-clip">
         <div className="drift absolute inset-0">
-          <Image src={success.photo.src} alt={success.photo.alt} fill sizes="100vw" className="object-cover object-[40%_42%]" />
+          <div className="parallax absolute inset-x-0 -inset-y-[10%]">
+            <Image src={success.photo.src} alt={success.photo.alt} fill sizes="100vw" className="object-cover object-[40%_42%]" />
+          </div>
         </div>
         <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-transparent" />
         <div className="reveal relative mx-auto w-full max-w-7xl px-4 pb-16 md:px-8 md:pb-24">
@@ -202,14 +205,14 @@ export default function Home() {
       </section>
 
       {/* 6. Kennismaken: the conversion point */}
-      <section id="kennismaken" data-green className="relative scroll-mt-8 overflow-hidden bg-forest px-4 py-24 text-white md:px-8 md:py-36">
+      <section id="kennismaken" data-green className="relative scroll-mt-8 overflow-clip bg-forest px-4 py-16 text-white md:px-8 md:py-36">
         <Pattern dark className="turn -bottom-56 -left-56 h-[44rem] w-[44rem]" />
         <div className="relative mx-auto max-w-7xl">
           <Eyebrow dark>{booking.eyebrow}</Eyebrow>
-          <h2 className="reveal text-display">
+          <h2 className="reveal text-section">
             <Emph text={booking.title} dark />
           </h2>
-          <div className="mt-14 grid items-start gap-12 md:grid-cols-[2fr_3fr] md:gap-20">
+          <div className="mt-6 grid items-start gap-8 md:mt-14 md:grid-cols-[2fr_3fr] md:gap-20">
             <p className="max-w-md text-lg text-white/85 md:text-xl">{booking.text}</p>
             <CalEmbed />
           </div>

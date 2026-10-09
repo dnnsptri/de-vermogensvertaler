@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { Inter, Young_Serif } from "next/font/google";
 import { site } from "@/content/site";
-import { Logo, SocialIcons } from "@/components/ui";
+import { ContactIcons, Logo } from "@/components/ui";
 import { BackToTop } from "@/components/BackToTop";
 import "./globals.css";
 
@@ -58,10 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             </div>
             <p className="max-w-md">{site.disclaimer}</p>
             <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
-              <a href={`mailto:${site.email}`} className="underline underline-offset-4 hover:text-white">
-                {site.email}
-              </a>
-              <SocialIcons dark />
+              <ContactIcons />
               <Link href="#" className="underline underline-offset-4 hover:text-white">
                 Privacyverklaring
               </Link>

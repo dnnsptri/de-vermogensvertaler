@@ -40,7 +40,13 @@ h3,
   }
 }
 
-/* Display size for the big section statements (wat ik doe, succes, kennismaken): one source, so they always match */
+/* Section heading size (Herken je dit?, Zet de eerste stap.): one source, so they always match */
+@utility text-section {
+  font-size: clamp(2.25rem, 4vw, 3.5rem);
+  line-height: 1.05;
+}
+
+/* Display size for the big section statements (wat ik doe, succes): one source, so they always match */
 @utility text-display {
   font-size: clamp(2.25rem, 6vw, 6.5rem);
   line-height: 1;
@@ -100,7 +106,9 @@ h3,
   }
 }
 
-/* Scroll-driven, CSS only. Browsers without support simply show the end state. */
+/* Scroll-driven, CSS only. Browsers without support simply show the end state.
+   Sections that contain these must use overflow-clip, NOT overflow-hidden: overflow-hidden turns the
+   section into its own (non-scrolling) scroll container, which freezes view() timelines at 0. */
 @supports (animation-timeline: view()) {
   /* Sections drift in */
   .reveal {
@@ -144,6 +152,21 @@ h3,
       transform: scale(1.18);
     }
   }
+  /* Parallax: the photo drifts slower than the page. Uses the separate `translate` property, so it
+     combines with the zoom animations (which use transform) instead of overriding them. */
+  .parallax {
+    animation: parallax linear both;
+    animation-timeline: view();
+    animation-range: cover;
+  }
+  @keyframes parallax {
+    from {
+      translate: 0 -8%;
+    }
+    to {
+      translate: 0 8%;
+    }
+  }
   /* Background mark turns a quarter while the section scrolls by */
   .turn {
     animation: turn linear both;
@@ -171,6 +194,7 @@ h3,
   .scrub,
   .unveil,
   .drift,
+  .parallax,
   .turn {
     animation: none;
   }

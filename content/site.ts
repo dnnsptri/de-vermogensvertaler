@@ -21,8 +21,8 @@ export const site = {
   booking: { label: "Plan een kennismaking", href: "#kennismaken" },
   // Profiles with href "#" are hidden until the real URL is known
   social: [
+    { label: "Instagram", href: "https://www.instagram.com/albertaopoku2018/" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/albertaopoku/" },
-    { label: "Instagram", href: "#" },
   ],
 };
 
@@ -38,7 +38,8 @@ export const home = {
     ],
     intro:
       "Je verdient goed en wilt als eerste in je familie vermogen opbouwen. Maar niemand van wie je kon leren hoe het kan? Dat verandert hier. Ik leg in gewone taal uit hoe geld, pensioen en beleggen werken, zodat jij weloverwogen zelf kunt bouwen. Geen producten, geen persoonlijk advies.",
-    secondary: { label: "Maak kennis met Alberta", href: "#over" },
+    // Was her "Maak kennis met Alberta"; changed to avoid a third "kennis" next to the booking button (tell Alberta)
+    secondary: { label: "Meer over Alberta", href: "#over" },
     photo: {
       src: "/photos/alberta-tafel.jpg",
       alt: "Alberta Opoku in een gele trui, zittend op een tafel met boeken over geld",
