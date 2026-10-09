@@ -207,15 +207,16 @@ export default function Home() {
       {/* 6. Kennismaken: the conversion point */}
       <section id="kennismaken" data-green className="relative scroll-mt-8 overflow-clip bg-forest px-4 py-16 text-white md:px-8 md:py-36">
         <Pattern dark className="turn -bottom-56 -left-56 h-[44rem] w-[44rem]" />
-        <div className="relative mx-auto max-w-7xl">
-          <Eyebrow dark>{booking.eyebrow}</Eyebrow>
-          <h2 className="reveal text-section">
-            <Emph text={booking.title} dark />
-          </h2>
-          <div className="mt-6 grid items-start gap-8 md:mt-14 md:grid-cols-[2fr_3fr] md:gap-20">
-            <p className="max-w-md text-lg text-white/85 md:text-xl">{booking.text}</p>
-            <CalEmbed />
+        {/* Heading and text left, calendar right from the top of the section (no gap above it) */}
+        <div className="relative mx-auto grid max-w-7xl items-start gap-8 md:grid-cols-[2fr_3fr] md:gap-20">
+          <div>
+            <Eyebrow dark>{booking.eyebrow}</Eyebrow>
+            <h2 className="reveal text-section">
+              <Emph text={booking.title} dark />
+            </h2>
+            <p className="mt-6 max-w-md text-lg text-white/85 md:mt-14 md:text-xl">{booking.text}</p>
           </div>
+          <CalEmbed />
         </div>
       </section>
     </>
