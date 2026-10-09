@@ -107,7 +107,8 @@ export const home = {
 
   // StoryBrand success: what life looks like after
   success: {
-    title: "Een plan dat schokken aankan. Zodat jij *rustig* verder kunt.", // OURS
+    // Alberta, 9 Oct: replaces our "Een plan dat schokken aankan..." (AFM: no promises about outcomes)
+    title: "Laat je vermogen ook op rolletjes lopen. Zodat jij *rustig* verder kunt.",
     photo: {
       src: "/photos/alberta-park.jpg",
       alt: "Alberta Opoku in een geruite jas, wandelend in een park",
