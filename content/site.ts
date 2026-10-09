@@ -15,6 +15,11 @@ export const site = {
   disclaimer:
     "De Vermogensvertaler geeft educatie en begeleiding, geen persoonlijk financieel advies of beleggingsadvies. Beleggen brengt risico's met zich mee. Alberta Opoku is geen vergunninghouder onder de Wft.",
   email: "alberta@devermogensvertaler.nl",
+  // Google Analytics 4: property "De Vermogensvertaler" (account 111826009), web stream devermogensvertaler.nl.
+  // Only loads after cookie consent (components/CookieConsent.tsx).
+  gaId: "G-919MP1L46Z",
+  // Privacy statement still to come from Alberta
+  privacyHref: "#",
   // Cal.com booking path, e.g. "alberta-opoku/kennismaking". Empty = placeholder until her account exists.
   calLink: "devermogensvertaler/kennismaking",
   // Label as Alberta wrote it. Her "Doe de Pensioencheck" buttons stay hidden until the check is on the site.

@@ -135,8 +135,9 @@ export function Eyebrow({ children, dark = false }: { children: React.ReactNode;
 // Footer contact icons on green: e-mail, then the social profiles (in the order of site.social).
 // Profiles with href "#" are left out until the real URL is known.
 const iconPaths: Record<string, string> = {
+  // Open envelope: flap folded up, the opening cut out (evenodd)
   "E-mail":
-    "M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6zm2 1.4V18h16V7.4l-8 5.6-8-5.6z",
+    "M22 8.6a2 2 0 0 0-.9-1.7L12 1.5 2.9 6.9A2 2 0 0 0 2 8.6V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8.6zM12 13.2 4.3 8.4 12 3.8l7.7 4.6L12 13.2z",
   LinkedIn:
     "M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.1c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.5H3.6V9h3.5v11.5z",
   Instagram:

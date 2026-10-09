@@ -4,6 +4,7 @@ import { Inter, Young_Serif } from "next/font/google";
 import { site } from "@/content/site";
 import { ContactIcons, Logo } from "@/components/ui";
 import { BackToTop } from "@/components/BackToTop";
+import { CookieConsent, CookieSettingsLink } from "@/components/CookieConsent";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main className="flex-1">{children}</main>
 
         <BackToTop />
+        <CookieConsent />
 
         <footer className="border-t border-white/15 bg-forest px-4 py-12 text-sm text-white/80 md:px-8">
           <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-start md:justify-between">
@@ -59,9 +61,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <p className="max-w-md">{site.disclaimer}</p>
             <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
               <ContactIcons />
-              <Link href="#" className="underline underline-offset-4 hover:text-white">
+              <Link href={site.privacyHref} className="underline underline-offset-4 hover:text-white">
                 Privacyverklaring
               </Link>
+              <CookieSettingsLink className="underline underline-offset-4 hover:text-white" />
             </div>
           </div>
         </footer>
