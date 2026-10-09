@@ -53,18 +53,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 
         <footer className="border-t border-white/15 bg-forest px-4 py-12 text-sm text-white/80 md:px-8">
           <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-start md:justify-between">
-            <div>
-              <Logo name={site.name} dark className="h-9" />
-              {/* Indented to line up with the wordmark: it starts at 16% of the 318px-wide logo */}
-              <p className="mt-2 pl-[3.2rem] text-xs text-white/60">{site.owner}</p>
-            </div>
+            <Logo name={site.name} dark className="h-9" />
             <p className="max-w-md">{site.disclaimer}</p>
-            <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+            {/* Icons on top, both legal links together underneath */}
+            <div className="flex flex-col gap-4">
               <ContactIcons />
-              <Link href={site.privacyHref} className="underline underline-offset-4 hover:text-white">
-                Privacyverklaring
-              </Link>
-              <CookieSettingsLink className="underline underline-offset-4 hover:text-white" />
+              <div className="flex flex-wrap gap-x-6 gap-y-2">
+                <Link href={site.privacyHref} className="underline underline-offset-4 hover:text-white">
+                  Privacyverklaring
+                </Link>
+                <CookieSettingsLink className="underline underline-offset-4 hover:text-white" />
+              </div>
             </div>
           </div>
         </footer>
