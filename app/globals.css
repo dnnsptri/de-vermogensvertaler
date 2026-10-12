@@ -54,7 +54,8 @@ h3,
 
 /* Hero photo fades into the green: at the bottom on mobile, on its left edge from md up */
 .hero-photo {
-  mask-image: linear-gradient(to bottom, black 70%, transparent);
+  /* Mobile: soft top edge into the green logo band, fade into the headline below */
+  mask-image: linear-gradient(to bottom, transparent, black 12%, black 70%, transparent);
 }
 @media (min-width: 768px) {
   .hero-photo {

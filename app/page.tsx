@@ -31,7 +31,9 @@ export default function Home() {
         {/* Light green floor under the text from md up */}
         <div aria-hidden className="absolute inset-0 hidden bg-gradient-to-t from-forest-deep/60 to-transparent md:block" />
 
-        <header className="fade-up absolute inset-x-0 top-0 z-10 mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-6 md:relative md:px-8">
+        {/* Mobile: the logo sits on a green band above the photo, so iOS Safari (which tints its bars from the
+            colour at the screen edge) starts green instead of photo-light */}
+        <header className="fade-up relative z-10 order-first mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-6 md:order-none md:px-8">
           <Link href="/" aria-label={`${site.name}, naar boven`}>
             <Logo name={site.name} dark />
           </Link>

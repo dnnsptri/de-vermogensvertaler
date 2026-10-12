@@ -35,8 +35,10 @@ const jsonLd = {
   name: site.name,
   description: site.description,
   url: site.url,
+  email: site.email,
   areaServed: "NL",
-  founder: { "@type": "Person", name: site.owner },
+  // sameAs links the profiles to this site, so search engines treat them as the same person
+  founder: { "@type": "Person", name: site.owner, sameAs: site.social.filter((s) => s.href !== "#").map((s) => s.href) },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
