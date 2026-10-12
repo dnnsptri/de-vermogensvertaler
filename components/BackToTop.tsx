@@ -39,6 +39,8 @@ export function BackToTop() {
     <a
       href="#top"
       aria-label="Terug naar boven"
+      // Needs JS to appear, so the standalone tool exports leave it out
+      data-export="remove"
       // Hidden buttons stay out of the tab order and can't be clicked
       tabIndex={visible ? 0 : -1}
       aria-hidden={!visible}

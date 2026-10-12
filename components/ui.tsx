@@ -80,13 +80,14 @@ export function Arrow({ className = "" }: { className?: string }) {
 }
 
 /* Pill with a round arrow badge. Hover: the pill lifts slightly, the arrow slides out to the right
-   and a second one slides in from the left (all transform-only, so it stays smooth). */
+   and a second one slides in from the left (all transform-only, so it stays smooth).
+   Without href it renders a form submit button with the same look (the tools). */
 export function Button({
   href,
   children,
   variant = "primary",
 }: {
-  href: string;
+  href?: string;
   children: React.ReactNode;
   variant?: "primary" | "dark" | "light";
 }) {
@@ -96,17 +97,24 @@ export function Button({
     dark: { pill: "bg-forest text-white", badge: "bg-mustard text-ink" },
     light: { pill: "bg-white text-ink", badge: "bg-forest text-white" },
   }[variant];
-  return (
-    <Link
-      href={href}
-      className={`group inline-flex items-center gap-4 rounded-full py-2 pl-7 pr-2 text-base font-semibold transition-transform duration-300 ease-out hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${styles.pill}`}
-    >
+  const className = `group inline-flex cursor-pointer items-center gap-4 rounded-full py-2 pl-7 pr-2 text-left text-base font-semibold transition-transform duration-300 ease-out hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${styles.pill}`;
+  const inner = (
+    <>
       {children}
       <span className={`relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full ${styles.badge}`}>
         <Arrow className="h-5 w-5 transition-transform duration-300 ease-out group-hover:translate-x-10 motion-reduce:transition-none" />
         <Arrow className="absolute h-5 w-5 -translate-x-10 transition-transform duration-300 ease-out group-hover:translate-x-0 motion-reduce:transition-none" />
       </span>
+    </>
+  );
+  return href ? (
+    <Link href={href} className={className}>
+      {inner}
     </Link>
+  ) : (
+    <button type="submit" className={className}>
+      {inner}
+    </button>
   );
 }
 
@@ -134,14 +142,21 @@ export function Eyebrow({ children, dark = false }: { children: React.ReactNode;
 
 // Footer contact icons on green: e-mail, then the social profiles (in the order of site.social).
 // Profiles with href "#" are left out until the real URL is known.
-const iconPaths: Record<string, string> = {
-  // Open envelope: flap folded up, the opening cut out (evenodd)
-  "E-mail":
-    "M22 8.6a2 2 0 0 0-.9-1.7L12 1.5 2.9 6.9A2 2 0 0 0 2 8.6V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8.6zM12 13.2 4.3 8.4 12 3.8l7.7 4.6L12 13.2z",
-  LinkedIn:
-    "M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.1c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.5H3.6V9h3.5v11.5z",
-  Instagram:
-    "M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 4.8a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.2-9.6a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z",
+// Material 3 outline style (2px line at 24px). Material Symbols has no Instagram glyph, so that one
+// is drawn on the same grid and line weight. viewBox per icon: Material Symbols use 0 -960 960 960.
+const icons: Record<string, { d: string; viewBox?: string }> = {
+  // Material Symbols Outlined "mail"
+  "E-mail": {
+    viewBox: "0 -960 960 960",
+    d: "M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 400-320Z",
+  },
+  LinkedIn: {
+    d: "M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.1c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.5H3.6V9h3.5v11.5z",
+  },
+  // Rounded frame, lens, flash dot; rings cut out with evenodd
+  Instagram: {
+    d: "M8 3h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8zm4 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm4.75-4a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z",
+  },
 };
 
 export function ContactIcons({ className = "" }: { className?: string }) {
@@ -161,8 +176,8 @@ export function ContactIcons({ className = "" }: { className?: string }) {
             aria-label={s.aria}
             className="flex h-12 w-12 items-center justify-center rounded-full border border-white/40 text-white transition-colors duration-300 hover:border-mustard hover:bg-mustard hover:text-ink"
           >
-            <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden>
-              <path d={iconPaths[s.label]} fillRule="evenodd" />
+            <svg viewBox={icons[s.label].viewBox ?? "0 0 24 24"} className="h-5 w-5 fill-current" aria-hidden>
+              <path d={icons[s.label].d} fillRule="evenodd" />
             </svg>
           </a>
         </li>

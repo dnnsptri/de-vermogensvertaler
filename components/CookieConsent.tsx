@@ -133,10 +133,11 @@ export function CookieConsent() {
   );
 }
 
-// Footer link that reopens the bar, so consent can be withdrawn as easily as it was given
+// Footer link that reopens the bar, so consent can be withdrawn as easily as it was given.
+// Left out of the standalone tool exports (data-export="remove"): they have no cookies to set.
 export function CookieSettingsLink({ className = "" }: { className?: string }) {
   return (
-    <button type="button" onClick={() => window.dispatchEvent(new Event(OPEN_EVENT))} className={className}>
+    <button type="button" data-export="remove" onClick={() => window.dispatchEvent(new Event(OPEN_EVENT))} className={className}>
       Cookie-instellingen
     </button>
   );

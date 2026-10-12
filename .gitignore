@@ -16,6 +16,8 @@
 # next.js
 /.next/
 /out/
+# standalone tool exports (npm run export:tools), generated from the site
+/export/
 
 # production
 /build
