@@ -81,15 +81,18 @@ export function Arrow({ className = "" }: { className?: string }) {
 
 /* Mustard pill with a plain arrow (no badge). Hover: the pill lifts slightly, the arrow slides out to
    the right and a second one slides in from the left (all transform-only, so it stays smooth).
-   Without href it renders a form submit button with the same look (the tools). */
+   Without href it renders a form submit button with the same look (the tools).
+   An in-page link (href "#...") points and slides down: it scrolls, it doesn't go somewhere else. */
 export function Button({ href, children }: { href?: string; children: React.ReactNode }) {
+  const down = href?.startsWith("#");
   // Forest on mustard: 4.75:1 (passes AA for this 16px semibold label)
   const className =
     "group inline-flex cursor-pointer items-center gap-3 rounded-full bg-mustard px-7 py-4 text-left text-base font-semibold text-forest transition-transform duration-300 ease-out hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0";
   const inner = (
     <>
       {children}
-      <span className="relative flex h-5 w-5 shrink-0 overflow-hidden">
+      {/* Rotating the wrapper turns both the arrows and their slide from left-to-right into top-to-bottom */}
+      <span className={`relative flex h-5 w-5 shrink-0 overflow-hidden ${down ? "rotate-90" : ""}`}>
         <Arrow className="h-5 w-5 transition-transform duration-300 ease-out group-hover:translate-x-6 motion-reduce:transition-none" />
         <Arrow className="absolute h-5 w-5 -translate-x-6 transition-transform duration-300 ease-out group-hover:translate-x-0 motion-reduce:transition-none" />
       </span>

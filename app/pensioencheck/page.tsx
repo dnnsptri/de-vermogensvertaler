@@ -15,7 +15,7 @@ export default function Pensioencheck() {
   const f = c.fields;
   const r = c.result;
   return (
-    <ToolPage tool="pensioencheck" eyebrow={c.eyebrow} heading={c.heading} lede={c.lede} fine={c.fine}>
+    <ToolPage tool="pensioencheck" c={c}>
       <ToolForm submit={c.submit}>
         <Step n={1} title={c.steps[0]} />
         <Field id="geboortejaar" label={f.geboortejaar.label}>
@@ -41,7 +41,7 @@ export default function Pensioencheck() {
             <Field id="pPensioenKeuze" label={f.pPensioenKeuze.label}>
               <Select id="pPensioenKeuze" options={f.pPensioenKeuze.options} />
             </Field>
-            <div id="pBedragBox">
+            <div id="pBedragBox" className="mt-6">
               <Field id="pBedrag" label={f.pBedrag.label}>
                 <NumberInput id="pBedrag" placeholder={f.pBedrag.placeholder} min={0} />
               </Field>
@@ -56,7 +56,7 @@ export default function Pensioencheck() {
         <Field id="pensioenKeuze" label={f.pensioenKeuze.label}>
           <Select id="pensioenKeuze" options={f.pensioenKeuze.options} />
         </Field>
-        <div id="bedragBox">
+        <div id="bedragBox" className="mt-6">
           <Field id="bedrag" label={f.bedrag.label} hint={f.bedrag.hint}>
             <NumberInput id="bedrag" placeholder={f.bedrag.placeholder} min={0} />
           </Field>

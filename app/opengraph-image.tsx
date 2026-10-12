@@ -1,34 +1,11 @@
-import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { brandOgImage, ogSize } from "@/components/og";
 import { home, site } from "@/content/site";
 
-// Share image for WhatsApp, LinkedIn etc.: brand green, mustard headline, Alberta on the right
+// Share image for the homepage: the hero headline, one sentence per line
 export const alt = `${site.name}: ${site.tagline}`;
-export const size = { width: 1200, height: 630 };
+export const size = ogSize;
 export const contentType = "image/png";
 
-export default async function Image() {
-  const photo = await readFile(join(process.cwd(), "public/photos/alberta-tafel.jpg"));
-  const src = `data:image/jpeg;base64,${photo.toString("base64")}`;
-
-  return new ImageResponse(
-    (
-      <div style={{ width: "100%", height: "100%", display: "flex", background: "#173326" }}>
-        <div
-          style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 64px" }}
-        >
-          <div style={{ fontSize: 30, color: "#ffffff", opacity: 0.85 }}>{site.name}</div>
-          {/* Same headline as the hero, one sentence per line */}
-          {home.hero.title.map((lines, i) => (
-            <div key={i} style={{ fontSize: 60, lineHeight: 1.05, color: "#e3b63f", marginTop: i === 0 ? 24 : 0 }}>
-              {lines.join(" ")}
-            </div>
-          ))}
-        </div>
-        <img src={src} alt="" width={480} height={630} style={{ objectFit: "cover", objectPosition: "60% 30%" }} />
-      </div>
-    ),
-    size,
-  );
+export default function Image() {
+  return brandOgImage({ lines: home.hero.title.map((lines) => lines.join(" ")) });
 }

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { home, site } from "@/content/site";
 import { Button, Emph, Eyebrow, Logo, Pattern, TextLink } from "@/components/ui";
 import { CalEmbed } from "@/components/CalEmbed";
+import { BackToTop } from "@/components/BackToTop";
 
 // Simple StoryBrand homepage: hero, voor wie, wat ik doe, over Alberta, succes, kennismaken.
 // One call to action throughout: the free intro call (Cal.com). Motion lives in globals.css.
@@ -12,7 +13,7 @@ export default function Home() {
   return (
     <>
       {/* 1. Hero: full-screen photo, giant headline rising in, one primary action */}
-      <section className="relative flex flex-col overflow-clip bg-forest-deep text-white md:h-[100svh] md:min-h-[40rem]">
+      <section data-green className="relative flex flex-col overflow-clip bg-forest-deep text-white md:h-[100svh] md:min-h-[40rem]">
         {/* Photo: top of the screen on mobile (text below, never over her face); from md up the right 60%,
             fading into the green so it still reads as one image */}
         <div className="hero-zoom hero-photo relative h-[58svh] md:absolute md:inset-y-0 md:left-auto md:right-0 md:h-auto md:w-[60%]">
@@ -221,6 +222,9 @@ export default function Home() {
           <CalEmbed />
         </div>
       </section>
+
+      {/* Only the long homepage needs it; on the tool pages it covered the buttons on phones */}
+      <BackToTop />
     </>
   );
 }

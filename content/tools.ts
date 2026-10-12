@@ -28,6 +28,7 @@ export const pensioencheck = {
   description:
     "Zie in twee minuten wat je later maandelijks aan pensioen overhoudt, en of er iets ontbreekt. Gratis check van De Vermogensvertaler.",
   eyebrow: "Gratis check", // OURS
+  og: ["De Pensioencheck:", "wat houd je later", "per maand over?"], // OURS: share image headline
   heading: "De *Pensioencheck*",
   lede: "Zie in twee minuten wat je later maandelijks aan pensioen overhoudt, en of er iets ontbreekt.",
   steps: ["Over jou", "Je pensioen", "Later"],
@@ -62,7 +63,7 @@ export const pensioencheck = {
     pensioenKeuze: {
       label: "Bouw je aanvullend pensioen op, via een werkgever of zelf?",
       options: [
-        ["bedrag", "Ja, ik weet het verwachte bedrag"],
+        ["bedrag", "Ja, ik weet het bedrag"], // was "...het verwachte bedrag": cut off on phones
         ["geen", "Nee, geen aanvullend pensioen"],
         ["onbekend", "Weet ik niet"],
       ] as [string, string][],
@@ -97,6 +98,7 @@ export const aowGat = {
   description:
     "Zie in twee minuten welk deel van je AOW je opbouwt als je niet sinds je 17e in Nederland woont, en wat dat scheelt per maand. Gratis scan van De Vermogensvertaler.", // OURS
   eyebrow: "Gratis scan", // OURS
+  og: ["De AOW-gatscan:", "hoeveel AOW", "loop je mis?"], // OURS: share image headline
   heading: "De *AOW-gatscan*",
   // Was "niet vanaf zijn 17e": made gender-neutral and in the site's "je" form
   lede: "Woon je niet al sinds je 17e onafgebroken in Nederland? In twee minuten zie je ongeveer welk deel van je AOW je opbouwt, en wat dat concreet betekent voor je maandinkomen later.",

@@ -26,24 +26,28 @@ export function Rich({ text }: { text: string }) {
   });
 }
 
-// Page frame: green hero in the homepage's style, then the tool on cream, fine print underneath
-export function ToolPage({
-  tool,
-  eyebrow,
-  heading,
-  lede,
-  fine,
-  children,
-}: {
-  tool: string;
-  eyebrow: string;
-  heading: string;
-  lede: string;
-  fine: string;
-  children: React.ReactNode;
-}) {
+type ToolCopy = { title: string; description: string; path: string; eyebrow: string; heading: string; lede: string; fine: string };
+
+// Page frame: green hero in the homepage's style, then the tool on cream, fine print underneath.
+// Also the tool's structured data, so search engines and AI assistants know it's a free calculator.
+export function ToolPage({ tool, c, children }: { tool: string; c: ToolCopy; children: React.ReactNode }) {
+  const { eyebrow, heading, lede, fine } = c;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: c.title,
+    description: c.description,
+    url: site.url + c.path,
+    applicationCategory: "FinanceApplication",
+    operatingSystem: "Web",
+    inLanguage: "nl-NL",
+    isAccessibleForFree: true,
+    offers: { "@type": "Offer", price: "0", priceCurrency: "EUR" },
+    provider: { "@type": "ProfessionalService", name: site.name, url: site.url },
+  };
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <section data-green className="relative overflow-clip bg-forest-deep text-white">
         <Pattern dark className="turn -right-48 -top-24 h-[40rem] w-[40rem]" />
         <header className="relative mx-auto flex max-w-7xl items-center px-4 py-6 md:px-8">
@@ -79,7 +83,14 @@ export function ToolForm({ submit, children }: { submit: string; children: React
   return (
     <form id="formulier" noValidate className={`${card} scroll-mt-6`}>
       {children}
-      <p data-error role="alert" className="mt-6 text-base font-semibold text-forest empty:hidden" />
+      {/* Error line: lib/tools.ts moves it under the field it is about. Warning mark + mustard bar, so it
+          never reads as one more field label. */}
+      <p
+        data-error
+        id="formulier-fout"
+        role="alert"
+        className="mt-3 flex items-start gap-2 rounded-lg border-l-4 border-mustard bg-mustard/20 px-3 py-2 text-sm font-semibold text-forest-deep empty:hidden before:mt-px before:flex before:h-4 before:w-4 before:shrink-0 before:items-center before:justify-center before:rounded-full before:bg-forest before:text-[0.65rem] before:text-white before:content-['!']"
+      />
       <div className="mt-8">
         <Button>{submit}</Button>
       </div>
@@ -118,7 +129,7 @@ export function Field({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mt-6 first:mt-0">
+    <div data-field className="mt-6 first:mt-0">
       <label htmlFor={id} className="block font-semibold text-forest" {...(labelOut && { "data-out": labelOut })}>
         {label}
       </label>
@@ -133,7 +144,7 @@ export function Field({
 }
 
 export function NumberInput({ id, placeholder, min, max }: { id: string; placeholder: string; min?: number; max?: number }) {
-  return <input type="number" inputMode="numeric" id={id} name={id} min={min} max={max} placeholder={placeholder} className={`mt-2 ${control}`} />;
+  return <input type="number" inputMode="numeric" id={id} name={id} min={min} max={max} placeholder={placeholder} autoComplete="off" className={`mt-2 ${control}`} />;
 }
 
 // Native select without the browser styling (Safari ignores height and padding otherwise),

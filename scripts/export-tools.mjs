@@ -55,7 +55,7 @@ for (const { path } of [pensioencheck, aowGatCopy]) {
     .replace(/<link rel="preload"[^>]*\/>/g, "")
     .replace(/<meta name="(robots|next-size-adjust)"[^>]*\/>/g, "") // copies rely on the canonical link instead
     .replace(/<div hidden=""><!--\$--><!--\/\$--><\/div>/g, "")
-    // Site-only parts (cookie settings, back-to-top), marked in the components
+    // Site-only parts (cookie settings), marked in the components
     .replace(/<(\w+)[^>]*data-export="remove"[^>]*>[\s\S]*?<\/\1>/g, "")
     // Site-relative links and icons point to the live site
     .replace(/(href|src)="\/(?!\/)/g, `$1="${site.url}/`)

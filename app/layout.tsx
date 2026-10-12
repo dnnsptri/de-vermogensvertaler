@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Inter, Young_Serif } from "next/font/google";
 import { site } from "@/content/site";
 import { ContactIcons, Logo } from "@/components/ui";
-import { BackToTop } from "@/components/BackToTop";
 import { CookieConsent, CookieSettingsLink } from "@/components/CookieConsent";
 import "./globals.css";
 
@@ -50,7 +49,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {/* The header lives inside the hero (app/page.tsx), so it sits on the green like Menno's sketch */}
         <main className="flex-1">{children}</main>
 
-        <BackToTop />
         <CookieConsent />
 
         <footer className="border-t border-white/15 bg-forest px-4 py-12 text-sm text-white/80 md:px-8">

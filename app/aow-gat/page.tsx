@@ -15,7 +15,7 @@ export default function AowGat() {
   const f = c.fields;
   const r = c.result;
   return (
-    <ToolPage tool="aow-gat" eyebrow={c.eyebrow} heading={c.heading} lede={c.lede} fine={c.fine}>
+    <ToolPage tool="aow-gat" c={c}>
       <ToolForm submit={c.submit}>
         <Field id="geboortejaar" label={f.geboortejaar.label}>
           <NumberInput id="geboortejaar" placeholder={f.geboortejaar.placeholder} min={1950} max={2008} />

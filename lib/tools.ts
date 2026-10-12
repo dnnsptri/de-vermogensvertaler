@@ -68,12 +68,22 @@ function scope(root: HTMLElement) {
       root.querySelectorAll(`[data-out="${name}"]`).forEach((el) => (el.textContent = text)),
     note: (name: string, show: boolean) =>
       root.querySelectorAll<HTMLElement>(`[data-note="${name}"]`).forEach((el) => (el.hidden = !show)),
-    error: (msg: string) => {
-      root.querySelector("[data-error]")!.textContent = msg;
+    // The message moves under the field it is about, and focus goes there: on a phone the field
+    // can be a full screen above the button, so an error next to the button would go unseen.
+    error: (msg: string, id: string) => {
+      const el = root.querySelector<HTMLElement>("[data-error]")!;
+      root.querySelectorAll("[aria-invalid]").forEach((f) => f.removeAttribute("aria-invalid"));
+      const f = field(id);
+      f.setAttribute("aria-invalid", "true");
+      f.setAttribute("aria-describedby", el.id);
+      f.closest("[data-field]")!.append(el);
+      el.textContent = msg;
+      f.focus();
       root.querySelector<HTMLElement>("[data-result]")!.hidden = true;
     },
     show: () => {
       root.querySelector("[data-error]")!.textContent = "";
+      root.querySelectorAll("[aria-invalid]").forEach((f) => f.removeAttribute("aria-invalid"));
       const result = root.querySelector<HTMLElement>("[data-result]")!;
       result.hidden = false;
       // Focus moves to the result so screen readers read it; scrolling follows separately (smooth)
@@ -144,16 +154,16 @@ function pensioencheck(root: HTMLElement, signal: AbortSignal) {
       const samen = woon === "samen";
       const mee = samen && field("partnerMee").checked;
 
-      if (!(gb >= 1950 && gb <= 2008)) return error("Vul een geboortejaar tussen 1950 en 2008 in.");
-      if (!werk) return error("Kies hoe je werkt.");
-      if (!woon) return error("Kies hoe je woont.");
+      if (!(gb >= 1950 && gb <= 2008)) return error("Vul een geboortejaar tussen 1950 en 2008 in.", "geboortejaar");
+      if (!werk) return error("Kies hoe je werkt.", "werk");
+      if (!woon) return error("Kies hoe je woont.", "woon");
       if (isNaN(jaren) || jaren < 0 || jaren > 50)
-        return error("Vul het aantal jaren buiten Nederland in (0 als je altijd in Nederland woonde).");
+        return error("Vul het aantal jaren buiten Nederland in (0 als je altijd in Nederland woonde).", "jaren");
       if (jaren > Math.max(0, jaar - gb - AOW_START))
-        return error("Dat zijn meer jaren dan je sinds je 17e hebt geleefd. Controleer je invoer.");
+        return error("Dat zijn meer jaren dan je sinds je 17e hebt geleefd. Controleer je invoer.", "jaren");
       if (keuze === "bedrag" && (isNaN(bedrag) || bedrag < 0))
-        return error('Vul je verwachte pensioen per maand in, of kies "Weet ik niet".');
-      if (isNaN(wens) || wens <= 0) return error("Vul in wat je later per maand wilt kunnen uitgeven.");
+        return error('Vul je verwachte pensioen per maand in, of kies "Weet ik niet".', "bedrag");
+      if (isNaN(wens) || wens <= 0) return error("Vul in wat je later per maand wilt kunnen uitgeven.", "wens");
 
       let pJaren = 0;
       let pKeuze = "geen";
@@ -163,9 +173,9 @@ function pensioencheck(root: HTMLElement, signal: AbortSignal) {
         pKeuze = val("pPensioenKeuze");
         pBedrag = pKeuze === "bedrag" ? num("pBedrag") : 0;
         if (isNaN(pJaren) || pJaren < 0 || pJaren > 50)
-          return error("Vul bij je partner het aantal jaren buiten Nederland in.");
+          return error("Vul bij je partner het aantal jaren buiten Nederland in.", "pJaren");
         if (pKeuze === "bedrag" && (isNaN(pBedrag) || pBedrag < 0))
-          return error('Vul het pensioen van je partner in, of kies "Weet ik niet".');
+          return error('Vul het pensioen van je partner in, of kies "Weet ik niet".', "pBedrag");
       }
 
       const ik = persoon(jaren, bedrag, !samen);
@@ -251,10 +261,10 @@ function aowGatscan(root: HTMLElement, signal: AbortSignal) {
       const verhuis = num("verhuisleeftijd");
       const woon = field("woon").value;
 
-      if (!(gb >= 1950 && gb <= 2008)) return error("Vul een geboortejaar tussen 1950 en 2008 in.");
-      if (isNaN(verhuis) || verhuis < 0) return error("Vul in op welke leeftijd je in Nederland kwam wonen.");
-      if (verhuis > jaar - gb) return error("Die leeftijd ligt na je huidige leeftijd. Controleer je invoer.");
-      if (!woon) return error("Kies hoe je woont bij je pensioen.");
+      if (!(gb >= 1950 && gb <= 2008)) return error("Vul een geboortejaar tussen 1950 en 2008 in.", "geboortejaar");
+      if (isNaN(verhuis) || verhuis < 0) return error("Vul in op welke leeftijd je in Nederland kwam wonen.", "verhuisleeftijd");
+      if (verhuis > jaar - gb) return error("Die leeftijd ligt na je huidige leeftijd. Controleer je invoer.", "verhuisleeftijd");
+      if (!woon) return error("Kies hoe je woont bij je pensioen.", "woon");
 
       const jaren = Math.max(0, verhuis - AOW_START);
       const gat = aowGat(jaren);
