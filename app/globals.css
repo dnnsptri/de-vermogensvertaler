@@ -17,6 +17,20 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Focus ring in the brand instead of the browser's blue. Keyboard only (focus-visible), so a mouse
+   click doesn't leave a ring. Forest on light backgrounds, mustard on the green sections and footer.
+   In the base layer, so utilities (e.g. the form fields' own focus style) can override it. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-forest);
+    outline-offset: 3px;
+  }
+  [data-green] :focus-visible,
+  footer :focus-visible {
+    outline-color: var(--color-mustard);
+  }
+}
+
 /* Every serif use (headings plus .font-serif: step numbers, stats, big statements) shares one weight */
 h1,
 h2,

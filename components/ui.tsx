@@ -79,31 +79,19 @@ export function Arrow({ className = "" }: { className?: string }) {
   );
 }
 
-/* Pill with a round arrow badge. Hover: the pill lifts slightly, the arrow slides out to the right
-   and a second one slides in from the left (all transform-only, so it stays smooth).
+/* Mustard pill with a plain arrow (no badge). Hover: the pill lifts slightly, the arrow slides out to
+   the right and a second one slides in from the left (all transform-only, so it stays smooth).
    Without href it renders a form submit button with the same look (the tools). */
-export function Button({
-  href,
-  children,
-  variant = "primary",
-}: {
-  href?: string;
-  children: React.ReactNode;
-  variant?: "primary" | "dark" | "light";
-}) {
-  const styles = {
-    // Forest on mustard: 4.75:1 (passes AA for this 16px semibold label). White on forest: 9:1.
-    primary: { pill: "bg-mustard text-forest", badge: "bg-forest text-mustard" },
-    dark: { pill: "bg-forest text-white", badge: "bg-mustard text-ink" },
-    light: { pill: "bg-white text-ink", badge: "bg-forest text-white" },
-  }[variant];
-  const className = `group inline-flex cursor-pointer items-center gap-4 rounded-full py-2 pl-7 pr-2 text-left text-base font-semibold transition-transform duration-300 ease-out hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${styles.pill}`;
+export function Button({ href, children }: { href?: string; children: React.ReactNode }) {
+  // Forest on mustard: 4.75:1 (passes AA for this 16px semibold label)
+  const className =
+    "group inline-flex cursor-pointer items-center gap-3 rounded-full bg-mustard px-7 py-4 text-left text-base font-semibold text-forest transition-transform duration-300 ease-out hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0";
   const inner = (
     <>
       {children}
-      <span className={`relative flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full ${styles.badge}`}>
-        <Arrow className="h-5 w-5 transition-transform duration-300 ease-out group-hover:translate-x-10 motion-reduce:transition-none" />
-        <Arrow className="absolute h-5 w-5 -translate-x-10 transition-transform duration-300 ease-out group-hover:translate-x-0 motion-reduce:transition-none" />
+      <span className="relative flex h-5 w-5 shrink-0 overflow-hidden">
+        <Arrow className="h-5 w-5 transition-transform duration-300 ease-out group-hover:translate-x-6 motion-reduce:transition-none" />
+        <Arrow className="absolute h-5 w-5 -translate-x-6 transition-transform duration-300 ease-out group-hover:translate-x-0 motion-reduce:transition-none" />
       </span>
     </>
   );

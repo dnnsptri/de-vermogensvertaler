@@ -97,9 +97,11 @@ export function Step({ n, title }: { n: number; title: string }) {
   );
 }
 
-// One look for every control: white like the card, fixed height so inputs and dropdowns line up
+// One look for every control: white like the card, fixed height so inputs and dropdowns line up.
+// Focus: mustard glow for the brand; the border turns forest so focus still meets 3:1 contrast
+// (mustard alone on white is 1.65:1).
 const control =
-  "h-14 w-full rounded-xl border border-forest/25 bg-white px-4 text-base text-ink placeholder:text-ink/45 focus:border-forest focus:outline-2 focus:outline-offset-2 focus:outline-forest";
+  "h-14 w-full rounded-xl border border-forest/25 bg-white px-4 text-base text-ink placeholder:text-ink/45 focus:border-forest focus:outline-none focus:ring-4 focus:ring-mustard/60";
 
 // Label + control + optional hint. labelOut: the label text is swapped by lib/tools.ts.
 export function Field({
@@ -171,7 +173,7 @@ export function ToolResult({ children }: { children: React.ReactNode }) {
     <div data-result hidden tabIndex={-1} className={`${card} mt-6 scroll-mt-6 outline-none`}>
       {children}
       <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-forest/15 pt-8">
-        <Button href={toolCta.href} variant="dark">
+        <Button href={toolCta.href}>
           {toolCta.label}
         </Button>
         {/* Back to the form: plain anchor, so it works the same on the site and in the export */}
