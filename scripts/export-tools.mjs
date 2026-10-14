@@ -69,3 +69,42 @@ for (const { path } of [pensioencheck, aowGatCopy]) {
   writeFileSync(file, html);
   console.log(`${file}  ${(html.length / 1024).toFixed(0)} KB`);
 }
+
+// Read-me for Alberta, written with every export so the ZIP always explains itself
+const tools = [pensioencheck, aowGatCopy];
+const today = new Date().toLocaleDateString("nl-NL", { day: "numeric", month: "long", year: "numeric" });
+writeFileSync(
+  join(outDir, "LEESMIJ.txt"),
+  `De Vermogensvertaler: Pensioencheck en AOW-gatscan
+Export van ${today}
+
+DE WEBSITE IS DE BRON
+De tools staan op de website:
+${tools.map((t) => `- ${t.title}: ${site.url}${t.path}`).join("\n")}
+
+Deze HTML-bestanden zijn kopieën, gemaakt uit de website. Ze rekenen en loggen precies
+hetzelfde als de pagina's op de site. Pas ze niet zelf aan: dan lopen site en kopie uit
+elkaar. Wijzigingen (teksten, bedragen) gaan via de website, daarna volgt een nieuwe export.
+De oude losse bestanden (zonder deze LEESMIJ) zijn vervangen en niet meer nodig.
+
+GEBRUIK
+- Dubbelklik een bestand om het in de browser te openen. Internet is alleen nodig voor de
+  links en de logging.
+- Elk bestand is compleet (huisstijl en lettertypes zitten erin), dus je kunt het ook
+  mailen of op een andere plek zetten.
+- De knop "Bespreek je uitkomst in een kennismaking" gaat naar de agenda op de website.
+
+LOGGING (GOOGLE SHEET)
+- Na elke berekening komt er een anonieme regel in je Google Sheet: gegroepeerde
+  antwoorden, geen naam, e-mail, bedragen of geboortejaar. Zelfde kolommen als voorheen.
+- Zet ?test=1 achter de link om te testen zonder dat het meetelt.
+- Zet ?utm_source=...&utm_campaign=... achter de link om per flyer of kanaal te meten.
+
+ELK HALFJAAR NAKIJKEN
+- AOW-bedragen: per 1 januari en 1 juli (nu: per 1 juli 2026).
+- Belastingcijfers: per 1 januari.
+Geef nieuwe bedragen door; ze worden op één plek aangepast en gelden dan voor site én export.
+`,
+);
+console.log(join(outDir, "LEESMIJ.txt"));
+
