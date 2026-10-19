@@ -81,6 +81,7 @@ Export van ${today}
 DE WEBSITE IS DE BRON
 De tools staan op de website:
 ${tools.map((t) => `- ${t.title}: ${site.url}${t.path}`).join("\n")}
+Uitgebreide handleiding: ${site.url}/handleiding
 
 Deze HTML-bestanden zijn kopieën, gemaakt uit de website. Ze rekenen en loggen precies
 hetzelfde als de pagina's op de site. Pas ze niet zelf aan: dan lopen site en kopie uit

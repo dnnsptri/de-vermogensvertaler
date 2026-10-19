@@ -48,21 +48,7 @@ export function ToolPage({ tool, c, children }: { tool: string; c: ToolCopy; chi
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <section data-green className="relative overflow-clip bg-forest-deep text-white">
-        <Pattern dark className="turn -right-48 -top-24 h-[40rem] w-[40rem]" />
-        <header className="relative mx-auto flex max-w-7xl items-center px-4 py-6 md:px-8">
-          <Link href="/" aria-label={`${site.name}, naar de homepage`}>
-            <Logo name={site.name} dark />
-          </Link>
-        </header>
-        <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-6 md:px-8 md:pb-24 md:pt-14">
-          <Eyebrow dark>{eyebrow}</Eyebrow>
-          <h1 className="text-display max-w-4xl">
-            <Emph text={heading} dark />
-          </h1>
-          <p className="mt-6 max-w-xl text-lg text-white/85 md:mt-8 md:text-xl">{lede}</p>
-        </div>
-      </section>
+      <PageHero eyebrow={eyebrow} heading={heading} lede={lede} />
 
       <section className="bg-cream px-4 py-12 md:px-8 md:py-20">
         <div data-tool={tool} data-log-url={toolsLogUrl} className="mx-auto max-w-2xl">
@@ -75,8 +61,29 @@ export function ToolPage({ tool, c, children }: { tool: string; c: ToolCopy; chi
   );
 }
 
+// Green hero in the homepage's style with the logo home link. Also used by the handleiding page.
+export function PageHero({ eyebrow, heading, lede }: { eyebrow: string; heading: string; lede: string }) {
+  return (
+    <section data-green className="relative overflow-clip bg-forest-deep text-white">
+      <Pattern dark className="turn -right-48 -top-24 h-[40rem] w-[40rem]" />
+      <header className="relative mx-auto flex max-w-7xl items-center px-4 py-6 md:px-8">
+        <Link href="/" aria-label={`${site.name}, naar de homepage`}>
+          <Logo name={site.name} dark />
+        </Link>
+      </header>
+      <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-6 md:px-8 md:pb-24 md:pt-14">
+        <Eyebrow dark>{eyebrow}</Eyebrow>
+        <h1 className="text-display max-w-4xl">
+          <Emph text={heading} dark />
+        </h1>
+        <p className="mt-6 max-w-xl text-lg text-white/85 md:mt-8 md:text-xl">{lede}</p>
+      </div>
+    </section>
+  );
+}
+
 // White card, same rounding as the step cards on the homepage
-const card = "rounded-[1.5rem] bg-white p-6 text-ink md:rounded-[2rem] md:p-10";
+export const card = "rounded-[1.5rem] bg-white p-6 text-ink md:rounded-[2rem] md:p-10";
 
 // The form card: fields, the error line (announced by screen readers) and the submit pill
 export function ToolForm({ submit, children }: { submit: string; children: React.ReactNode }) {
