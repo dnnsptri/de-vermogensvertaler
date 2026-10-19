@@ -93,7 +93,7 @@ export const pensioencheck = {
 };
 
 export const aowGat = {
-  path: "/aow-gat",
+  path: "/aow-gatscan",
   title: "De AOW-gatscan",
   description:
     "Zie in twee minuten welk deel van je AOW je opbouwt als je niet sinds je 17e in Nederland woont, en wat dat scheelt per maand. Gratis scan van De Vermogensvertaler.", // OURS
