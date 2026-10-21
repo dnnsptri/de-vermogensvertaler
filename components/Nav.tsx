@@ -24,6 +24,15 @@ export function Nav() {
     };
   }, [open]);
 
+  // Once scrolled past the header, the button shrinks to just the circle: the label would sit over the content
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   // Close on Escape
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenOn(null);
@@ -58,7 +67,15 @@ export function Nav() {
         onClick={() => setOpen(!open)}
         className="fixed right-4 top-5 z-50 flex items-center gap-2 text-sm font-semibold text-mustard md:hidden"
       >
-        <span aria-hidden>{open ? "Sluit" : "Menu"}</span>
+        {/* Label fades out while scrolled; "Sluit" always shows when the menu is open */}
+        <span
+          aria-hidden
+          className={`transition-[opacity,translate] duration-300 motion-reduce:transition-none ${
+            scrolled && !open ? "translate-x-2 opacity-0" : "opacity-100"
+          }`}
+        >
+          {open ? "Sluit" : "Menu"}
+        </span>
         <span className="flex h-11 w-11 items-center justify-center rounded-full bg-mustard text-forest">
           <svg viewBox="0 0 24 24" className={`h-5 w-5 transition-transform duration-300 motion-reduce:transition-none ${open ? "rotate-90" : ""}`} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden>
             {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h16" />}
