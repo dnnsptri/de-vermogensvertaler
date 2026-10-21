@@ -4,6 +4,7 @@ import { home, site } from "@/content/site";
 import { Button, Emph, Eyebrow, Logo, Pattern, TextLink } from "@/components/ui";
 import { CalEmbed } from "@/components/CalEmbed";
 import { BackToTop } from "@/components/BackToTop";
+import { Nav } from "@/components/Nav";
 
 // Simple StoryBrand homepage: hero, voor wie, wat ik doe, over Alberta, succes, kennismaken.
 // One call to action throughout: the free intro call (Cal.com). Motion lives in globals.css.
@@ -34,11 +35,11 @@ export default function Home() {
 
         {/* Mobile: the logo sits on a green band above the photo, so iOS Safari (which tints its bars from the
             colour at the screen edge) starts green instead of photo-light */}
-        <header className="fade-up relative z-10 order-first mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-6 md:order-none md:px-8">
+        <header className="fade-in relative z-[55] order-first mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-6 md:order-none md:px-8">
           <Link href="/" aria-label={`${site.name}, naar boven`}>
             <Logo name={site.name} dark />
           </Link>
-          {/* Right slot stays empty until the Pensioencheck is live; then Alberta's "Pensioencheck" link goes here */}
+          <Nav />
         </header>
 
         <div className="relative mx-auto -mt-8 w-full max-w-7xl px-4 pb-16 md:my-auto md:px-8 md:pb-[6svh] md:pt-0">
@@ -143,6 +144,16 @@ export default function Home() {
                         </span>
                       ))}
                     </p>
+                    {step.links?.length ? (
+                      <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
+                        {step.links.map((link) => (
+                          // White text on the forest and ink cards; forest on white and mustard (4.75:1)
+                          <TextLink key={link.href} href={link.href} dark={i % 2 === 1}>
+                            {link.label}
+                          </TextLink>
+                        ))}
+                      </div>
+                    ) : null}
                   </div>
                 </li>
               );
@@ -152,7 +163,23 @@ export default function Home() {
           {/* What she doesn't do: the boundary that keeps her out of advice (her words) */}
           <div className="reveal mt-16 grid gap-6 border-t border-forest/20 pt-12 md:mt-24 md:grid-cols-[1fr_2fr] md:gap-16">
             <h3 className="text-[clamp(2rem,3.5vw,3.25rem)] leading-[1] text-forest">{what.not.title}</h3>
-            <p className="text-lg text-ink/80 md:text-xl">{what.not.text}</p>
+            <div>
+              <p className="text-lg text-ink/80 md:text-xl">{what.not.text}</p>
+
+              {/* Why she does this (AFM figures): her "knopje", folded shut so the section stays short. Native
+                  details/summary: keyboard and screen readers work without JS */}
+              <details className="group mt-8">
+                <summary className="inline-flex cursor-pointer list-none items-center gap-3 rounded-full border border-forest px-6 py-3 font-semibold text-forest transition-colors hover:bg-forest hover:text-white [&::-webkit-details-marker]:hidden">
+                  {what.why.title}
+                  <span aria-hidden className="text-xl leading-none transition-transform group-open:rotate-45">+</span>
+                </summary>
+                {what.why.body.map((p) => (
+                  <p key={p} className="mt-6 max-w-2xl text-lg text-ink/80 md:text-xl">
+                    {p}
+                  </p>
+                ))}
+              </details>
+            </div>
           </div>
         </div>
       </section>

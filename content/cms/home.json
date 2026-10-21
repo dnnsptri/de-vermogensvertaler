@@ -1,0 +1,87 @@
+{
+  "hero": {
+    "white": [
+      "Je carrière loopt",
+      "op rolletjes."
+    ],
+    "mustard": [
+      "Nu je vermogen",
+      "nog."
+    ],
+    "intro": "Je verdient goed en wilt als eerste in je familie vermogen opbouwen. Maar niemand van wie je kon leren hoe het kan? Dat verandert hier. Ik leg in gewone taal uit hoe geld, pensioen en beleggen werken, zodat jij weloverwogen zelf kunt bouwen. Geen financiële producten, geen persoonlijk advies."
+  },
+  "forWhom": {
+    "eyebrow": "Voor wie",
+    "title": "Herken je *dit*?",
+    "items": [
+      {
+        "title": "Je carrière loopt op rolletjes, je vermogen nog niet.",
+        "text": "Je verdient goed en hebt een buffer. Maar wat je daarna met je geld doet, weet je niet precies."
+      },
+      {
+        "title": "Niemand deed het je voor.",
+        "text": "Geen ouder, oom of tante die je kon bellen. Dus zoek je het zelf uit, tussen tips en verkooppraatjes."
+      },
+      {
+        "title": "Je wilt bouwen, maar eerst begrijpen.",
+        "text": "Inzicht in klare taal: wat kan, wat kost het, wat zijn de risico's. En hoe kom je van uitstellen naar een overzichtelijke, eigen aanpak?"
+      }
+    ]
+  },
+  "what": {
+    "eyebrow": "Wat ik doe",
+    "title": "Geld, vertaald naar *jouw* leven.",
+    "intro": "Ik leer je hoe geld, pensioen en beleggen werken, zodat je zelf kunt bouwen aan jouw vermogen. Het is te leren. Jij krijgt bij mij de kennis om een heldere aanpak te maken, en het vertrouwen om zelf aan de slag te gaan.",
+    "steps": [
+      {
+        "title": "De Pensioencheck",
+        "text": "Bereken in 2 minuten waar je staat en wat je blinde vlekken zijn."
+      },
+      {
+        "title": "Kennismaken",
+        "text": "Een kwartier, gratis. We kijken of mijn training bij je past."
+      },
+      {
+        "title": "De Kring",
+        "text": "In max 9 maanden samen leren bouwen aan je eigen vermogen, met live dagen, online sessies en Q&A. Start januari 2027 in Amsterdam en Rotterdam. Maximaal 9 plekken per groep. Schrijf je in voor mijn nieuwsbrief en blijf op de hoogte. Ook hoor je als eerste wanneer ik een gratis masterclass geef."
+      },
+      {
+        "title": "Zelf bouwen",
+        "text": "Je maakt je eigen afwegingen en bouwt zelf aan je eigen vermogen. Beleggen brengt risico's met zich mee: je kunt je inleg verliezen. Resultaten uit het verleden bieden geen garantie voor de toekomst."
+      }
+    ],
+    "not": {
+      "title": "Wat ik niet doe",
+      "text": "Zeggen wat je met je geld moet doen. Dat bepaal jij zelf, nadat je hebt geleerd wat de mogelijkheden en risico's zijn. Ik ben geen econoom of financieel adviseur. Ik verkoop geen financiële producten en ik beheer geen portefeuilles of jouw geld."
+    },
+    "why": {
+      "title": "Waarom ik dit doe",
+      "body": [
+        "Uit een verkenning van de Autoriteit Financiële Markten (2021) bleek, dat 24 procent van de hoogopgeleide Nederlanders zonder migratieachtergrond belegt, tegenover 9 procent van de hoogopgeleiden met een niet-westerse migratieachtergrond. Het cijfer voor die laatste groep is indicatief, want de groep in het onderzoek was klein. Toch zegt het veel. Zelfde opleidingsniveau, bijna drie keer minder deelname. Ik denk dat het verschil vooral zit in het referentiepunt: iemand om je heen van wie je de kunst kunt leren.",
+        "Zie mij als de tante van wie je het wel kan leren. Niet morgen of ooit, maar vandaag."
+      ]
+    }
+  },
+  "who": {
+    "eyebrow": "Over Alberta",
+    "title": "Ik ken de taal van de financiële wereld. En ik vertaal die naar de *jouwe*.",
+    "body": [
+      "Ik kwam rond mijn tiende uit Ghana naar Nederland en was de eerste in mijn familie die hier vermogen opbouwde. Met vallen en opstaan, want ik had niemand om mij heen die het mij kon voordoen. Dus leer ik het nu aan jou.",
+      "Ik heb ruim 20 jaar ervaring in de financiële journalistiek en communicatie en werkte onder andere voor grootbanken en een toezichthouder. Ruim tien jaar zat ik aan de andere kant van de tafel. Als woordvoerder legde ik journalisten actuele ontwikkelingen uit rond beleggen, pensioenen en sparen. Nu vertaal ik de wereld van vermogen naar die van professionals zoals jij, zonder dat ik je een financieel product hoef te verkopen."
+    ],
+    "stats": [
+      {
+        "value": "20+",
+        "label": "jaar ervaring in financiële journalistiek en communicatie"
+      }
+    ]
+  },
+  "success": {
+    "title": "Laat je vermogen ook op rolletjes lopen. Zodat jij *rustig* verder kunt."
+  },
+  "booking": {
+    "eyebrow": "Kennismaken",
+    "title": "Zet de *eerste* stap.",
+    "text": "Plan een gratis kennismakingsgesprek van een kwartier. Geen verkooppraatje: we kijken samen waar je staat en of De Kring bij je past."
+  }
+}

@@ -11,7 +11,7 @@ export type PrivacyBlock = string | { list: string[] } | { table: { head: string
 export const privacy = {
   path: "/privacyverklaring",
   title: "Privacyverklaring",
-  updated: "Laatst bijgewerkt: 19 oktober 2026",
+  updated: "Laatst bijgewerkt: 22 oktober 2026",
   lede: "De Vermogensvertaler gaat zorgvuldig om met je gegevens en vraagt alleen wat nodig is. Hieronder lees je welke gegevens ik verwerk, waarom, met wie ik ze deel en hoe lang ik ze bewaar.",
   sections: [
     {

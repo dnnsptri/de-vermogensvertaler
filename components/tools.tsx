@@ -3,6 +3,7 @@ import { site } from "@/content/site";
 import { toolCta, toolsLogUrl } from "@/content/tools";
 import { Button, Emph, Eyebrow, Logo, Pattern } from "@/components/ui";
 import { ToolInit } from "@/components/ToolInit";
+import { Nav } from "@/components/Nav";
 
 // Building blocks for the tools (Pensioencheck, AOW-gatscan). Server-rendered only: behaviour comes from
 // lib/tools.ts, which also runs in the standalone exports (scripts/export-tools.mjs). Hooks for that script:
@@ -66,10 +67,11 @@ export function PageHero({ eyebrow, heading, lede }: { eyebrow: string; heading:
   return (
     <section data-green className="relative overflow-clip bg-forest-deep text-white">
       <Pattern dark className="turn -right-48 -top-24 h-[40rem] w-[40rem]" />
-      <header className="relative mx-auto flex max-w-7xl items-center px-4 py-6 md:px-8">
+      <header className="relative z-[55] mx-auto flex max-w-7xl items-center justify-between px-4 py-6 md:px-8">
         <Link href="/" aria-label={`${site.name}, naar de homepage`}>
           <Logo name={site.name} dark />
         </Link>
+        <Nav />
       </header>
       <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-6 md:px-8 md:pb-24 md:pt-14">
         <Eyebrow dark>{eyebrow}</Eyebrow>

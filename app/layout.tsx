@@ -1,9 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import Link from "next/link";
 import { Inter, Young_Serif } from "next/font/google";
 import { site } from "@/content/site";
-import { ContactIcons, Logo } from "@/components/ui";
-import { CookieConsent, CookieSettingsLink } from "@/components/CookieConsent";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -40,33 +37,15 @@ const jsonLd = {
   founder: { "@type": "Person", name: site.owner, sameAs: site.social.filter((s) => s.href !== "#").map((s) => s.href) },
 };
 
+// Shared shell: fonts, metadata, structured data. The site chrome (footer, cookie bar) lives in
+// app/(site)/layout.tsx, so the editor at /keystatic gets a clean screen without it.
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="nl" className={`${inter.variable} ${youngSerif.variable} antialiased`}>
       <body id="top" className="flex min-h-screen flex-col bg-white text-ink">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-        {/* The header lives inside the hero (app/page.tsx), so it sits on the green like Menno's sketch */}
-        <main className="flex-1">{children}</main>
-
-        <CookieConsent />
-
-        <footer className="border-t border-white/15 bg-forest px-4 py-12 text-sm text-white/80 md:px-8">
-          <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-start md:justify-between">
-            <Logo name={site.name} dark className="h-9" />
-            <p className="max-w-md">{site.disclaimer}</p>
-            {/* Icons on top, both legal links together underneath */}
-            <div className="flex flex-col gap-4">
-              <ContactIcons />
-              <div className="flex flex-wrap gap-x-6 gap-y-2">
-                <Link href={site.privacyHref} className="underline underline-offset-4 hover:text-white">
-                  Privacyverklaring
-                </Link>
-                <CookieSettingsLink className="underline underline-offset-4 hover:text-white" />
-              </div>
-            </div>
-          </div>
-        </footer>
+        {children}
       </body>
     </html>
   );

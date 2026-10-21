@@ -1,5 +1,5 @@
 // Copy for /handleiding: Alberta's manual for the tools, the Google Sheet, the exports and Analytics.
-// Not linked from the site and not indexed; she gets the link by mail. Same inline markup as the tools:
+// Not linked from the site and not indexed (the editor itself is at /keystatic); she gets the link by mail. Same inline markup as the tools:
 // **bold** and [label](url). Keep it timeless: one-off to-dos belong in the mail, not here.
 import { site } from "./site";
 import { aowGat, pensioencheck } from "./tools";
@@ -11,8 +11,20 @@ export const handleiding = {
   title: "Handleiding",
   eyebrow: "Voor Alberta",
   heading: "Zo werken je *tools*",
-  lede: "Alles over de Pensioencheck en de AOW-gatscan op één plek: delen, meten, testen en aanpassen.",
+  lede: "Alles over je website en je tools op één plek: teksten aanpassen, delen, meten en testen.",
   sections: [
+    {
+      title: "Teksten aanpassen",
+      items: [
+        `Ga naar ${link("/keystatic")} en log in.`,
+        "Kies links de pagina: **Homepage**, **Pensioencheck** of **AOW-gatscan**. Pas de tekst aan en klik rechtsboven op **Save**. Na ongeveer een minuut staat je wijziging op de site.",
+        "**Geel woord in een titel?** Zet er sterretjes omheen, bijvoorbeeld: Herken je *dit*? Op de site wordt dat woord dan geel, zonder sterretjes.",
+        "Bij de grote titel bovenaan de homepage staat elke regel apart. Zo bepaal je zelf waar de titel afbreekt.",
+        "**Zelf aanpassen:** alle teksten op de homepage, en de titel en introductie van de Pensioencheck en de AOW-gatscan. Later komt daar je trainingspagina bij.",
+        "**Via Dennis:** blokken verplaatsen of toevoegen, nieuwe pagina's, foto's, knoppen en links, de berekeningen in de tools en je privacyverklaring.",
+        "Gaat er iets mis? Elke wijziging wordt bewaard, dus Dennis kan altijd terug naar een eerdere versie.",
+      ],
+    },
     {
       title: "Je tools",
       items: [
@@ -42,7 +54,7 @@ export const handleiding = {
       items: [
         "Naast de website heb je de tools ook als losse HTML-bestanden. Dubbelklik een bestand en het opent in je browser.",
         "Elk bestand is compleet, dus je kunt het ook mailen of op een andere plek zetten. Ze rekenen en loggen precies zoals de website.",
-        "**Pas ze niet zelf aan.** Dan lopen site en bestand uit elkaar. Na elke wijziging op de site krijg je een nieuwe ZIP.",
+        "**Pas ze niet zelf aan.** Dan lopen site en bestand uit elkaar. Je tekstwijzigingen op de site komen niet vanzelf in de bestanden: vraag Dennis om een nieuwe ZIP als je die nodig hebt.",
       ],
     },
     {
@@ -53,9 +65,9 @@ export const handleiding = {
       ],
     },
     {
-      title: "Iets aanpassen",
+      title: "Iets anders veranderen",
       items: [
-        `Mail wat je wilt veranderen en op welke pagina: [hi@dennispetri.nl](mailto:hi@dennispetri.nl). Een screenshot met de tekst erbij is genoeg.`,
+        `Voor alles wat je niet zelf aanpast: mail wat je wilt veranderen en op welke pagina naar [hi@dennispetri.nl](mailto:hi@dennispetri.nl). Een screenshot met een korte uitleg is genoeg.`,
         "**Elk halfjaar nakijken:** de AOW-bedragen veranderen per 1 januari en 1 juli, de belastingcijfers per 1 januari. Geef de nieuwe bedragen door, dan gelden ze meteen voor site en bestanden.",
       ],
     },

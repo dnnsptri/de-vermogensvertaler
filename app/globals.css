@@ -108,6 +108,16 @@ h3,
     transform: translateY(1rem);
   }
 }
+/* Opacity only, for the homepage header: a transform there (even a finished, filled one) makes the header the
+   containing block for its fixed children, so the phone menu and hamburger would stick to it, not the screen */
+.fade-in {
+  animation: fade-in 0.9s ease-out both;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
 /* Scroll cue: a small line that keeps travelling down */
 .cue {
   animation: cue 2s ease-in-out infinite;
@@ -204,6 +214,7 @@ h3,
   .hero-zoom,
   .rise,
   .fade-up,
+  .fade-in,
   .cue,
   .reveal,
   .scrub,

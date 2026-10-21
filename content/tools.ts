@@ -2,6 +2,9 @@
 // the em dashes removed; lines marked OURS are new and need her approval.
 // Inline markup in notes and hints: **bold**, [label](url), and {slot} for a value lib/tools.ts fills in.
 // Sentences that change with the answers (kicker, verdict, AOW age) live in lib/tools.ts.
+// The scans' hero texts are editable by Alberta (keystatic.config.ts); everything else here goes through Dennis.
+import pensioencheckHero from "./cms/pensioencheck.json" with { type: "json" };
+import aowGatHero from "./cms/aow-gatscan.json" with { type: "json" };
 
 // Google Apps Script web app for the anonymous statistics. Empty = no logging.
 export const toolsLogUrl =
@@ -27,10 +30,8 @@ export const pensioencheck = {
   title: "De Pensioencheck",
   description:
     "Zie in twee minuten wat je later maandelijks aan pensioen overhoudt, en of er iets ontbreekt. Gratis check van De Vermogensvertaler.",
-  eyebrow: "Gratis check", // OURS
   og: ["De Pensioencheck:", "wat houd je later", "per maand over?"], // OURS: share image headline
-  heading: "De *Pensioencheck*",
-  lede: "Zie in twee minuten wat je later maandelijks aan pensioen overhoudt, en of er iets ontbreekt.",
+  ...pensioencheckHero, // eyebrow, heading, lede: Alberta edits these in content/cms/pensioencheck.json
   steps: ["Over jou", "Je pensioen", "Later"],
   fields: {
     geboortejaar: { label: "In welk jaar ben je geboren?", placeholder: "Bijv. 1985" },
@@ -97,11 +98,8 @@ export const aowGat = {
   title: "De AOW-gatscan",
   description:
     "Zie in twee minuten welk deel van je AOW je opbouwt als je niet sinds je 17e in Nederland woont, en wat dat scheelt per maand. Gratis scan van De Vermogensvertaler.", // OURS
-  eyebrow: "Gratis scan", // OURS
   og: ["De AOW-gatscan:", "hoeveel AOW", "loop je mis?"], // OURS: share image headline
-  heading: "De *AOW-gatscan*",
-  // Was "niet vanaf zijn 17e": made gender-neutral and in the site's "je" form
-  lede: "Woon je niet al sinds je 17e onafgebroken in Nederland? In twee minuten zie je ongeveer welk deel van je AOW je opbouwt, en wat dat concreet betekent voor je maandinkomen later.",
+  ...aowGatHero, // eyebrow, heading, lede: Alberta edits these in content/cms/aow-gatscan.json
   fields: {
     geboortejaar: { label: "In welk jaar ben je geboren?", placeholder: "Bijv. 1985" },
     verhuisleeftijd: {
