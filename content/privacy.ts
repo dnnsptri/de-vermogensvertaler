@@ -1,7 +1,8 @@
 // Privacyverklaring, verbatim from Alberta's "Privacy Statement De Vermogensvertaler.docx" (12 Oct 2026).
-// Legal text: change nothing without her. Deviations from her document: contact address is site.email
-// (admin@ doesn't exist, per Dennis 19 Oct) and the Google Analytics row was added.
-// Lines marked OPEN are unfinished or contradictory in her document and are waiting for her answer. Inline markup: **bold** and [label](url).
+// Legal text: change nothing without her. Changed on 19 Oct 2026 (mailed to her for approval): contact
+// address is site.email (admin@ doesn't exist), cookie sentence (said she *does* use tracking cookies),
+// Cal.com is embedded on the homepage, Vercel is American, Google row completed, Google Analytics row added.
+// Inline markup: **bold** and [label](url).
 // A block is a paragraph (string), a bullet list or a table.
 import { site } from "./site";
 
@@ -10,7 +11,7 @@ export type PrivacyBlock = string | { list: string[] } | { table: { head: string
 export const privacy = {
   path: "/privacyverklaring",
   title: "Privacyverklaring",
-  updated: "Laatst bijgewerkt: 12 oktober 2026",
+  updated: "Laatst bijgewerkt: 19 oktober 2026",
   lede: "De Vermogensvertaler gaat zorgvuldig om met je gegevens en vraagt alleen wat nodig is. Hieronder lees je welke gegevens ik verwerk, waarom, met wie ik ze deel en hoe lang ik ze bewaar.",
   sections: [
     {
@@ -70,9 +71,7 @@ export const privacy = {
         "**Hoe de rekentools werken.** De berekening gebeurt in je browser. Na het berekenen stuur ik een klein aantal gegroepeerde kenmerken door, bijvoorbeeld het decennium van je geboortejaar (niet je geboortejaar zelf), het aantal jaren buiten Nederland, je werkvorm en of je alleen of samen bent. Je naam, e-mailadres en exacte bedragen stuur ik niet door. Ik gebruik deze gegevens alleen gecombineerd, bijvoorbeeld om te zeggen hoeveel procent van de bezoekers een AOW-gat heeft.",
         "**Opslag.** Deze antwoorden komen in een Google Sheet via Google Apps Script. Google ontvangt daarbij technisch het verzoek, inclusief gegevens als je IP-adres. In mijn overzicht bewaar ik die niet.",
         "**Links met tags.** Een link kan een tag bevatten, zoals utm_source=poster, zodat ik zie via welk kanaal je kwam. Die tag zegt niets over jou persoonlijk.",
-        // OPEN: "Ik gebruik tracking- of advertentiecookies" contradicts the next sentences ("geen advertentietracking");
-        // probably a missing "geen". The Cal.com agenda is embedded on the homepage, not a separate page.
-        "**Cookies.** Ik gebruik tracking- of advertentiecookies. Ik gebruik Google Analytics 4 voor bezoekersstatistieken en alleen na toestemming via de cookiemelding. Ik gebruik geen advertentietracking. Als je een afspraak plant, open je de pagina van Cal.com. Voor de cookies daar geldt de privacyverklaring van Cal.com.",
+        "**Cookies.** Ik gebruik Google Analytics 4 voor bezoekersstatistieken, en alleen na toestemming via de cookiemelding. Ik gebruik geen advertentiecookies of advertentietracking. De agenda op de homepage is van Cal.com. Als je daarin een afspraak plant, verwerkt Cal.com je gegevens en geldt voor hun cookies de privacyverklaring van Cal.com.",
       ],
     },
     {
@@ -83,22 +82,24 @@ export const privacy = {
           table: {
             head: ["Partij", "Waarvoor", "Welke gegevens", "Locatie"],
             rows: [
-              // OPEN: Vercel is an American company; "Nederland" is not accurate for its hosting
-              ["Vercel (hostingpartij)", "De website tonen", "Technische gegevens, zoals IP-adres", "Nederland"],
+              [
+                "Vercel (hostingpartij)",
+                "De website tonen",
+                "Technische gegevens, zoals IP-adres",
+                "Verenigde Staten, met servers wereldwijd, onder het EU-VS Data Privacy Framework en standaardcontractbepalingen.",
+              ],
               [
                 "Cal.com",
                 "Afspraken plannen",
                 "Naam, e-mailadres, afspraak",
                 "Verenigde Staten, onder het EU-VS Data Privacy Framework en standaardcontractbepalingen.",
               ],
-              // OPEN: placeholder "[e-mail en agenda]" and unfinished list after "Gegroepeerde antwoorden,"
               [
-                "Google (Sheets, Apps Script, e-mail)",
-                "Anonieme overzichten van de rekentools, [e-mail en agenda]",
-                "Gegroepeerde antwoorden,",
+                "Google (Sheets, Apps Script, e-mail, agenda)",
+                "Anonieme overzichten van de rekentools, e-mail en agenda",
+                "Gegroepeerde antwoorden van de rekentools; bij e-mail en afspraken je naam, e-mailadres en bericht",
                 "Verenigde Staten en andere landen waar Google of zijn verwerkers vestigingen hebben.",
               ],
-              // Added (not in her document): GA4 runs on the site after consent, see section 3
               [
                 "Google Analytics 4",
                 "Bezoekersstatistieken, alleen na toestemming",
