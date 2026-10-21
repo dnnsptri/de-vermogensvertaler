@@ -67,5 +67,5 @@ export const trainingLink =
   trainingen.items.length === 0
     ? null
     : trainingen.items.length === 1
-      ? { label: "Training", href: trainingHref(trainingen.items[0]) }
+      ? { label: trainingen.items[0].title, href: trainingHref(trainingen.items[0]) }
       : { label: "Trainingen", href: trainingen.path };

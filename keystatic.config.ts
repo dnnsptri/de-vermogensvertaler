@@ -64,10 +64,10 @@ export default config({
             title: line("Titel", emph),
             intro: para("Introductie"),
             steps: fields.array(fields.object({ title: line("Titel"), text: para("Tekst") }), {
-              label: "Vier stappen",
-              description: "De links onder de stappen (Pensioencheck, kennismaken, De Kring) staan vast.",
+              label: "Vijf stappen",
+              description: "De links onder de stappen (Pensioencheck, kennismaken, De Kring, nieuwsbrief) staan vast.",
               itemLabel: (p) => p.fields.title.value,
-              validation: { length: { min: 4, max: 4 } },
+              validation: { length: { min: 5, max: 5 } },
             }),
             not: fields.object({ title: line("Titel"), text: para("Tekst") }, { label: "Wat ik niet doe" }),
             why: fields.object(

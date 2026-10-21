@@ -84,8 +84,7 @@ export function Nav() {
         }`}
       >
         <ul>
-          {/* Contact left out: the booking button below goes to the same place */}
-          {[{ label: "Home", href: "/" }, ...site.nav.filter((item) => item.href !== `/${site.booking.href}`)].map((item, i) => (
+          {[{ label: "Home", href: "/" }, ...site.nav].map((item, i) => (
             <li
               key={item.href}
               // Items follow the panel in one by one; on close they go with it at once

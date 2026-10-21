@@ -2,7 +2,7 @@
 // Simple homepage (October 2026): what it is, who Alberta is, who it's for, plus booking.
 // The earlier 7-block homepage, detail pages and scans are parked in git tag wireframe-7blocks.
 // `*word*` in a heading marks the emphasised word (mustard highlight, or mustard text on dark).
-import { aowGat, pensioencheck } from "./tools.ts"; // .ts: scripts/export-tools.mjs loads this file in plain Node
+import { pensioencheck } from "./tools.ts"; // .ts: scripts/export-tools.mjs loads this file in plain Node
 import { trainingen, trainingHref, trainingLink } from "./trainingen.ts";
 import homeText from "./cms/home.json" with { type: "json" };
 
@@ -11,7 +11,6 @@ const email = "alberta@devermogensvertaler.nl";
 export const mailto = (subject: string) => `mailto:${email}?subject=${encodeURIComponent(subject)}`;
 
 const pensioenLink = { label: "Doe de Pensioencheck", href: pensioencheck.path }; // her button label
-const aowLink = { label: "Doe de AOW-gatscan", href: aowGat.path };
 
 export const site = {
   name: "De Vermogensvertaler",
@@ -34,15 +33,16 @@ export const site = {
   calLink: "devermogensvertaler/kennismaking",
   // Label as Alberta wrote it
   booking: { label: "Plan een kennismaking", href: "#kennismaken" },
-  // Main menu (components/Nav.tsx), agreed 21 Oct 2026: the scans, trainings, about, contact. On desktop the logo is
-  // home and the hero button books; the phone menu adds Home first and the booking button last.
-  // Training: straight to the training once there is one, until then the overview with its "binnenkort" text.
+  // Main menu (components/Nav.tsx). On desktop the logo is home and the hero button books; the phone menu adds
+  // Home first and the booking button last. No AOW-gatscan (Alberta, 21 Oct 2026): it's for a small group and she
+  // links it from targeted mailings; on the site the Pensioencheck is the lead magnet and the tools mustn't compete.
+  // Training: straight to the training once there is one (named after it), until then the overview.
   nav: [
     { label: "Pensioencheck", href: pensioencheck.path },
-    { label: "AOW-gatscan", href: aowGat.path },
     trainingLink ?? { label: "Training", href: trainingen.path },
     { label: "Over Alberta", href: "/#over" },
-    { label: "Contact", href: "/#kennismaken" }, // the booking section (Cal.com)
+    // Mail, not the booking section: she wanted a way to just send a message (21 Oct 2026)
+    { label: "Contact", href: mailto("Contact") },
   ],
   // Profiles with href "#" are hidden until the real URL is known
   social: [
@@ -57,17 +57,14 @@ export const site = {
 // Photos, button targets and step links stay here: she edits words, layout goes through Dennis.
 const text = homeText;
 
-// Text links under each homepage step, by position (her steps are fixed at four in the editor).
+// Text links under each homepage step, by position (her steps are fixed at five in the editor).
 // ponytail: matched by index; if she reorders steps in the editor, the links follow the position, not the step.
 const stepLinks = [
-  [pensioenLink, aowLink],
+  [pensioenLink],
   [{ label: "Plan een kennismaking", href: "#kennismaken" }],
-  // De Kring, her first training: "wachtlijst" goes to its sign-up page; the newsletter sentence gets its own link
-  [
-    { label: "Zet jezelf op de wachtlijst", href: trainingHref(trainingen.items[0]) },
-    { label: "Schrijf je in voor de nieuwsbrief", href: mailto("Nieuwsbrief") },
-  ],
-  [],
+  [], // Training: what you learn, in general
+  [{ label: "Bekijk De Kring", href: trainingHref(trainingen.items[0]) }], // her first training's sign-up page
+  [{ label: "Schrijf je in voor de nieuwsbrief", href: mailto("Nieuwsbrief") }], // Zelf bouwen ends with the newsletter
 ];
 
 export const home = {

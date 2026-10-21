@@ -1,10 +1,11 @@
 // Privacyverklaring, verbatim from Alberta's "Privacy Statement De Vermogensvertaler.docx" (12 Oct 2026).
 // Legal text: change nothing without her. Changed on 19 Oct 2026 (mailed to her for approval): contact
-// address is site.email (admin@ doesn't exist), cookie sentence (said she *does* use tracking cookies),
+// address (admin@ since 21 Oct 2026, her request), cookie sentence (said she *does* use tracking cookies),
 // Cal.com is embedded on the homepage, Vercel is American, Google row completed, Google Analytics row added.
 // Inline markup: **bold** and [label](url).
 // A block is a paragraph (string), a bullet list or a table.
-import { site } from "./site";
+// Her privacy address; everything else on the site mails site.email
+const email = "admin@devermogensvertaler.nl";
 
 export type PrivacyBlock = string | { list: string[] } | { table: { head: string[]; rows: string[][] } };
 
@@ -18,7 +19,7 @@ export const privacy = {
       title: "Wie is verantwoordelijk",
       blocks: [
         "Alberta Opoku, handelend onder de naam De Vermogensvertaler, is verantwoordelijk voor de verwerking van je gegevens.",
-        { list: ["KvK-nummer: 34345341", `E-mail: [${site.email}](mailto:${site.email})`] },
+        { list: ["KvK-nummer: 34345341", `E-mail: [${email}](mailto:${email})`] },
       ],
     },
     {
@@ -148,7 +149,7 @@ export const privacy = {
             "je gegevens in een gangbaar formaat te ontvangen (overdraagbaarheid).",
           ],
         },
-        `Stuur daarvoor een e-mail naar [${site.email}](mailto:${site.email}). Ik kan eerst vragen wie je bent. Ik reageer binnen één maand.`,
+        `Stuur daarvoor een e-mail naar [${email}](mailto:${email}). Ik kan eerst vragen wie je bent. Ik reageer binnen één maand.`,
         "Vind je dat ik niet goed met je gegevens omga? Neem dan eerst contact met mij op. Je kunt ook een klacht indienen bij de [Autoriteit Persoonsgegevens](https://www.autoriteitpersoonsgegevens.nl).",
         "Ik kan deze verklaring aanpassen, bijvoorbeeld als ik nieuwe tools of diensten gebruik. De datum bovenaan toont de laatste wijziging.",
       ],
