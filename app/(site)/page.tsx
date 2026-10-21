@@ -63,11 +63,9 @@ export default function Home() {
             <p className="fade-up max-w-md text-lg text-white/85 md:text-xl" style={{ "--d": "550ms" } as React.CSSProperties}>
               {hero.intro}
             </p>
-            <div className="fade-up flex flex-wrap items-center gap-x-8 gap-y-4" style={{ "--d": "700ms" } as React.CSSProperties}>
+            {/* One action only: "Over Alberta" is already in the menu (removed the "Meer over Alberta" link, 21 Oct 2026) */}
+            <div className="fade-up" style={{ "--d": "700ms" } as React.CSSProperties}>
               <Button href={site.booking.href}>{site.booking.label}</Button>
-              <TextLink href={hero.secondary.href} dark>
-                {hero.secondary.label}
-              </TextLink>
             </div>
           </div>
         </div>

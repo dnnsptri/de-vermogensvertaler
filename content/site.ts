@@ -76,7 +76,6 @@ export const home = {
     // Fixed line breaks: the white lines, then the mustard lines
     title: [text.hero.white, text.hero.mustard],
     intro: text.hero.intro,
-    secondary: { label: "Meer over Alberta", href: "#over" },
     photo: {
       src: "/photos/alberta-tafel.jpg",
       alt: "Alberta Opoku in een gele trui, zittend op een tafel met boeken over geld",
