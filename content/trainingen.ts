@@ -46,7 +46,7 @@ const deKring: Training = {
     { label: "Groepsgrootte", value: "2 groepen van max 9 deelnemers" },
     { label: "Investering", value: "€9.075 incl. btw (particulieren) of €7.500 ex btw (ondernemers)" },
   ],
-  signup: { label: "Ik schrijf me in voor De Kring", subject: "Inschrijving De Kring" },
+  signup: { label: "Meld je aan voor de wachtlijst", subject: "Wachtlijst De Kring" },
   footnote: "¹ Bron: AFM, 'Onbenut vermogen: een studie naar niet-beleggers' (2026).",
 };
 

@@ -15,7 +15,7 @@ const pensioenLink = { label: "Doe de Pensioencheck", href: pensioencheck.path }
 export const site = {
   name: "De Vermogensvertaler",
   owner: "Alberta Opoku",
-  tagline: "Financiële taal, vertaald naar jouw leven",
+  tagline: "Financiën, vertaald naar jouw wereld",
   // SEO: canonical domain (override per environment with NEXT_PUBLIC_SITE_URL) and default description
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://devermogensvertaler.nl",
   description:
@@ -63,7 +63,7 @@ const stepLinks = [
   [pensioenLink],
   [{ label: "Plan een kennismaking", href: "#kennismaken" }],
   [], // Training: what you learn, in general
-  [{ label: "Bekijk De Kring", href: trainingHref(trainingen.items[0]) }], // her first training's sign-up page
+  [{ label: "Meld je aan voor de wachtlijst", href: trainingHref(trainingen.items[0]) }], // her first training, sign-up is a waitlist for now (23 Oct 2026)
   [{ label: "Schrijf je in voor de nieuwsbrief", href: mailto("Nieuwsbrief") }], // Zelf bouwen ends with the newsletter
 ];
 
