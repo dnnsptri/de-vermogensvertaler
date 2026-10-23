@@ -16,20 +16,20 @@ export type Training = {
   benefits: string[];
   outro: string[];
   facts: { label: string; value: string }[];
-  signup: { label: string; subject: string }; // mail subject until Stripe, see mailto in content/site.ts
+  signup: { label: string; href: string | null; subject: string }; // href: her link (Stripe); null = mail with this subject
   footnote?: string;
 };
 
 // Her texts come from the editor (content/cms/de-kring.json, keystatic.config.ts). Slug, title (= menu label)
-// and the mail subject stay here: changing them moves the URL or the menu, so that goes through Dennis.
-const { signupLabel, ...kringText } = deKringText;
+// and the fallback mail subject stay here: changing them moves the URL or the menu, so that goes through Dennis.
+const { signupLabel, signupUrl, ...kringText } = deKringText;
 const deKring: Training = {
   slug: "de-kring",
   title: "De Kring",
   summary: "In max 9 maanden samen leren bouwen aan je eigen vermogen, met live dagen, online sessies en Q&A.",
   when: "Start januari 2027 in Amsterdam en Rotterdam",
   ...kringText,
-  signup: { label: signupLabel, subject: "Wachtlijst De Kring" },
+  signup: { label: signupLabel, href: signupUrl, subject: "Wachtlijst De Kring" },
 };
 
 export const trainingen = {

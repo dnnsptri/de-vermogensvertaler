@@ -148,7 +148,11 @@ export default config({
           itemLabel: (p) => `${p.fields.label.value}: ${p.fields.value.value}`,
           validation: { length: { min: 1, max: 4 } },
         }),
-        signupLabel: line("Tekst op de knop", "De knop opent een mail aan jou."),
+        signupLabel: line("Tekst op de knop"),
+        signupUrl: fields.url({
+          label: "Link van de knop",
+          description: "Bijvoorbeeld je Stripe-link. Leeg laten: de knop opent een mail aan jou.",
+        }),
         footnote: para("Voetnoot (bron)"),
       },
     }),

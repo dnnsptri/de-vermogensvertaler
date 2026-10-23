@@ -39,7 +39,7 @@ export const handleiding = {
     {
       title: "Wat je zelf doet en wat via Dennis gaat",
       items: [
-        "**Zelf:** alle teksten op de homepage en op de pagina van De Kring, en de titel en introductie van de Pensioencheck en de AOW-gatscan.",
+        "**Zelf:** alle teksten op de homepage en op de pagina van De Kring (ook de link van de aanmeldknop, bijvoorbeeld je Stripe-link), en de titel en introductie van de Pensioencheck en de AOW-gatscan.",
         "**Via Dennis:** blokken verplaatsen of toevoegen, nieuwe pagina's, foto's, knoppen en links, de berekeningen in de tools en je privacyverklaring.",
         "**Gaat er iets mis?** Elke wijziging wordt bewaard, dus Dennis kan altijd terug naar een eerdere versie.",
       ],

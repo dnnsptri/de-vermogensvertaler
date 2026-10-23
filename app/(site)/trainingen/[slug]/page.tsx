@@ -60,7 +60,7 @@ export default async function Training({ params }: PageProps<"/trainingen/[slug]
               ))}
             </dl>
             <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
-              <Button href={mailto(t.signup.subject)}>{t.signup.label}</Button>
+              <Button href={t.signup.href || mailto(t.signup.subject)}>{t.signup.label}</Button>
               <span className="text-white/85">
                 Liever eerst kennismaken?{" "}
                 <TextLink href={`/${site.booking.href}`} dark>
