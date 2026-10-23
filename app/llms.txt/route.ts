@@ -1,5 +1,6 @@
 import { home, site } from "@/content/site";
 import { aowGat, pensioencheck } from "@/content/tools";
+import { trainingen, trainingHref } from "@/content/trainingen";
 
 // /llms.txt: plain-text summary for AI assistants (ChatGPT, Claude, Perplexity), built from the same
 // copy as the homepage so it never drifts. Static: generated once at build time.
@@ -38,6 +39,23 @@ Twee gratis rekenhulpen, zonder account en zonder dat je naam of e-mail nodig is
 ${[pensioencheck, aowGat].map((t) => `- [${t.title}](${site.url}${t.path}): ${t.description}`).join("\n")}
 
 Uitgangspunten: ${pensioencheck.fine}
+
+## Training
+
+${trainingen.items
+  .map(
+    (t) => `### [${t.title}](${site.url}${trainingHref(t)})
+
+${t.lede} ${t.when}.
+
+${t.intro.join("\n\n")}
+
+${t.benefitsTitle}:
+${t.benefits.map((b) => `- ${b}`).join("\n")}
+
+${t.facts.map((f) => `- ${f.label}: ${f.value}`).join("\n")}${t.footnote ? `\n\n${t.footnote}` : ""}`,
+  )
+  .join("\n\n")}
 
 ## ${home.who.eyebrow}
 

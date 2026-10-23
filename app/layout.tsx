@@ -15,7 +15,8 @@ export const metadata: Metadata = {
   title: { default: `${site.name} | ${site.tagline}`, template: `%s | ${site.name}` },
   description: site.description,
   alternates: { canonical: "/" },
-  openGraph: { type: "website", locale: "nl_NL", siteName: site.name, url: "/" },
+  // No og:url here: every page inherited "/" and shared as the homepage. Canonical covers pages without their own.
+  openGraph: { type: "website", locale: "nl_NL", siteName: site.name },
   twitter: { card: "summary_large_image" },
   robots: { index: indexable, follow: indexable },
 };
@@ -33,6 +34,9 @@ const jsonLd = {
   url: site.url,
   email: site.email,
   areaServed: "NL",
+  inLanguage: "nl",
+  // Topics for AI answers ("wie legt pensioen en beleggen uit in gewone taal?")
+  knowsAbout: ["Pensioen", "AOW", "Vermogensopbouw", "Beleggen", "Sparen", "Financiële educatie"],
   // sameAs links the profiles to this site, so search engines treat them as the same person
   founder: { "@type": "Person", name: site.owner, sameAs: site.social.filter((s) => s.href !== "#").map((s) => s.href) },
 };

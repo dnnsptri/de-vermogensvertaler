@@ -16,13 +16,30 @@ const find = async (params: Promise<{ slug: string }>) => {
 
 export async function generateMetadata({ params }: PageProps<"/trainingen/[slug]">): Promise<Metadata> {
   const t = await find(params);
-  return { title: t.title, description: t.lede, alternates: { canonical: trainingHref(t) } };
+  return {
+    title: t.title,
+    description: t.lede,
+    alternates: { canonical: trainingHref(t) },
+    openGraph: { type: "website", locale: "nl_NL", siteName: site.name, url: trainingHref(t) },
+  };
 }
 
 export default async function Training({ params }: PageProps<"/trainingen/[slug]">) {
   const t = await find(params);
+  // Course structured data: search engines and AI assistants see what the training is and who gives it.
+  // No price here: the facts are free text Alberta edits, a copied number would drift.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: t.title,
+    description: [t.lede, ...t.intro].join(" "),
+    url: site.url + trainingHref(t),
+    inLanguage: "nl",
+    provider: { "@type": "Organization", name: site.name, url: site.url },
+  };
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <PageHero eyebrow={t.eyebrow} heading={t.title} lede={t.lede} />
       <section className="bg-cream px-4 py-12 md:px-8 md:py-20">
         <div className="mx-auto grid max-w-5xl gap-6">
