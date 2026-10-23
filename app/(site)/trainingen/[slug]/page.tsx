@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { mailto, site } from "@/content/site";
 import { trainingen, trainingHref } from "@/content/trainingen";
 import { card, PageHero } from "@/components/tools";
-import { Button, TextLink } from "@/components/ui";
+import { Button, JsonLd, TextLink } from "@/components/ui";
 
 // One page per training in content/trainingen.ts, built at deploy time; unknown slugs are a 404
 export const dynamicParams = false;
@@ -39,7 +39,7 @@ export default async function Training({ params }: PageProps<"/trainingen/[slug]
   };
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={jsonLd} />
       <PageHero eyebrow={t.eyebrow} heading={t.title} lede={t.lede} />
       <section className="bg-cream px-4 py-12 md:px-8 md:py-20">
         <div className="mx-auto grid max-w-5xl gap-6">

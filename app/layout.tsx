@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Young_Serif } from "next/font/google";
 import { site } from "@/content/site";
+import { JsonLd } from "@/components/ui";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -47,7 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="nl" className={`${inter.variable} ${youngSerif.variable} antialiased`}>
       <body id="top" className="flex min-h-screen flex-col bg-white text-ink">
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <JsonLd data={jsonLd} />
 
         {children}
       </body>

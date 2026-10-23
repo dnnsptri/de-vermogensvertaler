@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { site } from "@/content/site";
 import { toolCta, toolsLogUrl } from "@/content/tools";
-import { Button, Emph, Eyebrow, Logo, Pattern } from "@/components/ui";
+import { Button, Emph, Eyebrow, JsonLd, Logo, Pattern } from "@/components/ui";
 import { ToolInit } from "@/components/ToolInit";
 import { Nav } from "@/components/Nav";
 
@@ -48,7 +48,7 @@ export function ToolPage({ tool, c, children }: { tool: string; c: ToolCopy; chi
   };
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <JsonLd data={jsonLd} />
       <PageHero eyebrow={eyebrow} heading={heading} lede={lede} />
 
       <section className="bg-cream px-4 py-12 md:px-8 md:py-20">

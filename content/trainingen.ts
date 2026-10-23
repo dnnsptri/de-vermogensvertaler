@@ -22,14 +22,16 @@ export type Training = {
 
 // Her texts come from the editor (content/cms/de-kring.json, keystatic.config.ts). Slug, title (= menu label)
 // and the fallback mail subject stay here: changing them moves the URL or the menu, so that goes through Dennis.
-const { signupLabel, signupUrl, ...kringText } = deKringText;
+const { signupLabel, signupUrl: rawUrl, ...kringText } = deKringText;
+const signupUrl = rawUrl as string | null; // null in the JSON until she fills it in
 const deKring: Training = {
   slug: "de-kring",
   title: "De Kring",
   summary: "In max 9 maanden samen leren bouwen aan je eigen vermogen, met live dagen, online sessies en Q&A.",
   when: "Start januari 2027 in Amsterdam en Rotterdam",
   ...kringText,
-  signup: { label: signupLabel, href: signupUrl, subject: "Wachtlijst De Kring" },
+  // https only: the editor's URL field would also accept javascript: links
+  signup: { label: signupLabel, href: signupUrl?.startsWith("https://") ? signupUrl : null, subject: "Wachtlijst De Kring" },
 };
 
 export const trainingen = {

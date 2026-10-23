@@ -176,3 +176,8 @@ export function ContactIcons({ className = "" }: { className?: string }) {
     </ul>
   );
 }
+
+// Structured data tag. Escapes "<" so editor text (Keystatic) can never close the script tag and inject HTML.
+export function JsonLd({ data }: { data: object }) {
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />;
+}
