@@ -1,4 +1,4 @@
-// Copy for /handleiding: Alberta's manual for the tools, the Google Sheet, the exports and Analytics.
+// Copy for /handleiding: Alberta's manual, editing in Keystatic first, then the tools and the Google Sheet.
 // Not linked from the site and not indexed (the editor itself is at /keystatic); she gets the link by mail. Same inline markup as the tools:
 // **bold** and [label](url). Keep it timeless: one-off to-dos belong in the mail, not here.
 import { site } from "./site";
@@ -10,19 +10,38 @@ export const handleiding = {
   path: "/handleiding",
   title: "Handleiding",
   eyebrow: "Voor Alberta",
-  heading: "Zo werken je *tools*",
-  lede: "Alles over je website en je tools op één plek: teksten aanpassen, delen, meten en testen.",
+  heading: "Zo pas je je *site* aan",
+  lede: "Je teksten pas je zelf aan in Keystatic. Hier lees je hoe, en hoe je je tools deelt en test.",
   sections: [
     {
-      title: "Teksten aanpassen",
+      title: "Inloggen",
       items: [
-        `Ga naar ${link("/keystatic")} en log in.`,
-        "Kies links de pagina: **Homepage**, **Pensioencheck**, **AOW-gatscan** of **De Kring**. Pas de tekst aan en klik rechtsboven op **Save**. Na ongeveer een minuut staat je wijziging op de site.",
+        `Ga naar ${link("/keystatic")} en log in met je Keystatic-account.`,
+        "Zet de link in je bladwijzers, dan heb je hem altijd bij de hand.",
+      ],
+    },
+    {
+      title: "Een tekst aanpassen",
+      items: [
+        "Kies links de pagina: **Homepage**, **Pensioencheck**, **AOW-gatscan** of **De Kring**.",
+        "Elk blok op de pagina heeft een eigen kopje met de velden eronder, in dezelfde volgorde als op de site.",
+        "Pas de tekst aan en klik rechtsboven op **Save**. Na ongeveer een minuut staat je wijziging op de site. Ververs de pagina om hem te zien.",
+      ],
+    },
+    {
+      title: "Handige trucs",
+      items: [
         "**Geel woord in een titel?** Zet er sterretjes omheen, bijvoorbeeld: Herken je *dit*? Op de site wordt dat woord dan geel, zonder sterretjes.",
-        "Bij de grote titel bovenaan de homepage staat elke regel apart. Zo bepaal je zelf waar de titel afbreekt.",
-        "**Zelf aanpassen:** alle teksten op de homepage en op de pagina van De Kring, en de titel en introductie van de Pensioencheck en de AOW-gatscan.",
+        "**Waar breekt de titel af?** Bij de grote titel bovenaan de homepage staat elke regel apart. Zo bepaal je zelf waar een nieuwe regel begint.",
+        "**Alinea of punt erbij?** Bij lijsten, zoals de alinea's over jou of wat De Kring oplevert, kun je er een toevoegen of weghalen. Het aantal stappen en uitspraken op de homepage ligt vast, omdat de vormgeving daarop is gebouwd.",
+      ],
+    },
+    {
+      title: "Wat je zelf doet en wat via Dennis gaat",
+      items: [
+        "**Zelf:** alle teksten op de homepage en op de pagina van De Kring, en de titel en introductie van de Pensioencheck en de AOW-gatscan.",
         "**Via Dennis:** blokken verplaatsen of toevoegen, nieuwe pagina's, foto's, knoppen en links, de berekeningen in de tools en je privacyverklaring.",
-        "Gaat er iets mis? Elke wijziging wordt bewaard, dus Dennis kan altijd terug naar een eerdere versie.",
+        "**Gaat er iets mis?** Elke wijziging wordt bewaard, dus Dennis kan altijd terug naar een eerdere versie.",
       ],
     },
     {
@@ -47,21 +66,6 @@ export const handleiding = {
         "Na elke berekening komt er een anonieme regel in je Sheet, met dezelfde kolommen als voorheen.",
         "Er staat geen naam, e-mail, geboortejaar of exact bedrag in. Alleen gegroepeerde antwoorden, zoals het decennium waarin iemand geboren is of een bandbreedte van het tekort.",
         `**Zelf testen?** Zet ?test=1 achter de link, bijvoorbeeld ${pensioencheck.path}?test=1. Dan telt je test niet mee.`,
-      ],
-    },
-    {
-      title: "De losse bestanden (ZIP)",
-      items: [
-        "Naast de website heb je de tools ook als losse HTML-bestanden. Dubbelklik een bestand en het opent in je browser.",
-        "Elk bestand is compleet, dus je kunt het ook mailen of op een andere plek zetten. Ze rekenen en loggen precies zoals de website.",
-        "**Pas ze niet zelf aan.** Dan lopen site en bestand uit elkaar. Je tekstwijzigingen op de site komen niet vanzelf in de bestanden: vraag Dennis om een nieuwe ZIP als je die nodig hebt.",
-      ],
-    },
-    {
-      title: "Bezoekers in Google Analytics",
-      items: [
-        "Open [Google Analytics](https://analytics.google.com), kies **Rapporten** en dan **Realtime** om te zien wie er nu op je site is.",
-        "Analytics telt alleen bezoekers die in de cookiemelding op **Akkoord** klikken. De echte aantallen zijn dus hoger. Je Google Sheet telt wel iedereen die een tool invult.",
       ],
     },
     {

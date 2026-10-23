@@ -60,7 +60,7 @@ export default function Home() {
             )}
           </h1>
           <div className="mt-8 flex flex-col gap-8 md:mt-10 md:flex-row md:items-end md:justify-between">
-            <p className="fade-up max-w-md text-lg text-white/85 md:text-xl" style={{ "--d": "550ms" } as React.CSSProperties}>
+            <p className="fade-up max-w-[40rem] text-lg text-white/85 md:text-xl" style={{ "--d": "550ms" } as React.CSSProperties}>
               {hero.intro}
             </p>
             {/* One action only: "Over Alberta" is already in the menu (removed the "Meer over Alberta" link, 21 Oct 2026) */}
@@ -106,7 +106,7 @@ export default function Home() {
             <h2 className="text-display text-forest">
               <Emph text={what.title} />
             </h2>
-            <p className="mt-8 max-w-xl text-lg text-ink/75 md:text-xl">{what.intro}</p>
+            <p className="mt-8 max-w-[45rem] text-lg text-ink/75 md:text-xl">{what.intro}</p>
           </div>
 
           <ol className="mt-16 md:mt-24">
@@ -135,8 +135,9 @@ export default function Home() {
                     <h3 className="text-[clamp(2rem,4.5vw,4.5rem)] leading-[1]">{step.title}</h3>
                   </div>
                   <div className="mt-3 md:mt-4 md:pl-40">
+                    {/* Step text capped at 720px: wider lines on desktop, still readable (23 Oct 2026) */}
                     {/* One sentence per line from md up, so the lines break where the thought breaks */}
-                    <p className="text-lg opacity-80 md:text-xl">
+                    <p className="max-w-[45rem] text-lg opacity-80 md:text-xl">
                       {step.text.split(/(?<=[.?!])\s+/).map((sentence) => (
                         <span key={sentence} className="md:block">
                           {sentence}{" "}
