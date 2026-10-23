@@ -22,7 +22,7 @@ export default config({
   cloud: { project: "dennis-petri/de-vermogensvertaler" },
   ui: {
     brand: { name: "De Vermogensvertaler" },
-    navigation: { Homepage: ["home"], Scans: ["pensioencheck", "aowGatscan"] },
+    navigation: { Homepage: ["home"], Scans: ["pensioencheck", "aowGatscan"], Training: ["deKring"] },
   },
   singletons: {
     home: singleton({
@@ -119,6 +119,38 @@ export default config({
       path: "content/cms/aow-gatscan",
       format: { data: "json" },
       schema: hero,
+    }),
+    deKring: singleton({
+      label: "De Kring",
+      path: "content/cms/de-kring",
+      format: { data: "json" },
+      schema: {
+        eyebrow: line("Kopje boven de titel"),
+        lede: para("Introductie onder de titel"),
+        intro: fields.array(para("Alinea"), {
+          label: "Tekst",
+          itemLabel: (p) => p.value.slice(0, 60),
+          validation: { length: { min: 1 } },
+        }),
+        benefitsTitle: line("Kopje boven de lijst"),
+        benefits: fields.array(line("Punt"), {
+          label: "Wat het oplevert",
+          itemLabel: (p) => p.value,
+          validation: { length: { min: 1 } },
+        }),
+        outro: fields.array(para("Alinea"), {
+          label: "Tekst onder de lijst",
+          itemLabel: (p) => p.value.slice(0, 60),
+          validation: { length: { min: 1 } },
+        }),
+        facts: fields.array(fields.object({ label: line("Kopje"), value: line("Tekst") }), {
+          label: "Feiten (start, groep, prijs)",
+          itemLabel: (p) => `${p.fields.label.value}: ${p.fields.value.value}`,
+          validation: { length: { min: 1, max: 4 } },
+        }),
+        signupLabel: line("Tekst op de knop", "De knop opent een mail aan jou."),
+        footnote: para("Voetnoot (bron)"),
+      },
     }),
   },
 });

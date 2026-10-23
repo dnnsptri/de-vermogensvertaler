@@ -17,10 +17,10 @@ export const handleiding = {
       title: "Teksten aanpassen",
       items: [
         `Ga naar ${link("/keystatic")} en log in.`,
-        "Kies links de pagina: **Homepage**, **Pensioencheck** of **AOW-gatscan**. Pas de tekst aan en klik rechtsboven op **Save**. Na ongeveer een minuut staat je wijziging op de site.",
+        "Kies links de pagina: **Homepage**, **Pensioencheck**, **AOW-gatscan** of **De Kring**. Pas de tekst aan en klik rechtsboven op **Save**. Na ongeveer een minuut staat je wijziging op de site.",
         "**Geel woord in een titel?** Zet er sterretjes omheen, bijvoorbeeld: Herken je *dit*? Op de site wordt dat woord dan geel, zonder sterretjes.",
         "Bij de grote titel bovenaan de homepage staat elke regel apart. Zo bepaal je zelf waar de titel afbreekt.",
-        "**Zelf aanpassen:** alle teksten op de homepage, en de titel en introductie van de Pensioencheck en de AOW-gatscan. Later komt daar je trainingspagina bij.",
+        "**Zelf aanpassen:** alle teksten op de homepage en op de pagina van De Kring, en de titel en introductie van de Pensioencheck en de AOW-gatscan.",
         "**Via Dennis:** blokken verplaatsen of toevoegen, nieuwe pagina's, foto's, knoppen en links, de berekeningen in de tools en je privacyverklaring.",
         "Gaat er iets mis? Elke wijziging wordt bewaard, dus Dennis kan altijd terug naar een eerdere versie.",
       ],
