@@ -4,6 +4,7 @@
 // and only erasable TypeScript (Node runs this file directly for the export's sanity checks).
 // The markup is server-rendered (components/tools); this script only fills [data-out] slots and
 // toggles [data-note] blocks. Sentences that bend with the answers live here, fixed copy in content/tools.ts.
+// The mail route (app/api/uitkomst) imports the calculations as well.
 
 // ---- Figures. Check per 1 January and 1 July (AOW) and per 1 January (tax). ----
 export const AOW_BRUTO = { alleen: 1662.16, samen: 1139.39 }; // per month, from 1 July 2026 (SVB)
@@ -47,25 +48,173 @@ export function aowLeeftijd(geboortejaar: number) {
   return { jaren: 67, maanden: 3, vast: false }; // not fixed yet: rises with life expectancy
 }
 
-// ---- Behaviour ----
+// ---- Calculations ----
+// Pure: answers in, texts out. The browser fills the page with the result, the mail route
+// (app/api/uitkomst) recalculates it from the same answers for the mail, so both always match
+// and the mail never carries text sent in from outside.
 
-const eur = (n: number) =>
+// Raw form values, as FormData gives them: strings, a ticked checkbox is "on"
+export type Antwoorden = Record<string, string>;
+// out: text per [data-out] slot; notes: which [data-note] blocks show; log: the anonymous statistics
+export type Uitkomst = { out: Record<string, string>; notes: Record<string, boolean>; log: Record<string, string | number> };
+export type Fout = { error: string; field: string };
+
+export const eur = (n: number) =>
   new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(Math.round(n));
 
+// Empty input = NaN, so "0" stays a valid answer; accepts a Dutch decimal comma
+const getal = (v: string | undefined) => {
+  const s = (v ?? "").trim();
+  return s === "" ? NaN : Number(s.replace(",", "."));
+};
+
 const klasse = (n: number, grenzen: [number, string][]) => grenzen.find(([max]) => n <= max)?.[1] ?? "";
+
+const decennium = (gb: number) => {
+  const d = Math.floor(gb / 10) * 10;
+  return `${d}-${d + 9}`;
+};
+
+const fout = (error: string, field: string): Fout => ({ error, field });
+
+export function rekenPensioencheck(a: Antwoorden, jaar: number): Uitkomst | Fout {
+  const gb = getal(a.geboortejaar);
+  const werk = a.werk ?? "";
+  const woon = a.woon ?? "";
+  const jaren = getal(a.jaren);
+  const keuze = a.pensioenKeuze ?? "";
+  const bedrag = keuze === "bedrag" ? getal(a.bedrag) : 0;
+  const wens = getal(a.wens);
+  const samen = woon === "samen";
+  const mee = samen && a.partnerMee === "on";
+
+  if (!(gb >= 1950 && gb <= 2008)) return fout("Vul een geboortejaar tussen 1950 en 2008 in.", "geboortejaar");
+  if (!werk) return fout("Kies hoe je werkt.", "werk");
+  if (!woon) return fout("Kies hoe je woont.", "woon");
+  if (isNaN(jaren) || jaren < 0 || jaren > 50)
+    return fout("Vul het aantal jaren buiten Nederland in (0 als je altijd in Nederland woonde).", "jaren");
+  if (jaren > Math.max(0, jaar - gb - AOW_START))
+    return fout("Dat zijn meer jaren dan je sinds je 17e hebt geleefd. Controleer je invoer.", "jaren");
+  if (keuze === "bedrag" && (isNaN(bedrag) || bedrag < 0))
+    return fout('Vul je verwachte pensioen per maand in, of kies "Weet ik niet".', "bedrag");
+  if (isNaN(wens) || wens <= 0) return fout("Vul in wat je later per maand wilt kunnen uitgeven.", "wens");
+
+  let pJaren = 0;
+  let pKeuze = "geen";
+  let pBedrag = 0;
+  if (mee) {
+    pJaren = getal(a.pJaren);
+    pKeuze = a.pPensioenKeuze ?? "";
+    pBedrag = pKeuze === "bedrag" ? getal(a.pBedrag) : 0;
+    if (isNaN(pJaren) || pJaren < 0 || pJaren > 50)
+      return fout("Vul bij je partner het aantal jaren buiten Nederland in.", "pJaren");
+    if (pKeuze === "bedrag" && (isNaN(pBedrag) || pBedrag < 0))
+      return fout('Vul het pensioen van je partner in, of kies "Weet ik niet".', "pBedrag");
+  }
+
+  const ik = persoon(jaren, bedrag, !samen);
+  const partner = mee ? persoon(pJaren, pBedrag, false) : null;
+  const net = ik.net + (partner?.net ?? 0);
+  const verlies = ik.verlies + (partner?.verlies ?? 0);
+  const tekort = wens - net;
+  const ikOnbekend = keuze === "onbekend";
+  const pOnbekend = mee && pKeuze === "onbekend";
+  const onbekend = ikOnbekend || pOnbekend;
+
+  const al = aowLeeftijd(gb);
+  const aowJaar = gb + al.jaren + (al.maanden >= 6 ? 1 : 0);
+
+  return {
+    out: {
+      kicker: onbekend
+        ? `Alleen op basis van AOW ${mee ? "houden jullie" : "houd je"} later ongeveer over`
+        : `Naar schatting ${mee ? "houden jullie" : "houd je"} later over`,
+      net: eur(net),
+      verdict: tekort > 0 ? `Er ontbreekt ongeveer ${eur(tekort)} per maand` : `Je komt op papier ${eur(-tekort)} per maand uit`,
+      onbekendWie:
+        ikOnbekend && pOnbekend
+          ? "Jullie aanvullende pensioenen zijn"
+          : ikOnbekend
+            ? "Je aanvullend pensioen is"
+            : "Het aanvullend pensioen van je partner is",
+      wensWie: mee ? "Jullie wens" : "Jouw wens",
+      wens: eur(wens),
+      aow: eur(ik.aowBruto + (partner?.aowBruto ?? 0)),
+      pensioen: eur(ik.pensioenBruto + (partner?.pensioenBruto ?? 0)),
+      gatTekst: mee ? "Door jaren buiten Nederland lopen jullie AOW mis." : `Je mist ${ik.gat}% van je AOW door jaren buiten Nederland (2% per jaar).`,
+      verlies: eur(verlies),
+      aowTekst:
+        aowJaar <= jaar
+          ? "Je AOW is naar verwachting al ingegaan of gaat dit jaar in. Controleer in Mijn SVB wat je precies ontvangt."
+          : al.vast
+            ? `Je AOW gaat naar verwachting rond ${aowJaar} in, op ${al.jaren} jaar${al.maanden ? ` en ${al.maanden} maanden` : ""}.`
+            : `Je AOW-leeftijd staat voor jouw geboortejaar nog niet vast. Die stijgt mee met de levensverwachting. Reken op z'n vroegst op rond ${aowJaar}, op ${al.jaren} jaar en ${al.maanden} maanden of later.`,
+    },
+    notes: { onbekend, verlies: verlies >= 1, zzp: werk !== "loondienst" && keuze === "geen" },
+    log: {
+      tool: "pensioencheck",
+      gemisteJaren: jaren, // keeps the Apps Script's existing columns working
+      gatPercentage: ik.gat,
+      status: woon,
+      decennium: decennium(gb),
+      werk,
+      partner: mee ? "ja" : samen ? "niet-meegenomen" : "nee",
+      pensioen: keuze,
+      jarenKlasse: klasse(jaren, [[0, "0"], [5, "1-5"], [10, "6-10"], [20, "11-20"], [99, "21+"]]),
+      tekort: tekort <= 0 ? "geen" : klasse(tekort, [[250, "1-250"], [500, "251-500"], [1000, "501-1000"], [Infinity, "1000+"]]),
+      onbekend: onbekend ? "ja" : "nee",
+    },
+  };
+}
+
+export function rekenAowGat(a: Antwoorden, jaar: number): Uitkomst | Fout {
+  const gb = getal(a.geboortejaar);
+  const verhuis = getal(a.verhuisleeftijd);
+  const woon = a.woon ?? "";
+
+  if (!(gb >= 1950 && gb <= 2008)) return fout("Vul een geboortejaar tussen 1950 en 2008 in.", "geboortejaar");
+  if (isNaN(verhuis) || verhuis < 0) return fout("Vul in op welke leeftijd je in Nederland kwam wonen.", "verhuisleeftijd");
+  if (verhuis > jaar - gb) return fout("Die leeftijd ligt na je huidige leeftijd. Controleer je invoer.", "verhuisleeftijd");
+  if (!woon) return fout("Kies hoe je woont bij je pensioen.", "woon");
+
+  const jaren = Math.max(0, verhuis - AOW_START);
+  const gat = aowGat(jaren);
+  const gemisMaand = Math.round((gat / 100) * (woon === "alleen" ? AOW_BRUTO.alleen : AOW_BRUTO.samen));
+
+  return {
+    out: {
+      gat: String(gat),
+      opgebouwd: String(100 - gat),
+      jaren: `${jaren} niet-verzekerde ${jaren === 1 ? "jaar" : "jaren"}`,
+      gemisMaand: eur(gemisMaand),
+      gemisJaar: eur(gemisMaand * 12),
+    },
+    notes: { geenGat: jaren === 0, gat: jaren > 0 },
+    log: { tool: "aow-gatscan", gemisteJaren: jaren, gatPercentage: gat, status: woon, decennium: decennium(gb) },
+  };
+}
+
+// data-tool value → calculation
+export const rekenaars: Record<string, (a: Antwoorden, jaar: number) => Uitkomst | Fout> = {
+  pensioencheck: rekenPensioencheck,
+  "aow-gat": rekenAowGat,
+};
+
+// Check for the mail field; the mail route repeats it. A bare address only: no "Name <a@b>", commas or
+// semicolons that a mail API could read as extra recipients behind the rate limit's back.
+export const geldigAdres = (v: string) =>
+  v.length <= 254 && /^[A-Za-z0-9._%+'-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/.test(v);
+
+// ---- Behaviour ----
 
 // Helpers bound to one tool's root element
 function scope(root: HTMLElement) {
   const field = (id: string) => root.querySelector<HTMLInputElement>(`#${id}`)!;
+  const out = (name: string, text: string) =>
+    root.querySelectorAll(`[data-out="${name}"]`).forEach((el) => (el.textContent = text));
   return {
     field,
-    // Empty input = NaN, so "0" stays a valid answer; accepts a Dutch decimal comma
-    num: (id: string) => {
-      const v = field(id).value.trim();
-      return v === "" ? NaN : Number(v.replace(",", "."));
-    },
-    out: (name: string, text: string) =>
-      root.querySelectorAll(`[data-out="${name}"]`).forEach((el) => (el.textContent = text)),
+    out,
     note: (name: string, show: boolean) =>
       root.querySelectorAll<HTMLElement>(`[data-note="${name}"]`).forEach((el) => (el.hidden = !show)),
     // The message moves under the field it is about, and focus goes there: on a phone the field
@@ -108,17 +257,32 @@ function log(root: HTMLElement, payload: Record<string, string | number>) {
   fetch(`${url}?${params}`, { mode: "no-cors", keepalive: true }).catch(() => {});
 }
 
-const decennium = (gb: number) => {
-  const d = Math.floor(gb / 10) * 10;
-  return `${d}-${d + 9}`;
-};
+// Sends the answers to the mail route, which mails the result (and the opt-in confirmation).
+// The result is already on screen, so this only reports back in the status line.
+async function mail(tool: string, a: Antwoorden, status: (text: string) => void) {
+  status(`Je uitkomst wordt gemaild naar ${a.email}…`);
+  try {
+    const res = await fetch("/api/uitkomst", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ tool, antwoorden: a }),
+    });
+    if (res.status === 429) return status("Je liet je uitkomst al een paar keer mailen. Hij staat hieronder; probeer het later nog eens.");
+    if (!res.ok) throw new Error(String(res.status));
+    status(
+      `Je uitkomst is gemaild naar ${a.email}.` +
+        (a.optin === "on" ? " Bevestig je aanmelding voor tips en inspiratie via de knop in de tweede mail." : ""),
+    );
+  } catch {
+    status("Mailen lukte nu niet. Je uitkomst staat hieronder, probeer het later nog eens.");
+  }
+}
 
-function pensioencheck(root: HTMLElement, signal: AbortSignal) {
-  const { field, num, out, note, error, show } = scope(root);
+// Pensioencheck only: partner and amount fields appear when they apply, and the wish label follows
+function pensioencheckUI(root: HTMLElement, signal: AbortSignal) {
+  const { field, out } = scope(root);
   const val = (id: string) => field(id).value;
   const hide = (id: string, hidden: boolean) => ((root.querySelector<HTMLElement>(`#${id}`)!).hidden = hidden);
-
-  // Partner and amount fields only appear when they apply
   const updateUI = () => {
     const samen = val("woon") === "samen";
     const mee = samen && field("partnerMee").checked;
@@ -138,161 +302,46 @@ function pensioencheck(root: HTMLElement, signal: AbortSignal) {
   for (const id of ["woon", "partnerMee", "pensioenKeuze", "pPensioenKeuze"])
     field(id).addEventListener("change", updateUI, { signal });
   updateUI();
+}
 
-  root.querySelector("form")!.addEventListener(
+function wire(root: HTMLElement, signal: AbortSignal) {
+  const tool = root.dataset.tool!;
+  const reken = rekenaars[tool];
+  if (!reken) return;
+  if (tool === "pensioencheck") pensioencheckUI(root, signal);
+  const { out, note, error, show } = scope(root);
+  const form = root.querySelector("form")!;
+  // The mail field exists on the site only; the standalone export drops it (data-export="remove")
+  const gate = !!root.querySelector("#email");
+
+  form.addEventListener(
     "submit",
     (e) => {
       e.preventDefault();
-      const jaar = new Date().getFullYear();
-      const gb = num("geboortejaar");
-      const werk = val("werk");
-      const woon = val("woon");
-      const jaren = num("jaren");
-      const keuze = val("pensioenKeuze");
-      const bedrag = keuze === "bedrag" ? num("bedrag") : 0;
-      const wens = num("wens");
-      const samen = woon === "samen";
-      const mee = samen && field("partnerMee").checked;
-
-      if (!(gb >= 1950 && gb <= 2008)) return error("Vul een geboortejaar tussen 1950 en 2008 in.", "geboortejaar");
-      if (!werk) return error("Kies hoe je werkt.", "werk");
-      if (!woon) return error("Kies hoe je woont.", "woon");
-      if (isNaN(jaren) || jaren < 0 || jaren > 50)
-        return error("Vul het aantal jaren buiten Nederland in (0 als je altijd in Nederland woonde).", "jaren");
-      if (jaren > Math.max(0, jaar - gb - AOW_START))
-        return error("Dat zijn meer jaren dan je sinds je 17e hebt geleefd. Controleer je invoer.", "jaren");
-      if (keuze === "bedrag" && (isNaN(bedrag) || bedrag < 0))
-        return error('Vul je verwachte pensioen per maand in, of kies "Weet ik niet".', "bedrag");
-      if (isNaN(wens) || wens <= 0) return error("Vul in wat je later per maand wilt kunnen uitgeven.", "wens");
-
-      let pJaren = 0;
-      let pKeuze = "geen";
-      let pBedrag = 0;
-      if (mee) {
-        pJaren = num("pJaren");
-        pKeuze = val("pPensioenKeuze");
-        pBedrag = pKeuze === "bedrag" ? num("pBedrag") : 0;
-        if (isNaN(pJaren) || pJaren < 0 || pJaren > 50)
-          return error("Vul bij je partner het aantal jaren buiten Nederland in.", "pJaren");
-        if (pKeuze === "bedrag" && (isNaN(pBedrag) || pBedrag < 0))
-          return error('Vul het pensioen van je partner in, of kies "Weet ik niet".', "pBedrag");
+      const a = Object.fromEntries(new FormData(form)) as Antwoorden;
+      const u = reken(a, new Date().getFullYear());
+      if ("error" in u) return error(u.error, u.field);
+      if (gate) {
+        a.email = (a.email ?? "").trim();
+        if (!geldigAdres(a.email)) return error("Vul een geldig e-mailadres in, dan mailen we je de uitkomst.", "email");
       }
 
-      const ik = persoon(jaren, bedrag, !samen);
-      const partner = mee ? persoon(pJaren, pBedrag, false) : null;
-      const net = ik.net + (partner?.net ?? 0);
-      const verlies = ik.verlies + (partner?.verlies ?? 0);
-      const tekort = wens - net;
-      const ikOnbekend = keuze === "onbekend";
-      const pOnbekend = mee && pKeuze === "onbekend";
-      const onbekend = ikOnbekend || pOnbekend;
-
-      const al = aowLeeftijd(gb);
-      const aowJaar = gb + al.jaren + (al.maanden >= 6 ? 1 : 0);
-
-      out(
-        "kicker",
-        onbekend
-          ? `Alleen op basis van AOW ${mee ? "houden jullie" : "houd je"} later ongeveer over`
-          : `Naar schatting ${mee ? "houden jullie" : "houd je"} later over`,
-      );
-      out("net", eur(net));
-      out(
-        "verdict",
-        tekort > 0 ? `Er ontbreekt ongeveer ${eur(tekort)} per maand` : `Je komt op papier ${eur(-tekort)} per maand uit`,
-      );
-      out(
-        "onbekendWie",
-        ikOnbekend && pOnbekend
-          ? "Jullie aanvullende pensioenen zijn"
-          : ikOnbekend
-            ? "Je aanvullend pensioen is"
-            : "Het aanvullend pensioen van je partner is",
-      );
-      note("onbekend", onbekend);
-      out("wensWie", mee ? "Jullie wens" : "Jouw wens");
-      out("wens", eur(wens));
-      out("aow", eur(ik.aowBruto + (partner?.aowBruto ?? 0)));
-      out("pensioen", eur(ik.pensioenBruto + (partner?.pensioenBruto ?? 0)));
-      out(
-        "gatTekst",
-        mee ? "Door jaren buiten Nederland lopen jullie AOW mis." : `Je mist ${ik.gat}% van je AOW door jaren buiten Nederland (2% per jaar).`,
-      );
-      out("verlies", eur(verlies));
-      note("verlies", verlies >= 1);
-      note("zzp", werk !== "loondienst" && keuze === "geen");
-      out(
-        "aowTekst",
-        aowJaar <= jaar
-          ? "Je AOW is naar verwachting al ingegaan of gaat dit jaar in. Controleer in Mijn SVB wat je precies ontvangt."
-          : al.vast
-            ? `Je AOW gaat naar verwachting rond ${aowJaar} in, op ${al.jaren} jaar${al.maanden ? ` en ${al.maanden} maanden` : ""}.`
-            : `Je AOW-leeftijd staat voor jouw geboortejaar nog niet vast. Die stijgt mee met de levensverwachting. Reken op z'n vroegst op rond ${aowJaar}, op ${al.jaren} jaar en ${al.maanden} maanden of later.`,
-      );
+      for (const [k, v] of Object.entries(u.out)) out(k, v);
+      for (const [k, v] of Object.entries(u.notes)) note(k, v);
+      out("mailStatus", "");
       show();
 
-      log(root, {
-        tool: "pensioencheck",
-        gemisteJaren: jaren, // keeps the Apps Script's existing columns working
-        gatPercentage: ik.gat,
-        status: woon,
-        decennium: decennium(gb),
-        werk,
-        partner: mee ? "ja" : samen ? "niet-meegenomen" : "nee",
-        pensioen: keuze,
-        jarenKlasse: klasse(jaren, [[0, "0"], [5, "1-5"], [10, "6-10"], [20, "11-20"], [99, "21+"]]),
-        tekort: tekort <= 0 ? "geen" : klasse(tekort, [[250, "1-250"], [500, "251-500"], [1000, "501-1000"], [Infinity, "1000+"]]),
-        onbekend: onbekend ? "ja" : "nee",
-      });
+      // Honeypot filled in = a bot: show the result, but mail nothing
+      if (gate && !a.website) mail(tool, a, (t) => out("mailStatus", t));
+      log(root, u.log);
     },
     { signal },
   );
 }
-
-function aowGatscan(root: HTMLElement, signal: AbortSignal) {
-  const { field, num, out, note, error, show } = scope(root);
-
-  root.querySelector("form")!.addEventListener(
-    "submit",
-    (e) => {
-      e.preventDefault();
-      const jaar = new Date().getFullYear();
-      const gb = num("geboortejaar");
-      const verhuis = num("verhuisleeftijd");
-      const woon = field("woon").value;
-
-      if (!(gb >= 1950 && gb <= 2008)) return error("Vul een geboortejaar tussen 1950 en 2008 in.", "geboortejaar");
-      if (isNaN(verhuis) || verhuis < 0) return error("Vul in op welke leeftijd je in Nederland kwam wonen.", "verhuisleeftijd");
-      if (verhuis > jaar - gb) return error("Die leeftijd ligt na je huidige leeftijd. Controleer je invoer.", "verhuisleeftijd");
-      if (!woon) return error("Kies hoe je woont bij je pensioen.", "woon");
-
-      const jaren = Math.max(0, verhuis - AOW_START);
-      const gat = aowGat(jaren);
-      const gemisMaand = Math.round((gat / 100) * (woon === "alleen" ? AOW_BRUTO.alleen : AOW_BRUTO.samen));
-
-      note("geenGat", jaren === 0);
-      note("gat", jaren > 0);
-      out("gat", String(gat));
-      out("opgebouwd", String(100 - gat));
-      out("jaren", `${jaren} niet-verzekerde ${jaren === 1 ? "jaar" : "jaren"}`);
-      out("gemisMaand", eur(gemisMaand));
-      out("gemisJaar", eur(gemisMaand * 12));
-      show();
-
-      log(root, { tool: "aow-gatscan", gemisteJaren: jaren, gatPercentage: gat, status: woon, decennium: decennium(gb) });
-    },
-    { signal },
-  );
-}
-
-const tools: Record<string, (root: HTMLElement, signal: AbortSignal) => void> = {
-  pensioencheck,
-  "aow-gat": aowGatscan,
-};
 
 // Wires every [data-tool] on the page. Returns a cleanup, so React's double effect in dev doesn't double-bind.
 export function initTools() {
   const ac = new AbortController();
-  document.querySelectorAll<HTMLElement>("[data-tool]").forEach((root) => tools[root.dataset.tool!]?.(root, ac.signal));
+  document.querySelectorAll<HTMLElement>("[data-tool]").forEach((root) => wire(root, ac.signal));
   return () => ac.abort();
 }

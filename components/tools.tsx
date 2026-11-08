@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { site } from "@/content/site";
-import { toolCta, toolsLogUrl } from "@/content/tools";
+import { toolCta, toolMail, toolsLogUrl } from "@/content/tools";
 import { Button, Emph, Eyebrow, JsonLd, Logo, Pattern } from "@/components/ui";
 import { ToolInit } from "@/components/ToolInit";
 import { Nav } from "@/components/Nav";
@@ -100,10 +100,29 @@ export function ToolForm({ submit, children }: { submit: string; children: React
         role="alert"
         className="mt-3 flex items-start gap-2 rounded-lg border-l-4 border-mustard bg-mustard/20 px-3 py-2 text-sm font-semibold text-forest-deep empty:hidden before:mt-px before:flex before:h-4 before:w-4 before:shrink-0 before:items-center before:justify-center before:rounded-full before:bg-forest before:text-[0.65rem] before:text-white before:content-['!']"
       />
+      <MailFields />
       <div className="mt-8">
         <Button>{submit}</Button>
       </div>
     </form>
+  );
+}
+
+// Mail address (required), the unticked opt-in and a honeypot. Site only: the standalone export drops the
+// fieldset (data-export="remove"), and lib/tools.ts then skips the mail. No nested fieldset, the export's regex needs that.
+function MailFields() {
+  return (
+    <fieldset data-export="remove" className="mt-10 border-t border-forest/15 pt-8">
+      <Field id="email" label={toolMail.label} hint={toolMail.hint}>
+        <input type="email" id="email" name="email" required autoComplete="email" placeholder={toolMail.placeholder} className={`mt-2 ${control}`} />
+      </Field>
+      <label className="mt-6 flex items-start gap-3 text-base">
+        <input type="checkbox" id="optin" name="optin" className="mt-1 h-5 w-5 shrink-0 accent-forest" />
+        <span>{toolMail.optin}</span>
+      </label>
+      {/* Honeypot: invisible to people and screen readers, bots fill it in. lib/tools.ts and the mail route ignore those. */}
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden className="absolute -left-[9999px] h-px w-px opacity-0" />
+    </fieldset>
   );
 }
 
@@ -191,6 +210,8 @@ export function Note({ text, note, warn = false }: { text: string; note?: string
 export function ToolResult({ children }: { children: React.ReactNode }) {
   return (
     <div data-result hidden tabIndex={-1} className={`${card} mt-6 scroll-mt-6 outline-none`}>
+      {/* Mail status, filled by lib/tools.ts; announced politely once the mail is sent */}
+      <p data-out="mailStatus" role="status" className="mb-6 rounded-xl bg-cream px-4 py-3 text-sm text-ink/75 empty:hidden" />
       {children}
       <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-forest/15 pt-8">
         <Button href={toolCta.href}>

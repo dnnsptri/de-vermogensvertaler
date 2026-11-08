@@ -44,7 +44,7 @@ function inlineCss(href, preloaded) {
 }
 
 mkdirSync(outDir, { recursive: true });
-for (const { path } of [pensioencheck, aowGatCopy]) {
+for (const { path, submit, submitExport } of [pensioencheck, aowGatCopy]) {
   let html = readFileSync(join(nextDir, "server/app", `${path}.html`), "utf8");
   const preloaded = new Set([...html.matchAll(/href="\/_next\/static\/media\/([^"]+)" as="font"/g)].map((m) => m[1]));
 
@@ -59,11 +59,14 @@ for (const { path } of [pensioencheck, aowGatCopy]) {
     .replace(/<(\w+)[^>]*data-export="remove"[^>]*>[\s\S]*?<\/\1>/g, "")
     // Site-relative links and icons point to the live site
     .replace(/(href|src)="\/(?!\/)/g, `$1="${site.url}/`)
+    // No mail in the copies (the mail fields are removed above), so the button keeps its calculate label
+    .replace(`>${submit}<`, `>${submitExport}<`)
     .replace("</body>", `${toolScript}</body>`);
 
   // A leftover reference to Next's assets would break offline; fail loudly instead
   assert.ok(!html.includes("/_next/"), `${path}: still references /_next/`);
   assert.ok(html.includes("data-tool="), `${path}: tool markup missing`);
+  assert.ok(!html.includes('id="email"') && html.includes(`>${submitExport}<`), `${path}: mail fields or mail label left in`);
 
   const file = join(outDir, `${path.slice(1)}.html`);
   writeFileSync(file, html);

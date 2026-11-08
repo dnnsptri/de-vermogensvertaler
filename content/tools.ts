@@ -19,6 +19,33 @@ export const toolCta = {
   again: "Opnieuw berekenen",
 };
 
+// Mail field under both tools (site only), the result mail and the opt-in confirmation (Alberta, 28 and 30 Oct 2026).
+// The address is required; the note says the result shows on screen regardless. Lines marked OURS need her approval.
+export const toolMail = {
+  label: "Je e-mailadres",
+  placeholder: "naam@voorbeeld.nl",
+  hint: "Je uitkomst zie je meteen hier op het scherm. Je krijgt hem ook per mail, met de disclaimer. Je adres gebruik ik alleen daarvoor, tenzij je hieronder kiest voor tips en inspiratie. Zo ga ik met je gegevens om: [privacyverklaring](/privacyverklaring).", // Alberta, 4 Nov 2026
+  optin: "Ja, stuur mij af en toe tips, inspiratie en uitnodigingen voor trainingen van De Vermogensvertaler.", // Alberta, 4 Nov 2026
+  // Result mail. Intro OURS, ctaIntro Alberta 4 Nov 2026 (the old one sounded like personal advice); the disclaimer follows the button
+  intro: "Hier is je uitkomst, zoals je hem net op de site zag.",
+  ctaIntro: "Wil je deze uitkomst samen doornemen? Plan een gratis kennismaking.",
+  // Opt-in confirmation mail and page (double opt-in). OURS, button and wording Alberta 4 Nov 2026
+  confirm: {
+    subject: "Bevestig je aanmelding bij De Vermogensvertaler",
+    body: "Je gaf aan dat je af en toe tips, inspiratie en uitnodigingen voor trainingen van De Vermogensvertaler wilt ontvangen. Bevestig dat met de knop hieronder. Heb je dit niet gevraagd? Dan hoef je niets te doen, je krijgt dan geen mails van mij.",
+    button: "Ja, ik wil tips en inspiratie ontvangen",
+    after: "Afmelden kan altijd, via de link onderaan elke mail. Zo ga ik met je gegevens om: [privacyverklaring](/privacyverklaring).",
+    page: {
+      eyebrow: "Aanmelding",
+      heading: "Bevestig je *aanmelding*",
+      lede: "Nog één klik, dan stuur ik je af en toe tips, inspiratie en uitnodigingen voor trainingen. Afmelden kan altijd, onderaan elke mail.",
+      doneHeading: "Je bent *aangemeld*",
+      doneLede: "Dank je wel. Je ontvangt af en toe tips, inspiratie en uitnodigingen voor trainingen van De Vermogensvertaler. Afmelden kan altijd, onderaan elke mail.",
+      error: "Deze link klopt niet, is niet compleet of is ouder dan 7 dagen. Vul de tool opnieuw in en vink het vakje aan, dan krijg je een nieuwe link.",
+    },
+  },
+};
+
 const woonOptions: [string, string][] = [
   ["", "Kies…"],
   ["alleen", "Alleenstaand"],
@@ -77,7 +104,8 @@ export const pensioencheck = {
     // The label text itself is swapped by lib/tools.ts (alone, together, or only your part)
     wens: { placeholder: "Bijv. 2500", hint: "In euro's van nu, dus zonder rekening te houden met inflatie." },
   },
-  submit: "Bereken wat ik later overhoud",
+  submit: "Toon en mail me wat ik later overhoud", // Alberta, 4 Nov 2026: the result shows on screen as well
+  submitExport: "Bereken wat ik later overhoud", // standalone HTML files: no mail there
   result: {
     perMonth: "netto per maand",
     // Order = order on screen; keys are the data-out slots lib/tools.ts fills
@@ -109,7 +137,8 @@ export const aowGat = {
     },
     woon: { label: "Woonsituatie bij pensionering", options: woonOptions },
   },
-  submit: "Bereken mijn AOW-gat",
+  submit: "Toon en mail me mijn AOW-gat", // Alberta, 4 Nov 2026
+  submitExport: "Bereken mijn AOW-gat",
   result: {
     unit: "% AOW-gat",
     geenGat:

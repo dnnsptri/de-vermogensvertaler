@@ -2,6 +2,8 @@
 // Legal text: change nothing without her. Changed on 19 Oct 2026 (mailed to her for approval): contact
 // address (admin@ since 21 Oct 2026, her request), cookie sentence (said she *does* use tracking cookies),
 // Cal.com is embedded on the homepage, Vercel is American, Google row completed, Google Analytics row added.
+// 2 Nov 2026: result by mail and opt-in via Resend (new rows in the first, processors and retention tables, extra
+// paragraph under "Rekentools en cookies"). Reworked after her feedback of 4 Nov 2026, approved by Alberta.
 // Inline markup: **bold** and [label](url).
 // A block is a paragraph (string), a bullet list or a table.
 // Her privacy address; everything else on the site mails site.email
@@ -12,7 +14,7 @@ export type PrivacyBlock = string | { list: string[] } | { table: { head: string
 export const privacy = {
   path: "/privacyverklaring",
   title: "Privacyverklaring",
-  updated: "Laatst bijgewerkt: 22 oktober 2026",
+  updated: "Laatst bijgewerkt: 2 november 2026",
   lede: "De Vermogensvertaler gaat zorgvuldig om met je gegevens en vraagt alleen wat nodig is. Hieronder lees je welke gegevens ik verwerk, waarom, met wie ik ze deel en hoe lang ik ze bewaar.",
   sections: [
     {
@@ -30,10 +32,22 @@ export const privacy = {
             head: ["Situatie", "Gegevens", "Doel", "Grondslag"],
             rows: [
               [
-                "Rekentools (Pensioencheck, AOW-gatscan)",
+                "Rekentools (Pensioencheck, AOW-gatscan): statistieken",
                 "Alleen gegroepeerde antwoorden, zoals decennium van geboorte, aantal jaren buiten Nederland, werkvorm, alleen of samen. Geen naam, e-mailadres of exacte bedragen.",
                 "Anonieme statistieken en verbetering van de tools",
                 "Gerechtvaardigd belang",
+              ],
+              [
+                "Rekentools: je uitkomst per mail",
+                "E-mailadres en je uitkomst",
+                "Je de uitkomst mailen, met de uitnodiging voor een kennismaking",
+                "Uitvoering van je verzoek",
+              ],
+              [
+                "Tips, inspiratie en uitnodigingen voor trainingen (alleen als je het vakje aanvinkt en je aanmelding bevestigt)",
+                "E-mailadres",
+                "Je af en toe tips, inspiratie en uitnodigingen voor trainingen mailen",
+                "Toestemming, die je altijd kunt intrekken via de afmeldlink in elke mail",
               ],
               [
                 "Een kennismaking plannen (Cal.com)",
@@ -69,7 +83,8 @@ export const privacy = {
     {
       title: "Rekentools en cookies",
       blocks: [
-        "**Hoe de rekentools werken.** De berekening gebeurt in je browser. Na het berekenen stuur ik een klein aantal gegroepeerde kenmerken door, bijvoorbeeld het decennium van je geboortejaar (niet je geboortejaar zelf), het aantal jaren buiten Nederland, je werkvorm en of je alleen of samen bent. Je naam, e-mailadres en exacte bedragen stuur ik niet door. Ik gebruik deze gegevens alleen gecombineerd, bijvoorbeeld om te zeggen hoeveel procent van de bezoekers een AOW-gat heeft.",
+        "**Hoe de rekentools werken.** De berekening gebeurt in je browser. Na het berekenen stuur ik een klein aantal gegroepeerde kenmerken door, bijvoorbeeld het decennium van je geboortejaar (niet je geboortejaar zelf), het aantal jaren buiten Nederland, je werkvorm en of je alleen of samen bent. Je naam, e-mailadres en exacte bedragen komen niet in dat overzicht. Ik gebruik deze gegevens alleen gecombineerd, bijvoorbeeld om te zeggen hoeveel procent van de bezoekers een AOW-gat heeft.",
+        "**Je uitkomst per mail.** Om de uitkomst te zien vul je je e-mailadres in. Je antwoorden gaan dan naar de website, die de uitkomst opnieuw berekent en je antwoorden niet bewaart. Naar mijn mailsysteem Resend gaan alleen je e-mailadres en de mail met je uitkomst. Ik meet niet of je die mail opent of op links klikt. Je antwoorden en je adres komen niet in het overzicht met statistieken. Zonder vinkje kom je niet op mijn mailinglijst; je mail staat dan alleen 30 dagen in het verzendoverzicht van Resend. Vink je het vakje voor tips, inspiratie en uitnodigingen aan, dan krijg je eerst een mail om dat te bevestigen. Pas na die bevestiging kom je op mijn mailinglijst, en afmelden kan altijd onderaan elke mail.",
         "**Opslag.** Deze antwoorden komen in een Google Sheet via Google Apps Script. Google ontvangt daarbij technisch het verzoek, inclusief gegevens als je IP-adres. In mijn overzicht bewaar ik die niet.",
         "**Links met tags.** Een link kan een tag bevatten, zoals utm_source=poster, zodat ik zie via welk kanaal je kwam. Die tag zegt niets over jou persoonlijk.",
         "**Cookies.** Ik gebruik Google Analytics 4 voor bezoekersstatistieken, en alleen na toestemming via de cookiemelding. Ik gebruik geen advertentiecookies of advertentietracking. De agenda op de homepage is van Cal.com. Als je daarin een afspraak plant, verwerkt Cal.com je gegevens en geldt voor hun cookies de privacyverklaring van Cal.com.",
@@ -107,6 +122,12 @@ export const privacy = {
                 "Bezochte pagina's, apparaat, browser en globale locatie. Google Analytics slaat geen IP-adressen op.",
                 "Verenigde Staten, onder het EU-VS Data Privacy Framework en standaardcontractbepalingen.",
               ],
+              [
+                "Resend",
+                "Je uitkomst mailen, en tips, inspiratie en uitnodigingen voor trainingen als je je daarvoor aanmeldt",
+                "E-mailadres en de inhoud van de mail, zoals je uitkomst",
+                "Verenigde Staten, onder het EU-VS Data Privacy Framework en standaardcontractbepalingen.",
+              ],
               ["Stripe", "Betalingen", "Betaalgegevens, factuurgegevens", "Europese Unie, Verenigde Staten en India."],
               ["ManyChat", "Automatisch antwoord op Instagram", "Je profielnaam en bericht", "Verenigde Staten en andere landen."],
             ],
@@ -124,6 +145,8 @@ export const privacy = {
             head: ["Gegevens", "Bewaartermijn"],
             rows: [
               ["Anonieme antwoorden van de rekentools", "Zolang ze nuttig zijn voor statistieken; ze zijn niet herleidbaar tot een persoon"],
+              ["Verzonden mails met je uitkomst (bij Resend)", "30 dagen, daarna verwijdert Resend ze"],
+              ["E-mailadres op de mailinglijst", "Tot je je afmeldt, en uiterlijk 24 maanden na je laatste contact met mij. Na afmelden bewaar ik alleen dat je afgemeld bent, zodat je geen mail meer krijgt"],
               ["Afspraak of vraag zonder vervolg", "Maximaal 12 maanden na het laatste contact"],
               ["Deelnemers aan trainingen", "Tot 24 maanden na afloop van de training"],
               ["Facturen en administratie", "7 jaar (fiscale bewaarplicht)"],

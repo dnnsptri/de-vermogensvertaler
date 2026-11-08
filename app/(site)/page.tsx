@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { home, site } from "@/content/site";
+import { home, pensioenLink, site } from "@/content/site";
 import { Button, Emph, Eyebrow, Logo, Pattern, TextLink } from "@/components/ui";
 import { CalEmbed } from "@/components/CalEmbed";
 import { BackToTop } from "@/components/BackToTop";
@@ -63,9 +63,10 @@ export default function Home() {
             <p className="fade-up max-w-[40rem] text-lg text-white/85 md:text-xl" style={{ "--d": "550ms" } as React.CSSProperties}>
               {hero.intro}
             </p>
-            {/* One action only: "Over Alberta" is already in the menu (removed the "Meer over Alberta" link, 21 Oct 2026) */}
+            {/* One action only: "Over Alberta" is already in the menu (removed the "Meer over Alberta" link, 21 Oct 2026).
+              The Pensioencheck, not the booking, now that it mails the result (Alberta, 5 Nov 2026). */}
             <div className="fade-up" style={{ "--d": "700ms" } as React.CSSProperties}>
-              <Button href={site.booking.href}>{site.booking.label}</Button>
+              <Button href={pensioenLink.href}>{pensioenLink.label}</Button>
             </div>
           </div>
         </div>

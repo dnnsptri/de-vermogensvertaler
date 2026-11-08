@@ -10,7 +10,7 @@ const email = "alberta@devermogensvertaler.nl";
 // Sign-ups by mail until her Stripe link and the waitlist/newsletter forms exist (Dennis, 21 Oct 2026)
 export const mailto = (subject: string) => `mailto:${email}?subject=${encodeURIComponent(subject)}`;
 
-const pensioenLink = { label: "Doe de Pensioencheck", href: pensioencheck.path }; // her button label
+export const pensioenLink = { label: "Doe de Pensioencheck", href: pensioencheck.path }; // her button label
 
 export const site = {
   name: "De Vermogensvertaler",
@@ -46,7 +46,7 @@ export const site = {
   ],
   // Profiles with href "#" are hidden until the real URL is known
   social: [
-    { label: "Instagram", href: "https://www.instagram.com/albertaopoku2018/" },
+    { label: "Instagram", href: "https://www.instagram.com/alberta.devermogensvertaler/" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/albertaopoku/" },
   ],
 };

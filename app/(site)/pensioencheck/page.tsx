@@ -31,7 +31,7 @@ export default function Pensioencheck() {
         {/* Only for "samenwonend of getrouwd"; lib/tools.ts shows it */}
         <div id="partnerBox" hidden>
           <label className="mt-6 flex items-start gap-3 text-base">
-            <input type="checkbox" id="partnerMee" className="mt-1 h-5 w-5 shrink-0 accent-forest" />
+            <input type="checkbox" id="partnerMee" name="partnerMee" className="mt-1 h-5 w-5 shrink-0 accent-forest" />
             <span>{f.partnerMee}</span>
           </label>
           <div id="partnerFields" hidden className="mt-2 border-l-4 border-mustard pl-4">
