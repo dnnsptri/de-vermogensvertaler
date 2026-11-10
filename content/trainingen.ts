@@ -22,8 +22,10 @@ export type Training = {
 
 // Her texts come from the editor (content/cms/de-kring.json, keystatic.config.ts). Slug, title (= menu label)
 // and the fallback mail subject stay here: changing them moves the URL or the menu, so that goes through Dennis.
-const { signupLabel, signupUrl: rawUrl, ...kringText } = deKringText;
-const signupUrl = rawUrl as string | null; // null in the JSON until she fills it in
+// Keystatic drops the signupUrl key entirely when the field is empty, so type it as optional:
+// otherwise TypeScript infers the type from whatever the JSON holds right now and every save breaks the build.
+const { signupLabel, signupUrl: rawUrl, ...kringText } = deKringText as typeof deKringText & { signupUrl?: string | null };
+const signupUrl = rawUrl ?? null; // null until she fills it in
 const deKring: Training = {
   slug: "de-kring",
   title: "De Kring",
