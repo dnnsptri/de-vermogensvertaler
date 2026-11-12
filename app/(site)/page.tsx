@@ -138,13 +138,16 @@ export default function Home() {
                   <div className="mt-3 md:mt-4 md:pl-40">
                     {/* Step text capped at 720px: wider lines on desktop, still readable (23 Oct 2026) */}
                     {/* One sentence per line from md up, so the lines break where the thought breaks */}
-                    <p className="max-w-[45rem] text-lg opacity-80 md:text-xl">
-                      {step.text.split(/(?<=[.?!])\s+/).map((sentence) => (
-                        <span key={sentence} className="md:block">
-                          {sentence}{" "}
-                        </span>
-                      ))}
-                    </p>
+                    {/* An empty line in the editor (Keystatic) starts a new paragraph */}
+                    {step.text.split(/\n\s*\n/).map((para) => (
+                      <p key={para} className="max-w-[45rem] text-lg opacity-80 md:text-xl [&+p]:mt-4">
+                        {para.trim().split(/(?<=[.?!])\s+/).map((sentence) => (
+                          <span key={sentence} className="md:block">
+                            {sentence}{" "}
+                          </span>
+                        ))}
+                      </p>
+                    ))}
                     {step.links?.length ? (
                       <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
                         {step.links.map((link) => (
